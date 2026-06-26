@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6366f1">
+<title>Painel de Vida Pessoal</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vida Pessoal">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJz4gPGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+IDxzdG9wIG9mZnNldD0nMCcgc3RvcC1jb2xvcj0nIzYzNjZmMScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0nI2VjNDg5OScvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPiA8cmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgcng9JzExMicgZmlsbD0ndXJsKCNnKScvPiA8cGF0aCBkPSdNMjU2IDM5MiBWMjUwJyBzdHJva2U9JyNmZmZmZmYnIHN0cm9rZS13aWR0aD0nMjYnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgZmlsbD0nbm9uZScvPiA8ZWxsaXBzZSBjeD0nMTkyJyBjeT0nMjUwJyByeD0nNzInIHJ5PSc0MCcgZmlsbD0nI2ZmZmZmZicgdHJhbnNmb3JtPSdyb3RhdGUoLTM1IDE5MiAyNTApJy8+IDxlbGxpcHNlIGN4PSczMjAnIGN5PScyNTAnIHJ4PSc3Micgcnk9JzQwJyBmaWxsPScjZmZmZmZmJyB0cmFuc2Zvcm09J3JvdGF0ZSgzNSAzMjAgMjUwKScvPiA8L3N2Zz4=">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJz4gPGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+IDxzdG9wIG9mZnNldD0nMCcgc3RvcC1jb2xvcj0nIzYzNjZmMScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0nI2VjNDg5OScvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPiA8cmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgcng9JzExMicgZmlsbD0ndXJsKCNnKScvPiA8cGF0aCBkPSdNMjU2IDM5MiBWMjUwJyBzdHJva2U9JyNmZmZmZmYnIHN0cm9rZS13aWR0aD0nMjYnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgZmlsbD0nbm9uZScvPiA8ZWxsaXBzZSBjeD0nMTkyJyBjeT0nMjUwJyByeD0nNzInIHJ5PSc0MCcgZmlsbD0nI2ZmZmZmZicgdHJhbnNmb3JtPSdyb3RhdGUoLTM1IDE5MiAyNTApJy8+IDxlbGxpcHNlIGN4PSczMjAnIGN5PScyNTAnIHJ4PSc3Micgcnk9JzQwJyBmaWxsPScjZmZmZmZmJyB0cmFuc2Zvcm09J3JvdGF0ZSgzNSAzMjAgMjUwKScvPiA8L3N2Zz4=">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGFpbmVsIGRlIFZpZGEgUGVzc29hbCIsInNob3J0X25hbWUiOiJWaWRhIFBlc3NvYWwiLCJzdGFydF91cmwiOiIvIiwic2NvcGUiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZjExMTciLCJ0aGVtZV9jb2xvciI6IiM2MzY2ZjEiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBuYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNuSUhacFpYZENiM2c5SnpBZ01DQTFNVElnTlRFeUp6NGdQR1JsWm5NK1BHeHBibVZoY2tkeVlXUnBaVzUwSUdsa1BTZG5KeUI0TVQwbk1DY2dlVEU5SnpBbklIZ3lQU2N4SnlCNU1qMG5NU2MrSUR4emRHOXdJRzltWm5ObGREMG5NQ2NnYzNSdmNDMWpiMnh2Y2owbkl6WXpOalptTVNjdlBqeHpkRzl3SUc5bVpuTmxkRDBuTVNjZ2MzUnZjQzFqYjJ4dmNqMG5JMlZqTkRnNU9TY3ZQand2YkdsdVpXRnlSM0poWkdsbGJuUStQQzlrWldaelBpQThjbVZqZENCM2FXUjBhRDBuTlRFeUp5Qm9aV2xuYUhROUp6VXhNaWNnY25nOUp6RXhNaWNnWm1sc2JEMG5kWEpzS0NObktTY3ZQaUE4Y0dGMGFDQmtQU2ROTWpVMklETTVNaUJXTWpVd0p5QnpkSEp2YTJVOUp5Tm1abVptWm1ZbklITjBjbTlyWlMxM2FXUjBhRDBuTWpZbklITjBjbTlyWlMxc2FXNWxZMkZ3UFNkeWIzVnVaQ2NnWm1sc2JEMG5ibTl1WlNjdlBpQThaV3hzYVhCelpTQmplRDBuTVRreUp5QmplVDBuTWpVd0p5QnllRDBuTnpJbklISjVQU2MwTUNjZ1ptbHNiRDBuSTJabVptWm1aaWNnZEhKaGJuTm1iM0p0UFNkeWIzUmhkR1VvTFRNMUlERTVNaUF5TlRBcEp5OCtJRHhsYkd4cGNITmxJR040UFNjek1qQW5JR041UFNjeU5UQW5JSEo0UFNjM01pY2djbms5SnpRd0p5Qm1hV3hzUFNjalptWm1abVptSnlCMGNtRnVjMlp2Y20wOUozSnZkR0YwWlNnek5TQXpNakFnTWpVd0tTY3ZQaUE4TDNOMlp6ND0iLCJzaXplcyI6ImFueSIsInR5cGUiOiJpbWFnZS9zdmcreG1sIiwicHVycG9zZSI6ImFueSJ9LHsic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBuYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNuSUhacFpYZENiM2c5SnpBZ01DQTFNVElnTlRFeUp6NGdQR1JsWm5NK1BHeHBibVZoY2tkeVlXUnBaVzUwSUdsa1BTZG5KeUI0TVQwbk1DY2dlVEU5SnpBbklIZ3lQU2N4SnlCNU1qMG5NU2MrSUR4emRHOXdJRzltWm5ObGREMG5NQ2NnYzNSdmNDMWpiMnh2Y2owbkl6WXpOalptTVNjdlBqeHpkRzl3SUc5bVpuTmxkRDBuTVNjZ2MzUnZjQzFqYjJ4dmNqMG5JMlZqTkRnNU9TY3ZQand2YkdsdVpXRnlSM0poWkdsbGJuUStQQzlrWldaelBpQThjbVZqZENCM2FXUjBhRDBuTlRFeUp5Qm9aV2xuYUhROUp6VXhNaWNnY25nOUp6RXhNaWNnWm1sc2JEMG5kWEpzS0NObktTY3ZQaUE4Y0dGMGFDQmtQU2ROTWpVMklETTVNaUJXTWpVd0p5QnpkSEp2YTJVOUp5Tm1abVptWm1ZbklITjBjbTlyWlMxM2FXUjBhRDBuTWpZbklITjBjbTlyWlMxc2FXNWxZMkZ3UFNkeWIzVnVaQ2NnWm1sc2JEMG5ibTl1WlNjdlBpQThaV3hzYVhCelpTQmplRDBuTVRreUp5QmplVDBuTWpVd0p5QnllRDBuTnpJbklISjVQU2MwTUNjZ1ptbHNiRDBuSTJabVptWm1aaWNnZEhKaGJuTm1iM0p0UFNkeWIzUmhkR1VvTFRNMUlERTVNaUF5TlRBcEp5OCtJRHhsYkd4cGNITmxJR040UFNjek1qQW5JR041UFNjeU5UQW5JSEo0UFNjM01pY2djbms5SnpRd0p5Qm1hV3hzUFNjalptWm1abVptSnlCMGNtRnVjMlp2Y20wOUozSnZkR0YwWlNnek5TQXpNakFnTWpVd0tTY3ZQaUE4TDNOMlp6ND0iLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJtYXNrYWJsZSJ9XX0=">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#0f1117;--bg2:#171a23;--card:#1c2030;--card2:#232838;--line:#2a3042;
+  --txt:#e6e9f0;--txt2:#9aa3b8;--muted:#6b7488;
+  --pri:#6366f1;--pri2:#818cf8;--ok:#22c55e;--warn:#f59e0b;--bad:#ef4444;
+  --cyan:#06b6d4;--pink:#ec4899;--radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit}
+.app{display:flex;min-height:100vh}
+.sidebar{width:235px;background:var(--bg2);border-right:1px solid var(--line);padding:20px 14px;position:fixed;height:100vh;overflow-y:auto;z-index:50}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 10px 18px;font-weight:700;font-size:18px}
+.brand .logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--pri),var(--pink));display:flex;align-items:center;justify-content:center;font-size:18px}
+.nav button{width:100%;display:flex;align-items:center;gap:11px;padding:11px 13px;background:none;border:none;color:var(--txt2);border-radius:11px;font-size:14.5px;text-align:left;margin-bottom:3px;transition:.15s}
+.nav button:hover{background:var(--card);color:var(--txt)}
+.nav button.active{background:var(--pri);color:#fff;font-weight:600}
+.nav .ico{font-size:17px;width:20px;text-align:center}
+.side-foot{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.side-foot button{width:100%;padding:10px;background:var(--card);border:1px solid var(--line);color:var(--txt2);border-radius:10px;font-size:13px;margin-bottom:7px}
+.side-foot button:hover{color:var(--txt);border-color:var(--pri)}
+.main{flex:1;margin-left:235px;padding:26px 30px 60px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.topbar h1{font-size:24px;font-weight:700}
+.topbar .date{color:var(--txt2);font-size:13.5px}
+.grid{display:grid;gap:16px}
+.g5{grid-template-columns:repeat(5,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.card h3{font-size:14px;color:var(--txt2);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden}
+.stat .lbl{font-size:12px;color:var(--txt2);font-weight:500}
+.stat .val{font-size:25px;font-weight:700;margin-top:6px}
+.stat .sub{font-size:12px;color:var(--muted);margin-top:3px}
+.stat .ico{position:absolute;top:16px;right:16px;font-size:22px;opacity:.8}
+.pbar{height:7px;background:var(--card2);border-radius:99px;overflow:hidden}
+.pbar>div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .4s}
+.form-row{display:grid;gap:11px;margin-bottom:13px}
+.fr2{grid-template-columns:1fr 1fr}.fr3{grid-template-columns:1fr 1fr 1fr}.fr4{grid-template-columns:repeat(4,1fr)}
+label.fl{font-size:12.5px;color:var(--txt2);display:block;margin-bottom:5px;font-weight:500}
+input,select,textarea{width:100%;padding:10px 12px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;color:var(--txt);font-size:14px;outline:none;transition:.15s}
+input:focus,select:focus,textarea:focus{border-color:var(--pri)}
+textarea{resize:vertical;min-height:60px}
+.btn{padding:10px 18px;background:var(--pri);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;transition:.15s}
+.btn:hover{background:var(--pri2)}
+.btn.sm{padding:7px 13px;font-size:13px}
+.btn.ghost{background:var(--card2);color:var(--txt2)}.btn.ghost:hover{color:var(--txt)}
+.btn.danger{background:transparent;color:var(--bad);padding:5px 9px;font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;color:var(--txt2);font-weight:600;font-size:11.5px;padding:9px 10px;border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.3px}
+td{padding:10px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:none}
+.tag{display:inline-block;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:600}
+.tag.in{background:rgba(34,197,94,.15);color:var(--ok)}
+.tag.out{background:rgba(239,68,68,.15);color:var(--bad)}
+.tag.warn{background:rgba(245,158,11,.15);color:var(--warn)}
+.tag.info{background:rgba(99,102,241,.15);color:var(--pri2)}
+.pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;background:var(--card2);color:var(--txt2)}
+.section{display:none;animation:fade .25s}.section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.empty{text-align:center;color:var(--muted);padding:26px;font-size:13.5px}
+.chart-wrap{position:relative;height:230px}
+.amount-pos{color:var(--ok);font-weight:600}.amount-neg{color:var(--bad);font-weight:600}
+.mb{margin-bottom:16px}.flex{display:flex;align-items:center;gap:10px}
+.between{display:flex;justify-content:space-between;align-items:center}
+.item{padding:13px 0;border-bottom:1px solid var(--line)}.item:last-child{border:none}
+.diary-item{background:var(--bg2);border-left:3px solid var(--pri);border-radius:0 10px 10px 0;padding:11px 14px;margin-bottom:10px}
+.diary-item .d{font-size:12px;color:var(--muted);margin-bottom:4px}
+.net{font-size:34px;font-weight:800}
+.menu-btn{display:none}.overlay{display:none}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:.25s;box-shadow:0 0 40px rgba(0,0,0,.5)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:18px 16px 50px}
+  .menu-btn{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:var(--card);border:1px solid var(--line);border-radius:11px;color:var(--txt);font-size:20px}
+  .overlay.show{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40}
+  .g5,.g4,.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}
+  .fr2,.fr3,.fr4{grid-template-columns:1fr}.topbar h1{font-size:20px}
+  table{font-size:12.5px}td,th{padding:7px 6px}
+}
+@media(max-width:480px){.g5,.g4,.g3{grid-template-columns:1fr}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:100;transition:.3s;opacity:0}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.subtabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.subtabs button{padding:8px 15px;background:var(--card);border:1px solid var(--line);color:var(--txt2);border-radius:10px;font-size:13.5px;font-weight:500}
+.subtabs button.active{background:var(--card2);color:var(--txt);border-color:var(--pri)}
+.subsec{display:none}.subsec.active{display:block}
+.mini{font-size:12px;color:var(--muted)}
+#loginScreen{position:fixed;inset:0;background:var(--bg);z-index:200;align-items:center;justify-content:center;padding:20px}
+.login-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px;width:100%;max-width:380px}
+.login-card h2{font-size:22px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.login-card .lg{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--pri),var(--pink));display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+.login-card .sub{color:var(--txt2);font-size:13.5px;margin-bottom:18px}
+.login-card .btn{width:100%;margin-top:8px}
+.login-card .switch{text-align:center;margin-top:14px;font-size:13px;color:var(--txt2)}
+.login-card .switch a{color:var(--pri2);cursor:pointer;text-decoration:underline}
+.login-err{font-size:13px;margin-top:10px;min-height:18px;color:var(--warn)}
+.synced{color:var(--ok)!important}
+.quickbar{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 10px;margin-bottom:16px}
+.quickbar .qicon{font-size:18px;padding-left:4px}
+.quickbar input{border:none;background:transparent;flex:1;font-size:14px;padding:8px 6px}
+.quickbar input:focus{border:none}
+.qmic{background:var(--card2);border:1px solid var(--line);border-radius:10px;width:42px;height:38px;font-size:17px;color:var(--txt);flex:none}
+.qmic.rec{background:var(--bad);border-color:var(--bad);animation:qpulse 1s infinite}
+@keyframes qpulse{0%,100%{opacity:1}50%{opacity:.45}}
+.qpreview{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--pri);border-radius:12px;padding:10px 14px;margin:-6px 0 16px;font-size:14px;flex-wrap:wrap}
+.qhint{font-size:11.5px;color:var(--muted);margin:-10px 2px 16px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:150;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;width:100%;max-width:460px;max-height:88vh;overflow-y:auto}
+.btn.editb{background:var(--card2);color:var(--pri2);padding:5px 9px;font-size:12px}
+.btn.editb:hover{color:#fff;background:var(--pri)}
+</style>
+</head>
+<body>
+<div id="loginScreen" style="display:none">
+  <div class="login-card">
+    <h2><span class="lg">🌱</span> Vida Pessoal</h2>
+    <div class="sub" id="loginSub">Entre para acessar seus dados em qualquer aparelho.</div>
+    <div class="form-row"><div><label class="fl">Email</label><input type="email" id="au_email" placeholder="voce@email.com"></div></div>
+    <div class="form-row"><div><label class="fl">Senha</label><input type="password" id="au_pass" placeholder="mínimo 6 caracteres"></div></div>
+    <button class="btn" id="loginBtn" onclick="authSubmit()">Entrar</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="switch" id="authSwitch">Não tem conta? <a onclick="toggleAuthMode()">Criar conta</a></div>
+  </div>
+</div>
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="logo">🌱</span> Vida Pessoal</div>
+    <nav class="nav" id="nav">
+      <button class="active" data-sec="dashboard"><span class="ico">📊</span> Dashboard</button>
+      <button data-sec="afazer"><span class="ico">📌</span> A Fazer</button>
+      <button data-sec="financeiro"><span class="ico">💰</span> Financeiro</button>
+      <button data-sec="profissional"><span class="ico">💼</span> Profissional</button>
+      <button data-sec="habilidades"><span class="ico">🎸</span> Habilidades</button>
+      <button data-sec="saude"><span class="ico">💪</span> Saúde</button>
+      <button data-sec="familia"><span class="ico">❤️</span> Família</button>
+      <button data-sec="habitos"><span class="ico">✅</span> Hábitos</button>
+      <button data-sec="livros"><span class="ico">📚</span> Livros</button>
+      <button data-sec="vida"><span class="ico">🧭</span> Metas de Vida</button>
+      <button data-sec="viagens"><span class="ico">✈️</span> Viagens</button>
+      <button data-sec="bens"><span class="ico">🏠</span> Bens</button>
+    </nav>
+    <div class="side-foot">
+      <button onclick="exportData()">⬇️ Exportar backup</button>
+      <button onclick="document.getElementById('importFile').click()">⬆️ Importar backup</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+      <button onclick="gerarPDF()">📄 Gerar PDF geral</button>
+      <button onclick="resetAll()" style="color:var(--bad)">🗑️ Apagar tudo</button>
+      <div id="acctRow" style="display:none">
+        <div class="mini synced" id="syncStatus" style="margin:8px 0 6px"></div>
+        <button onclick="doLogout()">🚪 Sair da conta</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="flex">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <div><h1 id="secTitle">Dashboard</h1><div class="date" id="todayDate"></div></div>
+      </div>
+    </div>
+
+    <div class="quickbar">
+      <span class="qicon">⚡</span>
+      <input id="qq" placeholder="Lançar rápido: ex. 'gastei 50 no almoço', 'pesei 82', 'day trade +200', 'joguei tênis 1h'..." onkeydown="if(event.key==='Enter')quickParse()">
+      <button class="qmic" id="qmic" onclick="quickVoice()" title="Falar">🎤</button>
+      <button class="btn sm" onclick="quickParse()">Lançar</button>
+    </div>
+    <div id="qpreview" class="qpreview" style="display:none"></div>
+
+    <!-- DASHBOARD -->
+    <section class="section active" id="dashboard">
+      <div class="grid g4 mb" id="kpis"></div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>💵 Patrimônio: investido x dívidas</h3><div class="chart-wrap"><canvas id="chNet"></canvas></div></div>
+        <div class="card"><h3>📈 Day Trade — acumulado no mês</h3><div class="chart-wrap"><canvas id="chTrade"></canvas></div></div>
+      </div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>📌 A Fazer — próximos</h3><div id="dashTodo"></div></div>
+        <div class="card"><h3>📓 Diário recente</h3><div id="dashDiary"></div></div>
+      </div>
+      <div class="card"><h3>🎸 Habilidades</h3><div id="dashSkills"></div></div>
+    </section>
+
+    <!-- A FAZER -->
+    <section class="section" id="afazer">
+      <div class="grid g2 mb">
+        <div class="card"><h3>➕ Novo lembrete / tarefa do ano</h3>
+          <div class="form-row"><div><label class="fl">O que precisa fazer</label><input id="td_title" placeholder="ex: Renovar CNH, fazer check-up, declarar IR..."></div></div>
+          <div class="form-row"><div><label class="fl">Fazer até (opcional)</label><input type="date" id="td_prazo"></div></div>
+          <button class="btn" onclick="addTodo()">Adicionar</button>
+          <div class="mini" style="margin-top:10px">Para lembretes e tarefas ao longo do ano (não do dia a dia). Marque o ✓ quando concluir.</div>
+        </div>
+        <div class="card"><h3>📝 Registro diário</h3>
+          <div class="form-row fr3">
+            <div><label class="fl">Data</label><input type="date" id="h_date"></div>
+            <div><label class="fl">Água (litros)</label><input type="number" step="0.1" id="h_water" placeholder="2.5"></div>
+            <div><label class="fl">Sono (h)</label><input type="number" step="0.5" id="h_sleep" placeholder="7.5"></div>
+          </div>
+          <div class="form-row fr3">
+            <div><label class="fl">Humor (1-5)</label><select id="h_mood"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div><label class="fl">Energia (1-5)</label><select id="h_energy"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div><label class="fl">Estresse (1-5)</label><select id="h_stress"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+          </div>
+          <div class="form-row"><div><label class="fl">🙏 Gratidão (1-3 coisas do dia)</label><input id="h_grat" placeholder="ex: meus filhos, treino bom, café da manhã"></div></div>
+          <div class="form-row"><div><label class="fl">📓 Algo relevante do dia (diário)</label><textarea id="h_note" placeholder="Como foi seu dia?"></textarea></div></div>
+          <button class="btn" onclick="addDaily()">Salvar dia</button>
+        </div>
+      </div>
+      <div class="card"><h3>📌 Tarefas e lembretes do ano</h3><div id="todoList"></div></div>
+    </section>
+
+    <!-- FINANCEIRO -->
+    <section class="section" id="financeiro">
+      <div class="grid g4 mb" id="finKpis"></div>
+      <div class="subtabs" data-group="fin">
+        <button class="active" data-sub="fin-mov">Movimentações</button>
+        <button data-sub="fin-acc">Contas & Investimentos</button>
+        <button data-sub="fin-debt">Dívidas & Parcelas</button>
+        <button data-sub="fin-fixos">Custos Fixos</button>
+        <button data-sub="fin-goal">Meta financeira</button>
+      </div>
+
+      <div class="subsec active" id="fin-mov">
+        <div class="grid g2 mb">
+          <div class="card"><h3>➕ Nova movimentação</h3>
+            <div class="form-row fr2">
+              <div><label class="fl">Data</label><input type="date" id="m_date"></div>
+              <div><label class="fl">Tipo</label><select id="m_type"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div>
+            </div>
+            <div class="form-row fr2">
+              <div><label class="fl">Categoria</label><select id="m_cat"><option>Alimentação</option><option>Moradia</option><option>Transporte</option><option>Lazer</option><option>Saúde</option><option>Educação</option><option>Salário</option><option>Investimento</option><option>Outro</option></select></div>
+              <div><label class="fl">Valor (R$)</label><input type="number" step="0.01" id="m_amount" placeholder="120.00"></div>
+            </div>
+            <div class="form-row"><div><label class="fl">Descrição</label><input id="m_note" placeholder="opcional"></div></div>
+            <button class="btn" onclick="addMove()">Salvar</button>
+          </div>
+          <div class="card"><h3>🍩 Despesas por categoria (mês)</h3><div class="chart-wrap"><canvas id="chCat"></canvas></div></div>
+        </div>
+        <div class="card"><h3>Histórico</h3><div id="movTable"></div></div>
+      </div>
+
+      <div class="subsec" id="fin-acc">
+        <div class="card mb"><h3>➕ Conta / Investimento</h3>
+          <div class="form-row fr3">
+            <div><label class="fl">Nome (banco/corretora)</label><input id="a_name" placeholder="ex: XP, Nubank, Tesouro"></div>
+            <div><label class="fl">Tipo</label><select id="a_type"><option>Investimento</option><option>Conta corrente</option><option>Poupança</option><option>Reserva</option></select></div>
+            <div><label class="fl">Valor (R$)</label><input type="number" step="0.01" id="a_value" placeholder="5000.00"></div>
+          </div>
+          <button class="btn" onclick="addAccount()">Adicionar</button>
+        </div>
+        <div class="card"><h3>Saldos centralizados</h3><div id="accTable"></div></div>
+      </div>
+
+      <div class="subsec" id="fin-debt">
+        <div class="grid g2 mb">
+          <div class="card"><h3>➕ Empréstimo / Parcelamento</h3>
+            <div class="form-row fr2">
+              <div><label class="fl">Nome</label><input id="l_name" placeholder="ex: Empréstimo carro"></div>
+              <div><label class="fl">Saldo devedor (R$)</label><input type="number" step="0.01" id="l_saldo" placeholder="12000"></div>
+            </div>
+            <div class="form-row fr2">
+              <div><label class="fl">Valor da parcela (R$)</label><input type="number" step="0.01" id="l_parcela" placeholder="500"></div>
+              <div><label class="fl">Parcelas restantes</label><input type="number" id="l_rest" placeholder="24"></div>
+            </div>
+            <button class="btn" onclick="addLoan()">Adicionar</button>
+          </div>
+          <div class="card"><h3>➕ Cartão de crédito</h3>
+            <div class="form-row fr2">
+              <div><label class="fl">Cartão</label><input id="c_name" placeholder="ex: Nubank"></div>
+              <div><label class="fl">Fatura atual (R$)</label><input type="number" step="0.01" id="c_fatura" placeholder="1500"></div>
+            </div>
+            <div class="form-row fr2">
+              <div><label class="fl">Parcelado restante (R$)</label><input type="number" step="0.01" id="c_parc" placeholder="3000"></div>
+              <div><label class="fl">Parcelas restantes</label><input type="number" id="c_rest" placeholder="6"></div>
+            </div>
+            <button class="btn" onclick="addCard()">Adicionar</button>
+          </div>
+        </div>
+        <div class="card mb"><h3>💳 Empréstimos e parcelamentos</h3><div id="loanTable"></div></div>
+        <div class="card"><h3>💳 Cartões</h3><div id="cardTable"></div></div>
+      </div>
+
+      <div class="subsec" id="fin-fixos">
+        <div class="grid g3 mb" id="fixosKpis"></div>
+        <div class="grid g2 mb">
+          <div class="card"><h3>➕ Novo custo fixo</h3>
+            <div class="form-row fr2">
+              <div><label class="fl">Nome</label><input id="fx_nome" placeholder="ex: Aluguel, Luz, Internet"></div>
+              <div><label class="fl">Categoria</label><select id="fx_cat"><option>Moradia</option><option>Contas (luz/água/gás)</option><option>Internet/Telefone</option><option>Assinaturas</option><option>Transporte</option><option>Educação</option><option>Saúde</option><option>Seguros</option><option>Outro</option></select></div>
+            </div>
+            <div class="form-row"><div><label class="fl">Valor mensal (R$)</label><input type="number" step="0.01" id="fx_valor" placeholder="1500"></div></div>
+            <button class="btn" onclick="addFixo()">Adicionar</button>
+          </div>
+          <div class="card"><h3>🍩 Distribuição dos custos fixos</h3><div class="chart-wrap"><canvas id="chFixos"></canvas></div></div>
+        </div>
+        <div class="card"><h3>Custos fixos mensais</h3><div id="fixosTable"></div></div>
+      </div>
+
+      <div class="subsec" id="fin-goal">
+        <div class="grid g2">
+          <div class="card"><h3>🎯 Meta de patrimônio / reserva</h3>
+            <div class="form-row fr2">
+              <div><label class="fl">Quanto quero acumular (R$)</label><input type="number" id="goal_patrim" placeholder="50000"></div>
+              <div style="display:flex;align-items:flex-end"><button class="btn" onclick="saveGoals()">Salvar metas</button></div>
+            </div>
+            <div id="goalPatrimView"></div>
+          </div>
+          <div class="card"><h3>🎯 Meta de renda mensal</h3>
+            <div class="form-row"><div><label class="fl">Renda alvo no mês (R$)</label><input type="number" id="goal_renda" placeholder="8000"></div></div>
+            <div id="goalRendaView"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFISSIONAL -->
+    <section class="section" id="profissional">
+      <div class="grid g4 mb" id="proKpis"></div>
+      <div class="subtabs" data-group="pro">
+        <button class="active" data-sub="pro-trade">Day Trade</button>
+        <button data-sub="pro-sal">Salário</button>
+      </div>
+      <div class="subsec active" id="pro-trade">
+        <div class="grid g2 mb">
+          <div class="card"><h3>➕ Resultado do dia</h3>
+            <div class="form-row fr2">
+              <div><label class="fl">Data</label><input type="date" id="t_date"></div>
+              <div><label class="fl">Resultado (R$)</label><input type="number" step="0.01" id="t_res" placeholder="ex: 250 ou -180"></div>
+            </div>
+            <div class="form-row fr2">
+              <div><label class="fl">Resultado (%)</label><input type="number" step="0.01" id="t_pct" placeholder="ex: 1.5 ou -1.2"></div>
+              <div><label class="fl">Nota</label><input id="t_note" placeholder="opcional"></div>
+            </div>
+            <button class="btn" onclick="addTrade()">Salvar</button>
+          </div>
+          <div class="card"><h3>📈 Evolução acumulada</h3><div class="chart-wrap"><canvas id="chTradeBig"></canvas></div></div>
+        </div>
+        <div class="grid g2 mb">
+          <div class="card"><h3>📊 Resultado por mês</h3><div class="chart-wrap"><canvas id="chTradeMonth"></canvas></div></div>
+          <div class="card"><h3>📅 Resumo por ano</h3><div id="tradeYear"></div></div>
+        </div>
+        <div class="card"><h3>Histórico de operações</h3><div id="tradeTable"></div></div>
+      </div>
+      <div class="subsec" id="pro-sal">
+        <div class="grid g2 mb">
+          <div class="card"><h3>➕ Registrar salário</h3>
+            <div class="form-row fr2">
+              <div><label class="fl">Mês</label><input type="month" id="s_month"></div>
+              <div><label class="fl">Valor (R$)</label><input type="number" step="0.01" id="s_val" placeholder="6000"></div>
+            </div>
+            <div class="form-row fr2">
+              <div><label class="fl">Tipo do lançamento</label><select id="s_tipo"><option>Salário</option><option>Bônus</option><option>Comissão</option><option>Outro</option></select></div>
+              <div><label class="fl">Observação</label><input id="s_note" placeholder="opcional"></div>
+            </div>
+            <button class="btn" onclick="addSalary()">Salvar</button>
+          </div>
+          <div class="card"><h3>📊 Evolução salarial</h3><div class="chart-wrap"><canvas id="chSal"></canvas></div></div>
+        </div>
+        <div class="card"><h3>Histórico</h3><div id="salTable"></div></div>
+      </div>
+    </section>
+
+    <!-- HABILIDADES -->
+    <section class="section" id="habilidades">
+      <div class="grid g2 mb">
+        <div class="card"><h3>⏱️ Registrar prática</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Habilidade</label><select id="p_skill"></select></div>
+            <div><label class="fl">Data</label><input type="date" id="p_date"></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Duração (min)</label><input type="number" id="p_min" placeholder="60"></div>
+            <div><label class="fl">Como foi? (1-5)</label><select id="p_rate"><option value="3">3 — ok</option><option value="1">1 — ruim</option><option value="2">2</option><option value="4">4</option><option value="5">5 — excelente</option></select></div>
+          </div>
+          <div class="form-row"><div><label class="fl">Nota</label><input id="p_note" placeholder="o que treinou?"></div></div>
+          <button class="btn" onclick="addSession()">Salvar prática</button>
+        </div>
+        <div class="card"><h3>➕ Nova habilidade</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Nome</label><input id="sk_name" placeholder="ex: Piano"></div>
+            <div><label class="fl">Nível atual (0-10)</label><input type="number" min="0" max="10" id="sk_level" placeholder="3"></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Meta de nível (0-10)</label><input type="number" min="0" max="10" id="sk_target" placeholder="8"></div>
+            <div style="display:flex;align-items:flex-end"><button class="btn" onclick="addSkill()">Adicionar</button></div>
+          </div>
+          <div class="mini">Já vêm: Violão, Tênis, Futvôlei, Xadrez, Inglês.</div>
+        </div>
+      </div>
+      <div class="card mb"><h3>🎸 Suas habilidades</h3><div id="skillsList"></div></div>
+      <div class="card"><h3>Últimas práticas</h3><div id="sessList"></div></div>
+    </section>
+
+    <!-- SAÚDE -->
+    <section class="section" id="saude">
+      <div class="grid g4 mb" id="healthKpis"></div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>➕ Registrar medição</h3>
+          <div class="mini" style="margin:-4px 0 10px">Lance quando medir — a data de hoje é usada automaticamente.</div>
+          <div class="form-row fr2">
+            <div><label class="fl">Peso (kg)</label><input type="number" step="0.1" id="s_weight" placeholder="75.5"></div>
+            <div><label class="fl">% Gordura</label><input type="number" step="0.1" id="s_fat" placeholder="18.0"></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Treino feito</label><select id="s_workout"><option value="">—</option><option>Musculação</option><option>Cardio</option><option>Corrida</option><option>Caminhada</option><option>Tênis</option><option>Futvôlei</option><option>Outro</option></select></div>
+            <div><label class="fl">Fez dieta hoje?</label><select id="s_diet"><option value="">—</option><option value="sim">Sim</option><option value="nao">Não</option></select></div>
+          </div>
+          <button class="btn" onclick="addMedicao()">Salvar medição</button>
+        </div>
+        <div class="card"><h3>⚖️ Peso x % Gordura</h3><div class="chart-wrap"><canvas id="chBody"></canvas></div></div>
+      </div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>💧 Água (litros, últimos dias)</h3><div class="chart-wrap"><canvas id="chWater"></canvas></div></div>
+        <div class="card"><h3>🍽️ Aderência à dieta (mês)</h3><div class="chart-wrap"><canvas id="chDiet"></canvas></div></div>
+      </div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>😊 Humor e energia (14 dias)</h3><div class="chart-wrap"><canvas id="chMood"></canvas></div></div>
+        <div class="card"><h3>😌 Estresse (14 dias)</h3><div class="chart-wrap"><canvas id="chStress"></canvas></div></div>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h3>📓 Diário</h3><div id="diaryList"></div></div>
+        <div class="card"><h3>📋 Histórico diário</h3><div id="healthTable"></div></div>
+      </div>
+    </section>
+
+    <!-- LIVROS -->
+    <section class="section" id="livros">
+      <div class="grid g3 mb" id="bookKpis"></div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>➕ Adicionar livro</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Título</label><input id="b_title" placeholder="ex: Hábitos Atômicos"></div>
+            <div><label class="fl">Autor</label><input id="b_author" placeholder="opcional"></div>
+          </div>
+          <div class="form-row fr3">
+            <div><label class="fl">Status</label><select id="b_status"><option>Quero ler</option><option>Lendo</option><option>Lido</option></select></div>
+            <div><label class="fl">Páginas (total)</label><input type="number" id="b_pages" placeholder="320"></div>
+            <div><label class="fl">Nota (0-10)</label><input type="number" min="0" max="10" id="b_rate" placeholder="só se lido"></div>
+          </div>
+          <button class="btn" onclick="addBook()">Adicionar</button>
+        </div>
+        <div class="card"><h3>🎯 Meta de leitura (ano)</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Livros no ano</label><input type="number" id="goal_books" placeholder="12"></div>
+            <div style="display:flex;align-items:flex-end"><button class="btn" onclick="saveGoals()">Salvar</button></div>
+          </div>
+          <div id="goalBooksView"></div>
+        </div>
+      </div>
+      <div class="card"><h3>📚 Sua estante</h3><div id="booksList"></div></div>
+    </section>
+
+    <!-- FAMÍLIA -->
+    <section class="section" id="familia">
+      <div class="grid g4 mb" id="famKpis"></div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>➕ Registrar momento</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Data</label><input type="date" id="r_date"></div>
+            <div><label class="fl">Com quem</label><select id="r_who"><option>Filhos</option><option>Namorada</option><option>Família</option><option>Amigos</option><option>Outro</option></select></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Atividade</label><input id="r_act" placeholder="ex: parque, cinema, jantar"></div>
+            <div><label class="fl">Como foi (1-5)</label><select id="r_rate"><option value="3">3 — ok</option><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="5">5 — incrível</option></select></div>
+          </div>
+          <div class="form-row"><div><label class="fl">⭐ Momento marcante (opcional)</label><textarea id="r_note" placeholder="algo especial pra lembrar"></textarea></div></div>
+          <button class="btn" onclick="addRelation()">Salvar</button>
+        </div>
+        <div class="card"><h3>👨‍👩‍👧 Momentos por pessoa (mês)</h3><div class="chart-wrap"><canvas id="chFam"></canvas></div></div>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h3>⭐ Momentos marcantes</h3><div id="famMoments"></div></div>
+        <div class="card"><h3>📋 Histórico</h3><div id="famTable"></div></div>
+      </div>
+    </section>
+
+    <!-- HÁBITOS -->
+    <section class="section" id="habitos">
+      <div class="grid g2 mb">
+        <div class="card"><h3>✅ Hoje — <span id="habToday"></span></h3><div id="habChecklist"></div></div>
+        <div class="card"><h3>➕ Novo hábito</h3>
+          <div class="form-row"><div><label class="fl">Nome do hábito</label><input id="hb_name" placeholder="ex: Meditar 10min"></div></div>
+          <button class="btn" onclick="addHabit()">Adicionar</button>
+          <div class="mini" style="margin-top:10px">Marque o que fez a cada dia. O 🔥 conta seus dias seguidos — não quebre a sequência!</div>
+        </div>
+      </div>
+      <div class="card"><h3>🔥 Suas sequências</h3><div id="habStats"></div></div>
+    </section>
+
+    <!-- METAS DE VIDA -->
+    <section class="section" id="vida">
+      <div class="grid g2 mb">
+        <div class="card"><h3>🧭 Roda da Vida (0-10)</h3>
+          <div id="wheelInputs"></div>
+          <button class="btn sm" onclick="saveWheel()">Salvar avaliação</button>
+        </div>
+        <div class="card"><h3>📊 Equilíbrio atual</h3><div class="chart-wrap"><canvas id="chWheel"></canvas></div></div>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h3>➕ Nova meta de vida</h3>
+          <div class="form-row"><div><label class="fl">Meta</label><input id="lg_title" placeholder="ex: Ficar fluente em inglês"></div></div>
+          <div class="form-row fr2">
+            <div><label class="fl">Área</label><select id="lg_area"><option>Saúde</option><option>Finanças</option><option>Carreira</option><option>Relacionamentos</option><option>Aprendizado</option><option>Lazer</option><option>Pessoal</option></select></div>
+            <div><label class="fl">Prazo</label><input type="date" id="lg_deadline"></div>
+          </div>
+          <div class="form-row"><div><label class="fl">Observação</label><input id="lg_note" placeholder="opcional"></div></div>
+          <button class="btn" onclick="addLifeGoal()">Criar meta</button>
+        </div>
+        <div class="card"><h3>🎯 Minhas metas de vida</h3><div id="lifeGoalsList"></div></div>
+      </div>
+    </section>
+
+    <!-- VIAGENS -->
+    <section class="section" id="viagens">
+      <div class="grid g3 mb" id="tripKpis"></div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>➕ Nova viagem</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Destino</label><input id="tr_dest" placeholder="ex: Cancún"></div>
+            <div><label class="fl">Data alvo</label><input type="month" id="tr_date"></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Orçamento (R$)</label><input type="number" id="tr_budget" placeholder="8000"></div>
+            <div><label class="fl">Já guardei (R$)</label><input type="number" id="tr_saved" placeholder="1500"></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Status</label><select id="tr_status"><option>Sonhando</option><option>Planejando</option><option>Reservado</option><option>Concluída</option></select></div>
+            <div><label class="fl">Quem vai</label><input id="tr_note" placeholder="ex: família toda"></div>
+          </div>
+          <div class="form-row">
+            <label class="fl">Já comprei:</label>
+            <div class="flex" style="gap:16px;flex-wrap:wrap">
+              <label class="flex" style="cursor:pointer;margin:0"><input type="checkbox" id="tr_passagem" style="width:auto"> ✈️ Passagem</label>
+              <label class="flex" style="cursor:pointer;margin:0"><input type="checkbox" id="tr_hospedagem" style="width:auto"> 🏨 Hospedagem</label>
+              <label class="flex" style="cursor:pointer;margin:0"><input type="checkbox" id="tr_passeios" style="width:auto"> 🎟️ Passeios</label>
+            </div>
+          </div>
+          <button class="btn" onclick="addTrip()">Adicionar</button>
+        </div>
+        <div class="card"><h3>✈️ Próximas viagens</h3><div id="tripsList"></div></div>
+      </div>
+    </section>
+
+    <!-- BENS -->
+    <section class="section" id="bens">
+      <div class="grid g3 mb" id="bensKpis"></div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>➕ Adicionar bem</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Nome / descrição</label><input id="bm_nome" placeholder="ex: Honda Civic 2020"></div>
+            <div><label class="fl">Tipo</label><select id="bm_tipo"><option>Carro</option><option>Imóvel</option><option>Moto</option><option>Eletrônico</option><option>Outro</option></select></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Valor estimado (R$)</label><input type="number" id="bm_valor" placeholder="80000"></div>
+            <div><label class="fl">Observação</label><input id="bm_note" placeholder="opcional"></div>
+          </div>
+          <button class="btn" onclick="addBem()">Adicionar</button>
+        </div>
+        <div class="card"><h3>🏠 Distribuição por tipo</h3><div class="chart-wrap"><canvas id="chBens"></canvas></div></div>
+      </div>
+      <div class="card"><h3>Meus bens</h3><div id="bensTable"></div></div>
+    </section>
+  </main>
+</div>
+<div id="editModal" class="modal" style="display:none">
+  <div class="modal-card">
+    <div class="between" style="margin-bottom:14px"><h3 id="editTitle" style="margin:0;color:var(--txt)">Editar</h3><button class="btn ghost sm" onclick="closeEdit()">✕</button></div>
+    <div id="editFields"></div>
+    <div class="flex" style="justify-content:flex-end;gap:8px;margin-top:8px"><button class="btn ghost" onclick="closeEdit()">Cancelar</button><button class="btn" onclick="saveEdit()">Salvar</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+//  CONFIGURAÇÃO DA NUVEM  —  cole suas 2 chaves do Supabase aqui.
+//  Enquanto estiverem vazias, o app funciona localmente (sem login).
+// ============================================================
+const SUPABASE_URL='https://wlljnqlccdfrhpdvjewl.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_N_xzqWc4VodffL4oEVsGzw_QeOij5Ph';
+const CLOUD=!!(SUPABASE_URL&&SUPABASE_ANON_KEY);
+let sb=CLOUD?supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
+let currentUser=null,cloudTimer=null,authMode='login';
+
+// ============ DADOS ============
+const KEYS=['daily','moves','accounts','loans','cards','salary','trades','skills','sessions','books','relations','habits','habitlog','lifegoals','trips','todos','bens','fixos'];
+const DB={};KEYS.forEach(k=>DB[k]=load('vp_'+k));
+DB.settings=loadObj('vp_settings');
+if(!DB.skills.length){['Violão','Tênis','Futvôlei','Xadrez','Inglês','Memória','Storytelling'].forEach(n=>DB.skills.push({id:uid(),nome:n,nivel:0,meta:8}));save('vp_skills',DB.skills)}
+if(!DB.habits.length){['Inglês (curso)','Treino','Beber 3L de água','Praticar tênis/futvôlei','Ler 10 páginas'].forEach(n=>DB.habits.push({id:uid(),nome:n}));save('vp_habits',DB.habits)}
+function load(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}}
+function loadObj(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return{}}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v));cloudSave()}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+const BRL=n=>'R$ '+Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtDate=d=>{if(!d)return'—';const[y,m,dd]=d.split('-');return `${dd}/${m}/${y.slice(2)}`};
+const today=()=>new Date().toISOString().slice(0,10);
+const val=id=>document.getElementById(id).value.trim();
+const num=id=>parseFloat(document.getElementById(id).value)||0;
+const clearF=ids=>ids.forEach(i=>{const e=document.getElementById(i);if(e)e.value=''});
+const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let charts={};
+
+// ============ NAV ============
+const titles={dashboard:'Dashboard',afazer:'A Fazer & Registro do Dia',financeiro:'Financeiro',profissional:'Profissional',habilidades:'Habilidades',saude:'Saúde',familia:'Família & Relacionamentos',habitos:'Hábitos & Sequências',livros:'Livros',vida:'Metas de Vida',viagens:'Viagens Futuras',bens:'Bens & Patrimônio'};
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
+  const s=b.dataset.sec;
+  document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x===b));
+  document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===s));
+  document.getElementById('secTitle').textContent=titles[s];
+  if(window.innerWidth<=900)toggleMenu(true);
+  renderAll();
+});
+document.querySelectorAll('.subtabs').forEach(group=>{
+  group.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    group.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));
+    const sub=b.dataset.sub;
+    document.querySelectorAll('.subsec').forEach(sx=>{if(sx.id.startsWith(sub.split('-')[0]+'-'))sx.classList.toggle('active',sx.id===sub)});
+    renderAll();
+  });
+});
+function toggleMenu(force){
+  const sb=document.getElementById('sidebar'),ov=document.getElementById('overlay');
+  const open=force===true?false:!sb.classList.contains('open');
+  sb.classList.toggle('open',open);ov.classList.toggle('show',open);
+}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+
+// ============ ADD ============
+function addMove(){const a=num('m_amount');if(!a)return toast('Informe o valor');
+  DB.moves.push({id:uid(),date:val('m_date')||today(),type:val('m_type'),cat:val('m_cat'),amount:a,note:val('m_note')});
+  save('vp_moves',DB.moves);clearF(['m_amount','m_note']);toast('Salvo ✓');renderAll()}
+function addAccount(){const v=num('a_value');const n=val('a_name');if(!n)return toast('Informe o nome');
+  DB.accounts.push({id:uid(),nome:n,tipo:val('a_type'),valor:v});save('vp_accounts',DB.accounts);clearF(['a_name','a_value']);toast('Conta adicionada ✓');renderAll()}
+function addLoan(){const n=val('l_name');if(!n)return toast('Informe o nome');
+  DB.loans.push({id:uid(),nome:n,saldo:num('l_saldo'),parcela:num('l_parcela'),rest:parseInt(val('l_rest'))||0});
+  save('vp_loans',DB.loans);clearF(['l_name','l_saldo','l_parcela','l_rest']);toast('Adicionado ✓');renderAll()}
+function addCard(){const n=val('c_name');if(!n)return toast('Informe o cartão');
+  DB.cards.push({id:uid(),nome:n,fatura:num('c_fatura'),parcelado:num('c_parc'),rest:parseInt(val('c_rest'))||0});
+  save('vp_cards',DB.cards);clearF(['c_name','c_fatura','c_parc','c_rest']);toast('Adicionado ✓');renderAll()}
+function addTrade(){const r=val('t_res');if(r==='')return toast('Informe o resultado');
+  DB.trades.push({id:uid(),date:val('t_date')||today(),res:parseFloat(r)||0,pct:num('t_pct'),note:val('t_note')});
+  save('vp_trades',DB.trades);clearF(['t_res','t_pct','t_note']);toast('Salvo ✓');renderAll()}
+function addSalary(){const v=num('s_val');if(!v)return toast('Informe o valor');
+  DB.salary.push({id:uid(),mes:val('s_month')||today().slice(0,7),valor:v,tipo:val('s_tipo')||'Salário',note:val('s_note')});
+  save('vp_salary',DB.salary);clearF(['s_val','s_note']);toast('Salvo ✓');renderAll()}
+function addSkill(){const n=val('sk_name');if(!n)return toast('Informe o nome');
+  DB.skills.push({id:uid(),nome:n,nivel:num('sk_level'),meta:num('sk_target')||10});
+  save('vp_skills',DB.skills);clearF(['sk_name','sk_level','sk_target']);toast('Habilidade criada ✓');renderAll()}
+function addSession(){const sid=val('p_skill');if(!sid)return toast('Escolha a habilidade');
+  DB.sessions.push({id:uid(),skillId:sid,date:val('p_date')||today(),min:parseInt(val('p_min'))||0,rate:num('p_rate'),note:val('p_note')});
+  save('vp_sessions',DB.sessions);clearF(['p_min','p_note']);toast('Prática registrada ✓');renderAll()}
+function addDaily(){const d=val('h_date')||today();const f={};
+  const setN=(k,id)=>{const v=parseFloat(document.getElementById(id).value);if(!isNaN(v))f[k]=v};
+  const setV=(k,id)=>{const v=document.getElementById(id).value.trim();if(v)f[k]=v};
+  setN('water','h_water');setN('sleep','h_sleep');setN('mood','h_mood');setN('energy','h_energy');setN('stress','h_stress');setV('grat','h_grat');setV('note','h_note');
+  if(!Object.keys(f).length)return toast('Preencha algo');
+  upsertByDate(d,f);clearF(['h_water','h_sleep','h_grat','h_note']);toast('Dia salvo ✓');renderAll()}
+function addBook(){const t=val('b_title');if(!t)return toast('Informe o título');
+  DB.books.push({id:uid(),titulo:t,autor:val('b_author'),status:val('b_status'),pages:parseInt(val('b_pages'))||0,read:0,nota:num('b_rate')});
+  save('vp_books',DB.books);clearF(['b_title','b_author','b_pages','b_rate']);toast('Livro adicionado ✓');renderAll()}
+function saveGoals(){
+  DB.settings.patrim=num('goal_patrim')||DB.settings.patrim||0;
+  DB.settings.renda=num('goal_renda')||DB.settings.renda||0;
+  DB.settings.books=parseInt(val('goal_books'))||DB.settings.books||0;
+  save('vp_settings',DB.settings);toast('Metas salvas ✓');renderAll()}
+
+function del(store,id){DB[store]=DB[store].filter(x=>x.id!==id);save('vp_'+store,DB[store]);toast('Removido');renderAll()}
+function updSkill(id,v){const s=DB.skills.find(x=>x.id===id);if(s){s.nivel=Math.min(10,Number(v)||0);save('vp_skills',DB.skills);renderAll()}}
+function updBookStatus(id,v){const b=DB.books.find(x=>x.id===id);if(b){b.status=v;save('vp_books',DB.books);renderAll()}}
+function updBookRead(id,v){const b=DB.books.find(x=>x.id===id);if(b){b.read=parseInt(v)||0;save('vp_books',DB.books);renderAll()}}
+
+// ============ TOTAIS FIN ============
+function finTotals(){
+  const invest=DB.accounts.reduce((a,b)=>a+b.valor,0);
+  const loanSaldo=DB.loans.reduce((a,b)=>a+b.saldo,0);
+  const cardTotal=DB.cards.reduce((a,b)=>a+b.fatura+b.parcelado,0);
+  const divida=loanSaldo+cardTotal;
+  const parcelado=DB.loans.reduce((a,b)=>a+b.parcela*b.rest,0)+DB.cards.reduce((a,b)=>a+b.parcelado,0);
+  return{invest,loanSaldo,cardTotal,divida,parcelado,patrimonio:invest-divida};
+}
+function monthMoves(){const ym=today().slice(0,7);return DB.moves.filter(m=>m.date.startsWith(ym))}
+
+// ============ RENDER ============
+function renderAll(){renderDash();renderFin();renderPro();renderSkills();renderHealth();renderBooks();renderFamilia();renderHabitos();renderVida();renderViagens();renderTodos();renderBens();renderFixos()}
+function addFixo(){const n=val('fx_nome');if(!n)return toast('Informe o nome');DB.fixos.push({id:uid(),nome:n,cat:val('fx_cat'),valor:num('fx_valor')});save('vp_fixos',DB.fixos);clearF(['fx_nome','fx_valor']);toast('Custo fixo adicionado ✓');renderAll()}
+function renderFixos(){const total=DB.fixos.reduce((a,b)=>a+b.valor,0);
+  const maior=DB.fixos.length?[...DB.fixos].sort((a,b)=>b.valor-a.valor)[0]:null;
+  document.getElementById('fixosKpis').innerHTML=kpi('Custo fixo mensal',BRL(total),'📅',DB.fixos.length+' itens')+kpi('Custo fixo anual',BRL(total*12),'📆','total x 12')+kpi('Maior custo',maior?BRL(maior.valor):'—','🔝',maior?esc(maior.nome):'');
+  const by={};DB.fixos.forEach(f=>by[f.cat||'Outro']=(by[f.cat||'Outro']||0)+f.valor);
+  donut('chFixos',Object.keys(by),Object.values(by));
+  const fs=[...DB.fixos].sort((a,b)=>b.valor-a.valor);
+  document.getElementById('fixosTable').innerHTML=fs.length?`<table><thead><tr><th>Nome</th><th>Categoria</th><th>Valor mensal</th><th>% do total</th><th></th></tr></thead><tbody>${fs.map(f=>`<tr><td><b>${esc(f.nome)}</b></td><td><span class="pill">${esc(f.cat||'—')}</span></td><td class="amount-neg">${BRL(f.valor)}</td><td>${total?Math.round(f.valor/total*100):0}%</td><td>${acts('fixos',f.id)}</td></tr>`).join('')}<tr><td colspan="2"><b>Total mensal</b></td><td class="amount-neg"><b>${BRL(total)}</b></td><td></td><td></td></tr></tbody></table>`:'<div class="empty">Adicione seus custos fixos mensais (aluguel, luz, internet...)</div>';
+}
+
+// ============ A FAZER (lembretes) ============
+function addTodo(){const t=val('td_title');if(!t)return toast('Informe a tarefa');DB.todos.push({id:uid(),titulo:t,prazo:val('td_prazo'),feito:false});save('vp_todos',DB.todos);clearF(['td_title','td_prazo']);toast('Adicionado ✓');renderAll()}
+function toggleTodo(id){const x=DB.todos.find(t=>t.id===id);if(x){x.feito=!x.feito;save('vp_todos',DB.todos);renderTodos()}}
+function renderTodos(){
+  const row=t=>{const days=t.prazo?Math.ceil((new Date(t.prazo)-new Date())/864e5):null;const late=days!=null&&days<0&&!t.feito;
+    return `<div class="item between"><label class="flex" style="cursor:pointer;margin:0"><input type="checkbox" style="width:auto" ${t.feito?'checked':''} onchange="toggleTodo('${t.id}')"> <span style="${t.feito?'text-decoration:line-through;color:var(--muted)':''}">${esc(t.titulo)}</span></label><span class="flex" style="gap:8px;white-space:nowrap">${t.prazo?'<span class="tag '+(late?'out':'info')+'">'+(late?'venceu ':'até ')+fmtDate(t.prazo)+'</span>':''}${acts('todos',t.id)}</span></div>`};
+  const open=DB.todos.filter(t=>!t.feito).sort((a,b)=>(a.prazo||'9999')>(b.prazo||'9999')?1:-1);
+  const done=DB.todos.filter(t=>t.feito);
+  document.getElementById('todoList').innerHTML=DB.todos.length?(open.map(row).join('')+(done.length?'<div class="mini" style="margin:12px 0 4px">✅ Concluídas</div>'+done.map(row).join(''):'')):'<div class="empty">Sem tarefas. Adicione lembretes do ano 📌</div>';
+}
+
+// ============ BENS ============
+function addBem(){const n=val('bm_nome');if(!n)return toast('Informe o nome');DB.bens.push({id:uid(),nome:n,tipo:val('bm_tipo'),valor:num('bm_valor'),note:val('bm_note')});save('vp_bens',DB.bens);clearF(['bm_nome','bm_valor','bm_note']);toast('Bem adicionado ✓');renderAll()}
+function renderBens(){const total=DB.bens.reduce((a,b)=>a+b.valor,0);const byType={};DB.bens.forEach(b=>byType[b.tipo]=(byType[b.tipo]||0)+b.valor);
+  document.getElementById('bensKpis').innerHTML=kpi('Total em bens',BRL(total),'🏠',DB.bens.length+' item(s)')+kpi('Carros',BRL(byType['Carro']||0),'🚗','')+kpi('Imóveis',BRL(byType['Imóvel']||0),'🏢','');
+  donut('chBens',Object.keys(byType),Object.values(byType));
+  document.getElementById('bensTable').innerHTML=DB.bens.length?`<table><thead><tr><th>Nome</th><th>Tipo</th><th>Valor</th><th>Obs</th><th></th></tr></thead><tbody>${DB.bens.map(b=>`<tr><td><b>${esc(b.nome)}</b></td><td><span class="pill">${b.tipo}</span></td><td class="amount-pos">${BRL(b.valor)}</td><td>${esc(b.note)||'—'}</td><td>${acts('bens',b.id)}</td></tr>`).join('')}<tr><td colspan="2"><b>Total</b></td><td class="amount-pos"><b>${BRL(total)}</b></td><td></td><td></td></tr></tbody></table>`:'<div class="empty">Adicione carro, imóvel e outros bens</div>';
+}
+
+// ============ PDF GERAL ============
+function gerarPDF(){
+  const t=finTotals();const bensTotal=DB.bens.reduce((a,b)=>a+b.valor,0);const dt=new Date().toLocaleDateString('pt-BR');
+  const tbl=(title,head,rows)=>{if(!rows.length)return'';return '<h2>'+title+'</h2><table><thead><tr>'+head.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+(c==null?'':c)+'</td>').join('')+'</tr>').join('')+'</tbody></table>'};
+  let h='<html><head><meta charset="utf-8"><title>Relatório Vida Pessoal</title><style>body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:26px}h1{margin:0 0 2px}h2{border-bottom:2px solid #6366f1;padding-bottom:4px;margin-top:22px;color:#4f46e5;font-size:15px}table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}th,td{border:1px solid #ccc;padding:5px 7px;text-align:left}.muted{color:#666;font-size:12px}.kpi{display:inline-block;margin:6px 18px 6px 0;font-size:13px}@media print{h2{page-break-after:avoid}}</style></head><body>';
+  h+='<h1>🌱 Painel de Vida Pessoal</h1><div class="muted">Relatório gerado em '+dt+'</div>';
+  h+='<h2>Resumo Financeiro</h2><div><span class="kpi"><b>Patrimônio líquido:</b> '+BRL(t.patrimonio)+'</span><span class="kpi"><b>Investido:</b> '+BRL(t.invest)+'</span><span class="kpi"><b>Dívidas:</b> '+BRL(t.divida)+'</span><span class="kpi"><b>Total parcelado:</b> '+BRL(t.parcelado)+'</span><span class="kpi"><b>Bens:</b> '+BRL(bensTotal)+'</span></div>';
+  h+=tbl('Contas & Investimentos',['Nome','Tipo','Valor'],DB.accounts.map(a=>[esc(a.nome),a.tipo,BRL(a.valor)]));
+  h+=tbl('Empréstimos',['Nome','Saldo devedor','Parcela','Restantes'],DB.loans.map(l=>[esc(l.nome),BRL(l.saldo),BRL(l.parcela),l.rest+'x']));
+  h+=tbl('Cartões',['Cartão','Fatura','Parcelado','Restantes'],DB.cards.map(c=>[esc(c.nome),BRL(c.fatura),BRL(c.parcelado),c.rest+'x']));
+  h+=tbl('Bens',['Nome','Tipo','Valor'],DB.bens.map(b=>[esc(b.nome),b.tipo,BRL(b.valor)]));
+  h+=tbl('Salários',['Mês','Tipo','Valor'],[...DB.salary].sort((a,b)=>b.mes.localeCompare(a.mes)).map(s=>[s.mes,s.tipo||'Salário',BRL(s.valor)]));
+  h+=tbl('Habilidades',['Nome','Nível','Meta'],DB.skills.map(s=>[esc(s.nome),s.nivel,s.meta]));
+  h+=tbl('Metas de Vida',['Meta','Área','Prazo','Progresso'],DB.lifegoals.map(g=>[esc(g.titulo),g.area,g.deadline?fmtDate(g.deadline):'—',(g.prog||0)+'%']));
+  h+=tbl('A Fazer',['Tarefa','Prazo','Status'],DB.todos.map(td=>[esc(td.titulo),td.prazo?fmtDate(td.prazo):'—',td.feito?'Concluída':'Pendente']));
+  h+=tbl('Viagens',['Destino','Data','Status','Orçamento','Guardado'],DB.trips.map(v=>[esc(v.dest),v.date||'—',v.status,BRL(v.budget),BRL(v.saved)]));
+  h+=tbl('Livros',['Título','Status','Nota'],DB.books.map(b=>[esc(b.titulo),b.status,b.nota||'—']));
+  h+='<div class="muted" style="margin-top:24px">Gerado pelo seu app Vida Pessoal.</div></body></html>';
+  const w=window.open('','_blank');if(!w)return toast('Permita pop-ups para gerar o PDF');w.document.write(h);w.document.close();setTimeout(()=>{w.focus();w.print()},500);
+}
+
+function kpi(lbl,v,ico,sub,cls){return `<div class="stat"><div class="ico">${ico}</div><div class="lbl">${lbl}</div><div class="val ${cls||''}">${v}</div><div class="sub">${sub||''}</div></div>`}
+
+function renderDash(){
+  const t=finTotals();
+  const mm=monthMoves();
+  const monthTrade=DB.trades.filter(x=>x.date.startsWith(today().slice(0,7))).reduce((a,b)=>a+b.res,0);
+  const wkAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
+  const lastW=[...DB.daily].reverse().find(d=>d.weight);
+  document.getElementById('kpis').innerHTML=
+    kpi('Patrimônio líquido',BRL(t.patrimonio),'💎',t.patrimonio>=0?'investido − dívidas':'no negativo',t.patrimonio>=0?'amount-pos':'amount-neg')+
+    kpi('Total parcelado',BRL(t.parcelado),'💳','o que falta em parcelas')+
+    kpi('Day Trade (mês)',BRL(monthTrade),'📈',monthTrade>=0?'lucro':'prejuízo',monthTrade>=0?'amount-pos':'amount-neg')+
+    kpi('Peso atual',lastW?lastW.weight+' kg':'—','⚖️',lastW?'em '+fmtDate(lastW.date):'sem registro');
+  barChart('chNet',['Investido','Dívidas'],[t.invest,t.divida],['#22c55e','#ef4444']);
+  // trade acumulado mês
+  const tr=DB.trades.filter(x=>x.date.startsWith(today().slice(0,7))).sort((a,b)=>a.date.localeCompare(b.date));
+  let acc=0;const accs=tr.map(x=>{acc+=x.res;return acc});
+  lineChart('chTrade',tr.map(x=>fmtDate(x.date)),accs,'#6366f1');
+  const tds=DB.todos.filter(x=>!x.feito).sort((a,b)=>(a.prazo||'9999')>(b.prazo||'9999')?1:-1).slice(0,6);
+  document.getElementById('dashTodo').innerHTML=tds.length?tds.map(x=>{const days=x.prazo?Math.ceil((new Date(x.prazo)-new Date())/864e5):null;const late=days!=null&&days<0;return `<div class="item between"><span>${esc(x.titulo)}</span>${x.prazo?'<span class="tag '+(late?'out':'info')+'">'+(late?'venceu':'até '+fmtDate(x.prazo))+'</span>':''}</div>`}).join(''):'<div class="empty">Sem tarefas pendentes 📌</div>';
+  document.getElementById('dashSkills').innerHTML=DB.skills.length?DB.skills.map(skillRow).join(''):'<div class="empty">—</div>';
+  const diary=[...DB.daily].filter(d=>d.note).reverse().slice(0,4);
+  document.getElementById('dashDiary').innerHTML=diary.length?diary.map(d=>`<div class="diary-item"><div class="d">${fmtDate(d.date)}</div>${esc(d.note)}</div>`).join(''):'<div class="empty">Escreva no diário em Saúde 📓</div>';
+}
+
+function renderFin(){
+  const t=finTotals();
+  document.getElementById('finKpis').innerHTML=
+    kpi('Patrimônio líquido',BRL(t.patrimonio),'💎','',t.patrimonio>=0?'amount-pos':'amount-neg')+
+    kpi('Total investido',BRL(t.invest),'💰','em '+DB.accounts.length+' conta(s)')+
+    kpi('Dívida total',BRL(t.divida),'📉','empréstimos + cartões')+
+    kpi('Total parcelado',BRL(t.parcelado),'💳','falta em parcelas');
+  // movimentações
+  const mm=monthMoves();
+  const f=[...DB.moves].reverse();
+  document.getElementById('movTable').innerHTML=f.length?`<table><thead><tr><th>Data</th><th>Categoria</th><th>Descrição</th><th>Tipo</th><th>Valor</th><th></th></tr></thead><tbody>${f.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${e.cat}</td><td>${esc(e.note)||'—'}</td><td><span class="tag ${e.type==='receita'?'in':'out'}">${e.type}</span></td><td class="${e.type==='receita'?'amount-pos':'amount-neg'}">${e.type==='receita'?'+':'-'}${BRL(e.amount)}</td><td>${acts('moves',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhuma movimentação</div>';
+  const cats={};mm.filter(m=>m.type==='despesa').forEach(m=>cats[m.cat]=(cats[m.cat]||0)+m.amount);
+  donut('chCat',Object.keys(cats),Object.values(cats));
+  // contas
+  document.getElementById('accTable').innerHTML=DB.accounts.length?`<table><thead><tr><th>Nome</th><th>Tipo</th><th>Valor</th><th></th></tr></thead><tbody>${DB.accounts.map(a=>`<tr><td><b>${esc(a.nome)}</b></td><td><span class="pill">${a.tipo}</span></td><td class="amount-pos">${BRL(a.valor)}</td><td>${acts('accounts',a.id)}</td></tr>`).join('')}<tr><td colspan="2"><b>Total</b></td><td class="amount-pos"><b>${BRL(t.invest)}</b></td><td></td></tr></tbody></table>`:'<div class="empty">Adicione suas contas e investimentos</div>';
+  // loans
+  document.getElementById('loanTable').innerHTML=DB.loans.length?`<table><thead><tr><th>Nome</th><th>Saldo devedor</th><th>Parcela</th><th>Restantes</th><th>Parcelado</th><th></th></tr></thead><tbody>${DB.loans.map(l=>`<tr><td><b>${esc(l.nome)}</b></td><td class="amount-neg">${BRL(l.saldo)}</td><td>${BRL(l.parcela)}</td><td>${l.rest}x</td><td>${BRL(l.parcela*l.rest)}</td><td>${acts('loans',l.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum empréstimo</div>';
+  // cards
+  document.getElementById('cardTable').innerHTML=DB.cards.length?`<table><thead><tr><th>Cartão</th><th>Fatura atual</th><th>Parcelado</th><th>Restantes</th><th></th></tr></thead><tbody>${DB.cards.map(c=>`<tr><td><b>${esc(c.nome)}</b></td><td class="amount-neg">${BRL(c.fatura)}</td><td>${BRL(c.parcelado)}</td><td>${c.rest}x</td><td>${acts('cards',c.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum cartão</div>';
+  // goals
+  document.getElementById('goal_patrim').value=DB.settings.patrim||'';
+  document.getElementById('goal_renda').value=DB.settings.renda||'';
+  if(DB.settings.patrim){const p=Math.min(100,Math.round(t.patrimonio/DB.settings.patrim*100))||0;
+    document.getElementById('goalPatrimView').innerHTML=`<div class="between mini mb"><span>${BRL(Math.max(0,t.patrimonio))} de ${BRL(DB.settings.patrim)}</span><b>${p}%</b></div><div class="pbar"><div style="width:${p}%"></div></div>`}
+  else document.getElementById('goalPatrimView').innerHTML='<div class="mini">Defina uma meta acima.</div>';
+  const mInc=mm.filter(m=>m.type==='receita').reduce((a,b)=>a+b.amount,0);
+  if(DB.settings.renda){const p=Math.min(100,Math.round(mInc/DB.settings.renda*100))||0;
+    document.getElementById('goalRendaView').innerHTML=`<div class="between mini mb"><span>${BRL(mInc)} de ${BRL(DB.settings.renda)} este mês</span><b>${p}%</b></div><div class="pbar"><div style="width:${p}%"></div></div>`}
+  else document.getElementById('goalRendaView').innerHTML='<div class="mini">Defina uma meta acima.</div>';
+}
+
+function renderPro(){
+  const ym=today().slice(0,7);
+  const mt=DB.trades.filter(x=>x.date.startsWith(ym));
+  const monthRes=mt.reduce((a,b)=>a+b.res,0);
+  const wins=DB.trades.filter(x=>x.res>0).length,total=DB.trades.length;
+  const winRate=total?Math.round(wins/total*100):0;
+  const allRes=DB.trades.reduce((a,b)=>a+b.res,0);
+  const lastSal=[...DB.salary].sort((a,b)=>a.mes.localeCompare(b.mes)).slice(-1)[0];
+  document.getElementById('proKpis').innerHTML=
+    kpi('Day Trade (mês)',BRL(monthRes),'📈',mt.length+' operações',monthRes>=0?'amount-pos':'amount-neg')+
+    kpi('Acumulado total',BRL(allRes),'💹','',allRes>=0?'amount-pos':'amount-neg')+
+    kpi('Taxa de acerto',winRate+'%','🎯',wins+'/'+total+' dias')+
+    kpi('Último salário',lastSal?BRL(lastSal.valor):'—','💼',lastSal?lastSal.mes:'sem registro');
+  const tr=[...DB.trades].sort((a,b)=>a.date.localeCompare(b.date));
+  let acc=0;const accs=tr.map(x=>{acc+=x.res;return acc});
+  lineChart('chTradeBig',tr.map(x=>fmtDate(x.date)),accs,'#6366f1');
+  const mAgg={};DB.trades.forEach(t=>{const k=(t.date||'').slice(0,7);if(k)mAgg[k]=(mAgg[k]||0)+t.res});
+  const mKeys=Object.keys(mAgg).sort();
+  barChart('chTradeMonth',mKeys.map(k=>{const p=k.split('-');return p[1]+'/'+p[0].slice(2)}),mKeys.map(k=>Math.round(mAgg[k])),mKeys.map(k=>mAgg[k]>=0?'#22c55e':'#ef4444'));
+  const yAgg={};DB.trades.forEach(t=>{const y=(t.date||'').slice(0,4);if(y){(yAgg[y]=yAgg[y]||{soma:0,dias:0,wins:0});yAgg[y].soma+=t.res;yAgg[y].dias++;if(t.res>0)yAgg[y].wins++}});
+  const yKeys=Object.keys(yAgg).sort();
+  document.getElementById('tradeYear').innerHTML=yKeys.length?yKeys.map(y=>{const o=yAgg[y];return `<div class="item between"><div><b>${y}</b> <span class="mini">${o.dias} dias · ${Math.round(o.wins/o.dias*100)}% acerto</span></div><b class="${o.soma>=0?'amount-pos':'amount-neg'}">${o.soma>=0?'+':''}${BRL(o.soma)}</b></div>`}).join(''):'<div class="empty">Sem dados</div>';
+  const rt=[...DB.trades].reverse();
+  document.getElementById('tradeTable').innerHTML=rt.length?`<table><thead><tr><th>Data</th><th>Resultado</th><th>%</th><th>Nota</th><th></th></tr></thead><tbody>${rt.map(e=>`<tr><td>${fmtDate(e.date)}</td><td class="${e.res>=0?'amount-pos':'amount-neg'}">${e.res>=0?'+':''}${BRL(e.res)}</td><td class="${e.pct>=0?'amount-pos':'amount-neg'}">${e.pct>=0?'+':''}${e.pct}%</td><td>${esc(e.note)||'—'}</td><td>${acts('trades',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Registre seus resultados de day trade</div>';
+  salaryChart();
+  const rs=[...DB.salary].sort((a,b)=>b.mes.localeCompare(a.mes));
+  document.getElementById('salTable').innerHTML=rs.length?`<table><thead><tr><th>Mês</th><th>Tipo</th><th>Valor</th><th>Obs</th><th></th></tr></thead><tbody>${rs.map(e=>`<tr><td>${e.mes}</td><td><span class="pill">${e.tipo||'Salário'}</span></td><td class="amount-pos">${BRL(e.valor)}</td><td>${esc(e.note)||'—'}</td><td>${acts('salary',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum salário registrado</div>';
+}
+
+function skillRow(s){
+  const pct=Math.min(100,Math.round(s.nivel/s.meta*100))||0;
+  const mins=DB.sessions.filter(x=>x.skillId===s.id).reduce((a,b)=>a+b.min,0);
+  return `<div class="item"><div class="between"><div><b>${esc(s.nome)}</b> <span class="pill">nível ${s.nivel}/${s.meta}</span> <span class="pill">${(mins/60).toFixed(1)}h praticadas</span></div>${acts('skills',s.id)}</div>
+    <div class="pbar" style="margin:8px 0 6px"><div style="width:${pct}%"></div></div>
+    <div class="flex mini">Atualizar nível: <input type="number" min="0" max="10" value="${s.nivel}" style="width:70px;padding:5px 8px" onchange="updSkill('${s.id}',this.value)"></div></div>`;
+}
+function renderSkills(){
+  const sel=document.getElementById('p_skill');const cur=sel.value;
+  sel.innerHTML=DB.skills.map(s=>`<option value="${s.id}">${esc(s.nome)}</option>`).join('');
+  if(cur)sel.value=cur;
+  document.getElementById('skillsList').innerHTML=DB.skills.length?DB.skills.map(skillRow).join(''):'<div class="empty">Adicione habilidades</div>';
+  const ss=[...DB.sessions].reverse().slice(0,15);
+  const sname=id=>{const s=DB.skills.find(x=>x.id===id);return s?s.nome:'?'};
+  document.getElementById('sessList').innerHTML=ss.length?`<table><thead><tr><th>Data</th><th>Habilidade</th><th>Duração</th><th>Nota</th><th>Obs</th><th></th></tr></thead><tbody>${ss.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${esc(sname(e.skillId))}</td><td>${e.min} min</td><td>${'⭐'.repeat(e.rate||0)}</td><td>${esc(e.note)||'—'}</td><td>${acts('sessions',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhuma prática registrada</div>';
+}
+
+function renderHealth(){
+  const lastW=[...DB.daily].reverse().find(d=>d.weight);
+  const lastF=[...DB.daily].reverse().find(d=>d.fat);
+  const ym=today().slice(0,7);
+  const md=DB.daily.filter(d=>d.date.startsWith(ym));
+  const dietYes=md.filter(d=>d.diet==='sim').length,dietNo=md.filter(d=>d.diet==='nao').length;
+  const adher=dietYes+dietNo?Math.round(dietYes/(dietYes+dietNo)*100):0;
+  const wkAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
+  const wAvg=DB.daily.filter(d=>d.water&&d.date>=wkAgo);
+  const avgWater=wAvg.length?(wAvg.reduce((a,b)=>a+b.water,0)/wAvg.length).toFixed(1):'—';
+  document.getElementById('healthKpis').innerHTML=
+    kpi('Peso atual',lastW?lastW.weight+' kg':'—','⚖️',lastW?fmtDate(lastW.date):'')+
+    kpi('% Gordura',lastF?lastF.fat+'%':'—','📉',lastF?fmtDate(lastF.date):'')+
+    kpi('Água média (7d)',avgWater!=='—'?avgWater+' L':'—','💧',wAvg.length+' dias')+
+    kpi('Aderência dieta (mês)',adher+'%','🍽️',dietYes+' de '+(dietYes+dietNo)+' dias');
+  const bd=DB.daily.filter(d=>d.weight||d.fat).slice(-30);
+  dualChart('chBody',bd.map(d=>fmtDate(d.date)),bd.map(d=>d.weight||null),bd.map(d=>d.fat||null));
+  const wd=DB.daily.filter(d=>d.water).slice(-14);
+  barChart('chWater',wd.map(d=>fmtDate(d.date)),wd.map(d=>d.water),'#06b6d4');
+  donut('chDiet',['Seguiu','Não seguiu'],[dietYes,dietNo],['#22c55e','#ef4444']);
+  const moodD=DB.daily.filter(d=>d.mood||d.energy).slice(-14);
+  dualLine('chMood',moodD.map(d=>fmtDate(d.date)),moodD.map(d=>d.mood||null),'Humor','#f59e0b',moodD.map(d=>d.energy||null),'Energia','#22c55e');
+  const stressD=DB.daily.filter(d=>d.stress).slice(-14);
+  barChart('chStress',stressD.map(d=>fmtDate(d.date)),stressD.map(d=>d.stress),'#ef4444');
+  const diary=[...DB.daily].filter(d=>d.note||d.grat).reverse();
+  document.getElementById('diaryList').innerHTML=diary.length?diary.map(d=>`<div class="diary-item"><div class="d">${fmtDate(d.date)}${d.mood?' · humor '+d.mood+'/5':''}</div>${d.note?esc(d.note):''}${d.grat?'<div class="mini" style="margin-top:5px">🙏 '+esc(d.grat)+'</div>':''}</div>`).join(''):'<div class="empty">Escreva algo do seu dia 📓</div>';
+  const h=[...DB.daily].reverse();
+  document.getElementById('healthTable').innerHTML=h.length?`<table><thead><tr><th>Data</th><th>Peso</th><th>%Gord</th><th>Água</th><th>Sono</th><th>Dieta</th><th>Treino</th><th></th></tr></thead><tbody>${h.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${e.weight||'—'}</td><td>${e.fat||'—'}</td><td>${e.water?e.water+'L':'—'}</td><td>${e.sleep?e.sleep+'h':'—'}</td><td>${e.diet==='sim'?'<span class="tag in">sim</span>':e.diet==='nao'?'<span class="tag out">não</span>':'—'}</td><td>${e.workout?'<span class="pill">'+e.workout+'</span>':'—'}</td><td>${acts('daily',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum registro</div>';
+}
+
+function renderBooks(){
+  const lido=DB.books.filter(b=>b.status==='Lido').length;
+  const lendo=DB.books.filter(b=>b.status==='Lendo').length;
+  const quero=DB.books.filter(b=>b.status==='Quero ler').length;
+  const yearRead=DB.books.filter(b=>b.status==='Lido').length;
+  document.getElementById('bookKpis').innerHTML=
+    kpi('Lidos',lido,'✅','total')+kpi('Lendo agora',lendo,'📖','')+kpi('Quero ler',quero,'📋','na fila');
+  document.getElementById('goal_books').value=DB.settings.books||'';
+  if(DB.settings.books){const p=Math.min(100,Math.round(yearRead/DB.settings.books*100))||0;
+    document.getElementById('goalBooksView').innerHTML=`<div class="between mini mb"><span>${yearRead} de ${DB.settings.books} livros</span><b>${p}%</b></div><div class="pbar"><div style="width:${p}%"></div></div>`}
+  else document.getElementById('goalBooksView').innerHTML='<div class="mini">Defina uma meta acima.</div>';
+  const order={'Lendo':0,'Quero ler':1,'Lido':2};
+  const bs=[...DB.books].sort((a,b)=>order[a.status]-order[b.status]);
+  document.getElementById('booksList').innerHTML=bs.length?bs.map(b=>{
+    const tagcls=b.status==='Lido'?'in':b.status==='Lendo'?'warn':'info';
+    let prog='';if(b.status==='Lendo'&&b.pages){const p=Math.min(100,Math.round(b.read/b.pages*100))||0;
+      prog=`<div class="pbar" style="margin:7px 0 5px"><div style="width:${p}%"></div></div><div class="flex mini">Página: <input type="number" value="${b.read}" style="width:80px;padding:5px 8px" onchange="updBookRead('${b.id}',this.value)"> de ${b.pages} (${p}%)</div>`}
+    return `<div class="item"><div class="between"><div><b>${esc(b.titulo)}</b> ${b.autor?'<span class="mini">— '+esc(b.autor)+'</span>':''} ${b.status==='Lido'&&b.nota?'<span class="pill">nota '+b.nota+'</span>':''}</div>${acts('books',b.id)}</div>
+      <div class="flex" style="margin-top:7px"><span class="tag ${tagcls}">${b.status}</span>
+      <select style="width:auto;padding:5px 8px;font-size:12px" onchange="updBookStatus('${b.id}',this.value)"><option ${b.status==='Quero ler'?'selected':''}>Quero ler</option><option ${b.status==='Lendo'?'selected':''}>Lendo</option><option ${b.status==='Lido'?'selected':''}>Lido</option></select></div>${prog}</div>`;
+  }).join(''):'<div class="empty">Adicione livros à sua estante</div>';
+}
+
+// ============ EDIÇÃO (genérica) ============
+const _CATS=['Alimentação','Moradia','Transporte','Lazer','Saúde','Educação','Salário','Investimento','Outro'];
+const SCHEMA={
+  moves:[['date','Data','date'],['type','Tipo','select',['despesa','receita']],['cat','Categoria','select',_CATS],['amount','Valor (R$)','number'],['note','Descrição','text']],
+  accounts:[['nome','Nome','text'],['tipo','Tipo','select',['Investimento','Conta corrente','Poupança','Reserva']],['valor','Valor (R$)','number']],
+  loans:[['nome','Nome','text'],['saldo','Saldo devedor (R$)','number'],['parcela','Valor da parcela (R$)','number'],['rest','Parcelas restantes','number']],
+  cards:[['nome','Cartão','text'],['fatura','Fatura atual (R$)','number'],['parcelado','Parcelado restante (R$)','number'],['rest','Parcelas restantes','number']],
+  trades:[['date','Data','date'],['res','Resultado (R$)','number'],['pct','Resultado (%)','number'],['note','Nota','text']],
+  salary:[['mes','Mês','month'],['valor','Valor (R$)','number'],['tipo','Tipo','select',['Salário','Bônus','Comissão','Outro']],['note','Observação','text']],
+  skills:[['nome','Nome','text'],['nivel','Nível atual (0-10)','number'],['meta','Meta (0-10)','number']],
+  habits:[['nome','Nome do hábito','text']],
+  todos:[['titulo','Tarefa / lembrete','text'],['prazo','Fazer até','date']],
+  bens:[['nome','Nome / descrição','text'],['tipo','Tipo','select',['Carro','Imóvel','Moto','Eletrônico','Outro']],['valor','Valor estimado (R$)','number'],['note','Observação','text']],
+  fixos:[['nome','Nome','text'],['cat','Categoria','select',['Moradia','Contas (luz/água/gás)','Internet/Telefone','Assinaturas','Transporte','Educação','Saúde','Seguros','Outro']],['valor','Valor mensal (R$)','number']],
+  sessions:[['date','Data','date'],['skillId','Habilidade','skill'],['min','Duração (min)','number'],['rate','Nota (1-5)','number'],['note','Nota','text']],
+  daily:[['date','Data','date'],['weight','Peso (kg)','number'],['fat','% Gordura','number'],['water','Água (L)','number'],['sleep','Sono (h)','number'],['diet','Seguiu dieta','select',['','sim','nao']],['workout','Treino','text'],['mood','Humor (1-5)','number'],['energy','Energia (1-5)','number'],['stress','Estresse (1-5)','number'],['grat','Gratidão','text'],['note','Diário','textarea']],
+  books:[['titulo','Título','text'],['autor','Autor','text'],['status','Status','select',['Quero ler','Lendo','Lido']],['pages','Páginas (total)','number'],['read','Página atual','number'],['nota','Nota (0-10)','number']],
+  relations:[['date','Data','date'],['who','Com quem','select',['Filhos','Namorada','Família','Amigos','Outro']],['act','Atividade','text'],['rate','Nota (1-5)','number'],['note','Momento marcante','textarea']],
+  lifegoals:[['titulo','Meta','text'],['area','Área','select',['Saúde','Finanças','Carreira','Relacionamentos','Aprendizado','Lazer','Pessoal']],['deadline','Prazo','date'],['prog','Progresso (%)','number'],['note','Observação','text']],
+  trips:[['dest','Destino','text'],['date','Data alvo','month'],['budget','Orçamento (R$)','number'],['saved','Já guardei (R$)','number'],['status','Status','select',['Sonhando','Planejando','Reservado','Concluída']],['note','Quem vai','text'],['passagem','Passagem comprada','check'],['hospedagem','Hospedagem comprada','check'],['passeios','Passeios comprados','check']]
+};
+let editStore=null,editId=null;
+function acts(store,id){return '<button class="btn editb" onclick="openEdit(\''+store+'\',\''+id+'\')">✏️ editar</button> <button class="btn danger" onclick="del(\''+store+'\',\''+id+'\')">excluir</button>'}
+function openEdit(store,id){const item=DB[store].find(x=>x.id===id);if(!item)return;editStore=store;editId=id;
+  let html='';(SCHEMA[store]||[]).forEach(f=>{const key=f[0],label=f[1],type=f[2],opts=f[3];const v=item[key]!=null?item[key]:'';
+    html+='<div class="form-row"><label class="fl">'+label+'</label>';
+    if(type==='select')html+='<select id="ed_'+key+'">'+opts.map(o=>'<option'+(String(v)===String(o)?' selected':'')+'>'+o+'</option>').join('')+'</select>';
+    else if(type==='skill')html+='<select id="ed_'+key+'">'+DB.skills.map(s=>'<option value="'+s.id+'"'+(v===s.id?' selected':'')+'>'+esc(s.nome)+'</option>').join('')+'</select>';
+    else if(type==='textarea')html+='<textarea id="ed_'+key+'">'+esc(String(v))+'</textarea>';
+    else if(type==='check')html+='<label class="flex" style="cursor:pointer"><input type="checkbox" id="ed_'+key+'" style="width:auto" '+(v?'checked':'')+'> Sim</label>';
+    else html+='<input type="'+(type==='number'?'number':type==='date'?'date':type==='month'?'month':'text')+'" id="ed_'+key+'" value="'+esc(String(v))+'">';
+    html+='</div>';});
+  document.getElementById('editFields').innerHTML=html;
+  document.getElementById('editModal').style.display='flex';
+}
+function saveEdit(){if(!editStore)return;const item=DB[editStore].find(x=>x.id===editId);if(!item)return;
+  (SCHEMA[editStore]||[]).forEach(f=>{const key=f[0],type=f[2];const el=document.getElementById('ed_'+key);if(!el)return;
+    if(type==='check')item[key]=el.checked;else if(type==='number')item[key]=parseFloat(el.value)||0;else item[key]=el.value;});
+  save('vp_'+editStore,DB[editStore]);closeEdit();toast('Atualizado ✓');renderAll();
+}
+function closeEdit(){document.getElementById('editModal').style.display='none';editStore=null;editId=null}
+function toggleTrip(id,field){const t=DB.trips.find(x=>x.id===id);if(t){t[field]=!t[field];save('vp_trips',DB.trips);renderViagens()}}
+function salaryChart(){
+  const yr=today().slice(0,4);const ys=DB.salary.filter(s=>(s.mes||'').startsWith(yr));
+  const months=[...new Set(ys.map(s=>s.mes))].sort();
+  const tipos=['Salário','Bônus','Comissão','Outro'],cores={'Salário':'#22c55e','Bônus':'#6366f1','Comissão':'#f59e0b','Outro':'#06b6d4'};
+  const datasets=tipos.map(tp=>({label:tp,data:months.map(m=>ys.filter(s=>s.mes===m&&(s.tipo||'Salário')===tp).reduce((a,b)=>a+b.valor,0)),backgroundColor:cores[tp],stack:'s',borderRadius:4}));
+  const totals=months.map(m=>ys.filter(s=>s.mes===m).reduce((a,b)=>a+b.valor,0));
+  const avg=totals.length?totals.reduce((a,b)=>a+b,0)/totals.length:0;
+  datasets.push({type:'line',label:'Média do ano',data:months.map(()=>avg),borderColor:'#e6e9f0',borderDash:[6,5],borderWidth:2,pointRadius:0,fill:false});
+  destroy('chSal');const c=document.getElementById('chSal');if(!c)return;
+  const o=baseOpts();o.plugins.legend={display:true,labels:{color:tickC,font:{size:10},boxWidth:12}};o.scales.x.stacked=true;o.scales.y.stacked=true;
+  charts['chSal']=new Chart(c,{type:'bar',data:{labels:months,datasets},options:o});
+}
+
+// ============ LANÇAMENTO RÁPIDO ============
+let pendingQuick=null;
+const norm=s=>(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+function upsertByDate(date,fields){let e=DB.daily.find(d=>d.date===date);if(!e){e={id:uid(),date};DB.daily.push(e)}Object.assign(e,fields);save('vp_daily',DB.daily)}
+function upsertDaily(fields){upsertByDate(today(),fields)}
+function addMedicao(){const f={};
+  const w=parseFloat(document.getElementById('s_weight').value);if(!isNaN(w))f.weight=w;
+  const ft=parseFloat(document.getElementById('s_fat').value);if(!isNaN(ft))f.fat=ft;
+  const wk=document.getElementById('s_workout').value;if(wk)f.workout=wk;
+  const dt=document.getElementById('s_diet').value;if(dt)f.diet=dt;
+  if(!Object.keys(f).length)return toast('Preencha algo');
+  upsertDaily(f);clearF(['s_weight','s_fat']);toast('Medição salva ✓');renderAll()}
+function guessCat(t){
+  if(/almo|jant|cafe|comida|mercado|lanche|restaurante|ifood|padaria|pizza/.test(t))return'Alimentação';
+  if(/uber|gasolina|combust|transporte|onibus|metro|passagem|estaciona|99/.test(t))return'Transporte';
+  if(/aluguel|luz|conta de agua|condominio|internet|moradia/.test(t))return'Moradia';
+  if(/remedio|farmacia|medico|consulta|dentista|academia/.test(t))return'Saúde';
+  if(/curso|livro|escola|faculdade|aula|mensalidade/.test(t))return'Educação';
+  if(/cinema|bar|festa|lazer|passeio|show|viagem/.test(t))return'Lazer';
+  return'Outro';
+}
+function getNum(t){const m=t.replace(/(\d)[.,](\d{3})\b/g,'$1$2').replace(',','.').match(/-?\d+(?:\.\d+)?/);return m?parseFloat(m[0]):null}
+function parseQuick(text){
+  const t=norm(text); const n=getNum(t);
+  if(/day ?trade|daytrade|operacao|trade/.test(t)&&n!=null){const r=/(perd|negativ|preju|menos|\-)/.test(t)?-Math.abs(n):Math.abs(n);
+    return{desc:`Day Trade: ${r>=0?'+':''}${BRL(r)} (hoje)`,fn:()=>{DB.trades.push({id:uid(),date:today(),res:r,pct:0,note:'rápido'});save('vp_trades',DB.trades)}}}
+  if(/(gast|paguei|comprei|despesa|gasto)/.test(t)&&n!=null){const cat=guessCat(t);
+    return{desc:`Despesa de ${BRL(n)} em ${cat}`,fn:()=>{DB.moves.push({id:uid(),date:today(),type:'despesa',cat,amount:n,note:text});save('vp_moves',DB.moves)}}}
+  if(/(recebi|ganhei|receita|salario|entrou|recebimento)/.test(t)&&n!=null){const cat=/salario/.test(t)?'Salário':'Outro';
+    return{desc:`Receita de ${BRL(n)} (${cat})`,fn:()=>{DB.moves.push({id:uid(),date:today(),type:'receita',cat,amount:n,note:text});save('vp_moves',DB.moves)}}}
+  if(/gordura/.test(t)&&n!=null) return{desc:`% de gordura hoje: ${n}%`,fn:()=>upsertDaily({fat:n})};
+  if(/(peso|pesei|pesando|quilos|kg)/.test(t)&&n!=null) return{desc:`Peso de hoje: ${n} kg`,fn:()=>upsertDaily({weight:n})};
+  if(/agua/.test(t)&&n!=null) return{desc:`Água de hoje: ${n} L`,fn:()=>upsertDaily({water:n})};
+  if(/(dormi|sono)/.test(t)&&n!=null) return{desc:`Sono de hoje: ${n} h`,fn:()=>upsertDaily({sleep:n})};
+  if(/humor/.test(t)&&n!=null) return{desc:`Humor de hoje: ${Math.min(5,n)}/5`,fn:()=>upsertDaily({mood:Math.min(5,n)})};
+  const sk=DB.skills.find(s=>t.includes(norm(s.nome)));
+  if(sk&&/(pratiq|joguei|toquei|estud|treinei|jogo|pratica)/.test(t)){
+    let min=60;const h=t.match(/(\d+(?:\.\d+)?)\s*h/);if(h)min=Math.round(parseFloat(h[1])*60);else if(/hora/.test(t)&&n!=null)min=Math.round(n*60);else if(/min/.test(t)&&n!=null)min=Math.round(n);else if(n!=null)min=Math.round(n);
+    return{desc:`Prática de ${sk.nome}: ${min} min (hoje)`,fn:()=>{DB.sessions.push({id:uid(),skillId:sk.id,date:today(),min,rate:3,note:'rápido'});save('vp_sessions',DB.sessions)}}}
+  if(/(treinei|musculac|cardio|corri|caminh|academia)/.test(t)){let w='Outro';if(/muscula/.test(t))w='Musculação';else if(/cardio/.test(t))w='Cardio';else if(/corri/.test(t))w='Corrida';else if(/caminh/.test(t))w='Caminhada';else if(t.includes('tenis'))w='Tênis';else if(t.includes('futvolei'))w='Futvôlei';
+    return{desc:`Treino de hoje: ${w}`,fn:()=>upsertDaily({workout:w})}}
+  if(/pagina/.test(t)&&n!=null){const b=DB.books.find(x=>x.status==='Lendo');if(b)return{desc:`Livro "${b.titulo}": página ${n}`,fn:()=>{b.read=n;save('vp_books',DB.books)}}}
+  return{desc:`Anotar no diário de hoje: "${text}"`,fn:()=>{const e=DB.daily.find(d=>d.date===today());const prev=e&&e.note?e.note+' | ':'';upsertDaily({note:prev+text})}};
+}
+function quickParse(){const text=document.getElementById('qq').value.trim();if(!text)return;pendingQuick=parseQuick(text);
+  const box=document.getElementById('qpreview');box.style.display='flex';
+  box.innerHTML=`<span>📥 ${pendingQuick.desc}</span><span style="white-space:nowrap"><button class="btn sm" onclick="quickConfirm()">Confirmar</button> <button class="btn sm ghost" onclick="quickCancel()">Cancelar</button></span>`}
+function quickConfirm(){if(!pendingQuick)return;pendingQuick.fn();pendingQuick=null;document.getElementById('qq').value='';document.getElementById('qpreview').style.display='none';toast('Lançado ✓');renderAll()}
+function quickCancel(){pendingQuick=null;document.getElementById('qpreview').style.display='none';document.getElementById('qq').value=''}
+function quickVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return toast('Navegador sem suporte a voz — digite');
+  const rec=new SR();rec.lang='pt-BR';rec.interimResults=false;rec.maxAlternatives=1;const mic=document.getElementById('qmic');mic.classList.add('rec');
+  rec.onresult=e=>{document.getElementById('qq').value=e.results[0][0].transcript;quickParse()};
+  rec.onerror=()=>toast('Não consegui ouvir, tente de novo');rec.onend=()=>mic.classList.remove('rec');rec.start()}
+
+// ============ FAMÍLIA ============
+function addRelation(){const act=val('r_act');if(!act&&!val('r_note'))return toast('Informe a atividade');
+  DB.relations.push({id:uid(),date:val('r_date')||today(),who:val('r_who'),act:act,rate:num('r_rate'),note:val('r_note')});
+  save('vp_relations',DB.relations);clearF(['r_act','r_note']);toast('Salvo ✓');renderAll()}
+function renderFamilia(){
+  const ym=today().slice(0,7);const mr=DB.relations.filter(r=>r.date.startsWith(ym));
+  const cnt=w=>mr.filter(r=>r.who===w).length;
+  document.getElementById('famKpis').innerHTML=
+    kpi('Momentos (mês)',mr.length,'❤️','registros')+
+    kpi('Com os filhos',cnt('Filhos'),'🧒','vezes no mês')+
+    kpi('Com a namorada',cnt('Namorada'),'💞','encontros no mês')+
+    kpi('Marcantes',DB.relations.filter(r=>r.note).length,'⭐','no total');
+  const by={};mr.forEach(r=>by[r.who]=(by[r.who]||0)+1);
+  donut('chFam',Object.keys(by),Object.values(by));
+  const mom=[...DB.relations].filter(r=>r.note).reverse();
+  document.getElementById('famMoments').innerHTML=mom.length?mom.map(r=>`<div class="diary-item"><div class="d">${fmtDate(r.date)} · ${esc(r.who)}</div>${esc(r.note)}</div>`).join(''):'<div class="empty">Registre momentos especiais ⭐</div>';
+  const rr=[...DB.relations].reverse();
+  document.getElementById('famTable').innerHTML=rr.length?`<table><thead><tr><th>Data</th><th>Quem</th><th>Atividade</th><th>Nota</th><th></th></tr></thead><tbody>${rr.map(r=>`<tr><td>${fmtDate(r.date)}</td><td>${esc(r.who)}</td><td>${esc(r.act)||'—'}</td><td>${'⭐'.repeat(r.rate||0)}</td><td>${acts('relations',r.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum registro</div>';
+}
+
+// ============ HÁBITOS ============
+function addHabit(){const n=val('hb_name');if(!n)return toast('Informe o hábito');
+  DB.habits.push({id:uid(),nome:n});save('vp_habits',DB.habits);clearF(['hb_name']);toast('Hábito criado ✓');renderAll()}
+function isDone(hid,date){return DB.habitlog.some(l=>l.habitId===hid&&l.date===date)}
+function toggleHabit(hid){const d=today();
+  if(isDone(hid,d)){DB.habitlog=DB.habitlog.filter(l=>!(l.habitId===hid&&l.date===d))}
+  else{DB.habitlog.push({id:uid(),habitId:hid,date:d})}
+  save('vp_habitlog',DB.habitlog);renderHabitos();renderDash()}
+function habitStreak(hid){let s=0;const d=new Date();
+  if(!isDone(hid,d.toISOString().slice(0,10)))d.setDate(d.getDate()-1);
+  while(isDone(hid,d.toISOString().slice(0,10))){s++;d.setDate(d.getDate()-1)}
+  return s}
+function renderHabitos(){
+  document.getElementById('habToday').textContent=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  const d=today();
+  document.getElementById('habChecklist').innerHTML=DB.habits.length?DB.habits.map(h=>{const done=isDone(h.id,d);const st=habitStreak(h.id);
+    return `<div class="item between"><label class="flex" style="cursor:pointer;margin:0"><input type="checkbox" style="width:auto" ${done?'checked':''} onchange="toggleHabit('${h.id}')"> ${esc(h.nome)}</label>${st?'<span class="pill">🔥 '+st+'</span>':''}</div>`}).join(''):'<div class="empty">Crie hábitos ao lado</div>';
+  const ym=today().slice(0,7);
+  document.getElementById('habStats').innerHTML=DB.habits.length?`<table><thead><tr><th>Hábito</th><th>Sequência</th><th>Feito no mês</th><th></th></tr></thead><tbody>${DB.habits.map(h=>{const mc=DB.habitlog.filter(l=>l.habitId===h.id&&l.date.startsWith(ym)).length;const st=habitStreak(h.id);return `<tr><td><b>${esc(h.nome)}</b></td><td>${st?'🔥 '+st+' dias':'—'}</td><td>${mc}x</td><td>${acts('habits',h.id)}</td></tr>`}).join('')}</tbody></table>`:'<div class="empty">Nenhum hábito</div>';
+}
+
+// ============ METAS DE VIDA ============
+const WHEEL=['Saúde','Finanças','Carreira','Relacionamentos','Família','Lazer','Crescimento','Espiritual'];
+function saveWheel(){DB.settings.wheel=DB.settings.wheel||{};
+  WHEEL.forEach(a=>{const el=document.getElementById('wheel_'+a);if(el&&el.value!=='')DB.settings.wheel[a]=Math.min(10,Math.max(0,parseFloat(el.value)||0))});
+  save('vp_settings',DB.settings);toast('Roda salva ✓');renderVida()}
+function addLifeGoal(){const t=val('lg_title');if(!t)return toast('Informe a meta');
+  DB.lifegoals.push({id:uid(),titulo:t,area:val('lg_area'),deadline:val('lg_deadline'),prog:0,note:val('lg_note')});
+  save('vp_lifegoals',DB.lifegoals);clearF(['lg_title','lg_note']);toast('Meta criada ✓');renderVida()}
+function updLifeGoal(id,v){const g=DB.lifegoals.find(x=>x.id===id);if(g){g.prog=Math.min(100,Math.max(0,parseInt(v)||0));save('vp_lifegoals',DB.lifegoals);renderVida()}}
+function renderVida(){
+  const w=DB.settings.wheel||{};
+  document.getElementById('wheelInputs').innerHTML=WHEEL.map(a=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><label class="fl" style="margin:0;flex:1">${a}</label><input id="wheel_${a}" type="number" min="0" max="10" value="${w[a]!=null?w[a]:''}" placeholder="0-10" style="width:90px"></div>`).join('');
+  radar('chWheel',WHEEL,WHEEL.map(a=>w[a]||0));
+  const gl=DB.lifegoals;
+  document.getElementById('lifeGoalsList').innerHTML=gl.length?gl.map(g=>{const days=g.deadline?Math.ceil((new Date(g.deadline)-new Date())/864e5):null;
+    return `<div class="item"><div class="between"><div><b>${esc(g.titulo)}</b> <span class="pill">${g.area}</span></div>${acts('lifegoals',g.id)}</div>
+    <div class="between mini" style="margin:7px 0"><span>${g.deadline?(days>=0?'faltam '+days+' dias':'prazo vencido')+' · '+fmtDate(g.deadline):'sem prazo'}</span><b>${g.prog||0}%</b></div>
+    <div class="pbar"><div style="width:${g.prog||0}%"></div></div>
+    <div class="flex mini" style="margin-top:7px">Progresso: <input type="number" min="0" max="100" value="${g.prog||0}" style="width:80px;padding:5px 8px" onchange="updLifeGoal('${g.id}',this.value)">%</div></div>`}).join(''):'<div class="empty">Defina suas grandes metas de vida 🧭</div>';
+}
+
+// ============ VIAGENS ============
+function addTrip(){const d=val('tr_dest');if(!d)return toast('Informe o destino');
+  const ck=id=>{const e=document.getElementById(id);return e?e.checked:false};
+  DB.trips.push({id:uid(),dest:d,date:val('tr_date'),budget:num('tr_budget'),saved:num('tr_saved'),status:val('tr_status'),note:val('tr_note'),passagem:ck('tr_passagem'),hospedagem:ck('tr_hospedagem'),passeios:ck('tr_passeios')});
+  ['tr_passagem','tr_hospedagem','tr_passeios'].forEach(i=>{const e=document.getElementById(i);if(e)e.checked=false});
+  save('vp_trips',DB.trips);clearF(['tr_dest','tr_budget','tr_saved','tr_note']);toast('Viagem adicionada ✓');renderViagens()}
+function updTripSaved(id,v){const t=DB.trips.find(x=>x.id===id);if(t){t.saved=parseFloat(v)||0;save('vp_trips',DB.trips);renderViagens()}}
+function renderViagens(){
+  const act=DB.trips.filter(t=>t.status!=='Concluída');
+  const totBudget=act.reduce((a,b)=>a+b.budget,0),totSaved=act.reduce((a,b)=>a+b.saved,0);
+  document.getElementById('tripKpis').innerHTML=
+    kpi('Viagens planejadas',act.length,'✈️','na lista')+
+    kpi('Falta guardar',BRL(Math.max(0,totBudget-totSaved)),'💰','para todas')+
+    kpi('Já guardado',BRL(totSaved),'🏦','do orçamento');
+  const order={'Reservado':0,'Planejando':1,'Sonhando':2,'Concluída':3};
+  const ts=[...DB.trips].sort((a,b)=>(order[a.status]-order[b.status])||((a.date||'')>(b.date||'')?1:-1));
+  document.getElementById('tripsList').innerHTML=ts.length?ts.map(t=>{const p=t.budget?Math.min(100,Math.round(t.saved/t.budget*100)):0;
+    return `<div class="item"><div class="between"><div><b>${esc(t.dest)}</b> <span class="pill">${t.status}</span> ${t.date?'<span class="mini">'+t.date+'</span>':''}</div><span style="white-space:nowrap">${acts('trips',t.id)}</span></div>
+    ${t.note?'<div class="mini" style="margin:3px 0">'+esc(t.note)+'</div>':''}
+    <div class="between mini" style="margin:7px 0"><span>${BRL(t.saved)} de ${BRL(t.budget)}</span><b>${p}%</b></div>
+    <div class="pbar"><div style="width:${p}%"></div></div>
+    <div class="flex mini" style="gap:14px;margin-top:8px;flex-wrap:wrap">
+      <label style="cursor:pointer"><input type="checkbox" style="width:auto" ${t.passagem?'checked':''} onchange="toggleTrip('${t.id}','passagem')"> ✈️ Passagem</label>
+      <label style="cursor:pointer"><input type="checkbox" style="width:auto" ${t.hospedagem?'checked':''} onchange="toggleTrip('${t.id}','hospedagem')"> 🏨 Hospedagem</label>
+      <label style="cursor:pointer"><input type="checkbox" style="width:auto" ${t.passeios?'checked':''} onchange="toggleTrip('${t.id}','passeios')"> 🎟️ Passeios</label>
+    </div>
+    <div class="flex mini" style="margin-top:7px">Guardado: <input type="number" value="${t.saved}" style="width:100px;padding:5px 8px" onchange="updTripSaved('${t.id}',this.value)"></div></div>`}).join(''):'<div class="empty">Adicione viagens dos seus sonhos ✈️</div>';
+}
+
+// ============ CHARTS ============
+const gridC='#2a3042',tickC='#9aa3b8';
+function destroy(id){if(charts[id])charts[id].destroy()}
+function baseOpts(){return{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridC},ticks:{color:tickC,font:{size:10}}},y:{grid:{color:gridC},ticks:{color:tickC,font:{size:10}}}}}}
+function lineChart(id,labels,data,color){destroy(id);const c=document.getElementById(id);if(!c)return;
+  charts[id]=new Chart(c,{type:'line',data:{labels,datasets:[{data,borderColor:color,backgroundColor:color+'22',fill:true,tension:.35,pointRadius:3,borderWidth:2}]},options:baseOpts()})}
+function barChart(id,labels,data,color){destroy(id);const c=document.getElementById(id);if(!c)return;
+  const colors=Array.isArray(color)?color:labels.map(()=>color||'#6366f1');
+  charts[id]=new Chart(c,{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:6}]},options:baseOpts()})}
+function dualChart(id,labels,d1,d2){destroy(id);const c=document.getElementById(id);if(!c)return;
+  const o=baseOpts();o.plugins.legend={display:true,labels:{color:tickC,font:{size:11}}};
+  o.scales.y1={position:'right',grid:{display:false},ticks:{color:tickC,font:{size:10}}};
+  charts[id]=new Chart(c,{type:'line',data:{labels,datasets:[
+    {label:'Peso (kg)',data:d1,borderColor:'#06b6d4',backgroundColor:'#06b6d422',tension:.35,pointRadius:2,borderWidth:2,spanGaps:true,yAxisID:'y'},
+    {label:'% Gordura',data:d2,borderColor:'#ec4899',backgroundColor:'#ec489922',tension:.35,pointRadius:2,borderWidth:2,spanGaps:true,yAxisID:'y1'}]},options:o})}
+function dualLine(id,labels,d1,l1,c1,d2,l2,c2){destroy(id);const c=document.getElementById(id);if(!c)return;
+  const o=baseOpts();o.plugins.legend={display:true,labels:{color:tickC,font:{size:11}}};o.scales.y.suggestedMin=0;o.scales.y.suggestedMax=5;
+  charts[id]=new Chart(c,{type:'line',data:{labels,datasets:[
+    {label:l1,data:d1,borderColor:c1,backgroundColor:c1+'22',tension:.35,pointRadius:2,borderWidth:2,spanGaps:true},
+    {label:l2,data:d2,borderColor:c2,backgroundColor:c2+'22',tension:.35,pointRadius:2,borderWidth:2,spanGaps:true}]},options:o})}
+function radar(id,labels,data){destroy(id);const c=document.getElementById(id);if(!c)return;
+  charts[id]=new Chart(c,{type:'radar',data:{labels,datasets:[{data,borderColor:'#6366f1',backgroundColor:'#6366f155',pointBackgroundColor:'#818cf8',borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:0,max:10,grid:{color:gridC},angleLines:{color:gridC},pointLabels:{color:tickC,font:{size:11}},ticks:{display:false}}}}})}
+function donut(id,labels,data,palette){destroy(id);const c=document.getElementById(id);if(!c)return;
+  if(!data.length||data.every(x=>!x)){c.getContext('2d').clearRect(0,0,c.width,c.height);return}
+  palette=palette||['#6366f1','#06b6d4','#22c55e','#f59e0b','#ec4899','#ef4444','#818cf8','#14b8a6','#a855f7'];
+  charts[id]=new Chart(c,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:palette,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{color:tickC,font:{size:11},boxWidth:12}}}}})}
+
+// ============ NUVEM (login + sync) ============
+function snapshot(){const o={};KEYS.forEach(k=>o[k]=DB[k]);o.settings=DB.settings;return o}
+function applySnapshot(d){KEYS.forEach(k=>{if(Array.isArray(d[k]))DB[k]=d[k]});if(d.settings)DB.settings=d.settings}
+function setSync(t,ok){const s=document.getElementById('syncStatus');if(s){s.textContent=t;s.classList.toggle('synced',!!ok)}}
+function showLogin(){document.getElementById('loginScreen').style.display='flex'}
+function showApp(){document.getElementById('loginScreen').style.display='none';const a=document.getElementById('acctRow');if(a)a.style.display='block';setSync('Sincronizado ✓',true)}
+function toggleAuthMode(){authMode=authMode==='login'?'signup':'login';
+  document.getElementById('loginBtn').textContent=authMode==='login'?'Entrar':'Criar conta';
+  document.getElementById('loginSub').textContent=authMode==='login'?'Entre para acessar seus dados em qualquer aparelho.':'Crie sua conta gratuita.';
+  document.getElementById('authSwitch').innerHTML=authMode==='login'?'Não tem conta? <a onclick="toggleAuthMode()">Criar conta</a>':'Já tem conta? <a onclick="toggleAuthMode()">Entrar</a>';
+  document.getElementById('loginErr').textContent=''}
+function traduzErro(m){m=m||'';if(/Invalid login/i.test(m))return'Email ou senha incorretos';if(/already registered/i.test(m))return'Esse email já tem conta — tente Entrar';if(/least 6/i.test(m))return'A senha precisa ter ao menos 6 caracteres';if(/Email not confirmed/i.test(m))return'Confirme seu email antes de entrar';return m}
+async function authSubmit(){const email=(document.getElementById('au_email').value||'').trim();const pass=document.getElementById('au_pass').value||'';
+  const err=document.getElementById('loginErr');err.textContent='';
+  if(!email||!pass)return err.textContent='Preencha email e senha';
+  try{let res=authMode==='signup'?await sb.auth.signUp({email,password:pass}):await sb.auth.signInWithPassword({email,password:pass});
+    if(res.error)return err.textContent=traduzErro(res.error.message);
+    if(res.data&&res.data.session){currentUser=res.data.session.user;showApp();await cloudLoad()}
+    else err.textContent='Conta criada! Confirme pelo email (se pedido) e depois entre.';
+  }catch(e){err.textContent='Erro: '+e.message}}
+async function cloudLoad(){
+  try{const{data,error}=await sb.from('app_data').select('data').eq('user_id',currentUser.id).maybeSingle();
+    if(error)throw error;
+    if(data&&data.data){applySnapshot(data.data);KEYS.forEach(k=>localStorage.setItem('vp_'+k,JSON.stringify(DB[k])));localStorage.setItem('vp_settings',JSON.stringify(DB.settings))}
+    else{await cloudPush()}
+  }catch(e){setSync('⚠ erro ao carregar')}
+  renderAll()}
+async function cloudPush(){if(!CLOUD||!currentUser)return;
+  try{const{error}=await sb.from('app_data').upsert({user_id:currentUser.id,data:snapshot(),updated_at:new Date().toISOString()});
+    if(error)throw error;setSync('Sincronizado ✓',true)}catch(e){setSync('⚠ erro ao salvar')}}
+function cloudSave(){if(!CLOUD||!currentUser)return;setSync('salvando…');clearTimeout(cloudTimer);cloudTimer=setTimeout(cloudPush,1000)}
+async function doLogout(){if(!CLOUD)return;try{await sb.auth.signOut()}catch(e){}location.reload()}
+async function initAuth(){showLogin();
+  try{const{data}=await sb.auth.getSession();if(data&&data.session){currentUser=data.session.user;showApp();await cloudLoad()}}catch(e){}}
+
+// ============ BACKUP ============
+function exportData(){const out={};KEYS.forEach(k=>out[k]=DB[k]);out.settings=DB.settings;
+  const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='vida-pessoal-backup-'+today()+'.json';a.click();toast('Backup exportado ✓')}
+function importData(ev){const file=ev.target.files[0];if(!file)return;
+  const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result);
+    KEYS.forEach(k=>{if(Array.isArray(d[k])){DB[k]=d[k];save('vp_'+k,d[k])}});
+    if(d.settings){DB.settings=d.settings;save('vp_settings',d.settings)}
+    renderAll();toast('Dados importados ✓')}catch(err){toast('Arquivo inválido')}};r.readAsText(file);ev.target.value=''}
+function resetAll(){if(confirm('Apagar TODOS os dados? Não dá pra desfazer.')){
+  KEYS.forEach(k=>{DB[k]=[];localStorage.removeItem('vp_'+k)});DB.settings={};localStorage.removeItem('vp_settings');
+  ['Violão','Tênis','Futvôlei','Xadrez','Inglês','Memória','Storytelling'].forEach(n=>DB.skills.push({id:uid(),nome:n,nivel:0,meta:8}));save('vp_skills',DB.skills);
+  ['Inglês (curso)','Treino','Beber 3L de água','Praticar tênis/futvôlei','Ler 10 páginas'].forEach(n=>DB.habits.push({id:uid(),nome:n}));save('vp_habits',DB.habits);
+  renderAll();toast('Tudo apagado')}}
+
+// ============ INIT ============
+['m_date','t_date','p_date','h_date','r_date'].forEach(id=>{const e=document.getElementById(id);if(e&&!e.value)e.value=today()});
+const sm=document.getElementById('s_month');if(sm&&!sm.value)sm.value=today().slice(0,7);
+document.getElementById('todayDate').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+if(CLOUD){initAuth()}else{renderAll()}
+</script>
+</body>
+</html>
