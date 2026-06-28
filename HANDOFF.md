@@ -132,3 +132,16 @@ A chave `publishable` do Supabase no código é pública e segura (a segurança 
 - `CONFIGURAR-NUVEM.md` — passo a passo da nuvem (Supabase + Netlify).
 - `HANDOFF.md` — este documento.
 - `vida-pessoal-backup-*.json` — backups eventuais.
+
+---
+
+## 12. Changelog
+
+**v2 (28/06/2026):**
+- **Bens:** novos tipos (joias, obras de arte, antiguidades). Bens agora entram no **patrimônio líquido** (investido + bens − dívidas).
+- **Metas de Vida:** Roda da Vida agora é **mensal** (seletor de mês); o radar compara o mês selecionado com o mês anterior.
+- **Leitura:** a aba "Livros" virou **"Leitura"** (livros, cursos, estudos) com campo de tipo.
+- **Hábitos + Habilidades unificados** numa aba só ("Hábitos & Habilidades") com quadros-resumo; o registro de prática inclui os ticks dos hábitos do dia; nível das habilidades exibido em 20 barras verticais.
+- **Meta financeira:** agora compara a meta com investido + bens (patrimônio) e com salário + receitas (renda do mês), mostrando quanto falta; nova seção de **ideias de renda extra**.
+- **Day Trade:** campo de resultado em % com símbolo, campo de **ativo** (Índice/Dólar/Cripto/Bolsa/Forex); gráfico de evolução acumulada só com linha (sem pontos) e com eixo de valores também à direita.
+- Histórico/versões versionado no GitHub a cada atualização.

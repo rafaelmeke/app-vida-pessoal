@@ -126,6 +126,9 @@ tr:last-child td{border-bottom:none}
 .modal-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;width:100%;max-width:460px;max-height:88vh;overflow-y:auto}
 .btn.editb{background:var(--card2);color:var(--pri2);padding:5px 9px;font-size:12px}
 .btn.editb:hover{color:#fff;background:var(--pri)}
+.lvlbars{display:flex;gap:3px;align-items:flex-end;height:36px;margin:8px 0 6px}
+.lvlbars i{flex:1;background:var(--card2);border-radius:2px 2px 0 0;display:block;min-height:3px}
+.lvlbars i.on{background:linear-gradient(180deg,var(--pri2),var(--pri))}
 </style>
 </head>
 <body>
@@ -149,11 +152,10 @@ tr:last-child td{border-bottom:none}
       <button data-sec="afazer"><span class="ico">📌</span> A Fazer</button>
       <button data-sec="financeiro"><span class="ico">💰</span> Financeiro</button>
       <button data-sec="profissional"><span class="ico">💼</span> Profissional</button>
-      <button data-sec="habilidades"><span class="ico">🎸</span> Habilidades</button>
       <button data-sec="saude"><span class="ico">💪</span> Saúde</button>
       <button data-sec="familia"><span class="ico">❤️</span> Família</button>
       <button data-sec="habitos"><span class="ico">✅</span> Hábitos</button>
-      <button data-sec="livros"><span class="ico">📚</span> Livros</button>
+      <button data-sec="livros"><span class="ico">📚</span> Leitura</button>
       <button data-sec="vida"><span class="ico">🧭</span> Metas de Vida</button>
       <button data-sec="viagens"><span class="ico">✈️</span> Viagens</button>
       <button data-sec="bens"><span class="ico">🏠</span> Bens</button>
@@ -317,18 +319,22 @@ tr:last-child td{border-bottom:none}
       </div>
 
       <div class="subsec" id="fin-goal">
-        <div class="grid g2">
-          <div class="card"><h3>🎯 Meta de patrimônio / reserva</h3>
+        <div class="grid g2 mb">
+          <div class="card"><h3>🎯 Meta de patrimônio</h3>
             <div class="form-row fr2">
               <div><label class="fl">Quanto quero acumular (R$)</label><input type="number" id="goal_patrim" placeholder="50000"></div>
-              <div style="display:flex;align-items:flex-end"><button class="btn" onclick="saveGoals()">Salvar metas</button></div>
+              <div><label class="fl">Renda alvo no mês (R$)</label><input type="number" id="goal_renda" placeholder="8000"></div>
             </div>
-            <div id="goalPatrimView"></div>
+            <button class="btn" onclick="saveGoals()">Salvar metas</button>
+            <div id="goalPatrimView" style="margin-top:14px"></div>
           </div>
           <div class="card"><h3>🎯 Meta de renda mensal</h3>
-            <div class="form-row"><div><label class="fl">Renda alvo no mês (R$)</label><input type="number" id="goal_renda" placeholder="8000"></div></div>
             <div id="goalRendaView"></div>
           </div>
+        </div>
+        <div class="card"><h3>💡 Ideias de renda extra</h3>
+          <div class="form-row"><div class="flex" style="gap:8px"><input id="ie_txt" placeholder="ex: vender curso de day trade, alugar quarto, freelance..." style="flex:1"><button class="btn" onclick="addIdeia()">Adicionar</button></div></div>
+          <div id="ideiasList"></div>
         </div>
       </div>
     </section>
@@ -348,9 +354,10 @@ tr:last-child td{border-bottom:none}
               <div><label class="fl">Resultado (R$)</label><input type="number" step="0.01" id="t_res" placeholder="ex: 250 ou -180"></div>
             </div>
             <div class="form-row fr2">
-              <div><label class="fl">Resultado (%)</label><input type="number" step="0.01" id="t_pct" placeholder="ex: 1.5 ou -1.2"></div>
-              <div><label class="fl">Nota</label><input id="t_note" placeholder="opcional"></div>
+              <div><label class="fl">Resultado (% da banca)</label><div class="flex" style="gap:6px"><input type="number" step="0.01" id="t_pct" placeholder="ex: 1.5 ou -1.2" style="flex:1"><span style="font-weight:700;color:var(--txt2)">%</span></div></div>
+              <div><label class="fl">Ativo</label><select id="t_ativo"><option value="">—</option><option>Índice</option><option>Dólar</option><option>Cripto</option><option>Bolsa</option><option>Forex</option></select></div>
             </div>
+            <div class="form-row"><div><label class="fl">Nota</label><input id="t_note" placeholder="opcional"></div></div>
             <button class="btn" onclick="addTrade()">Salvar</button>
           </div>
           <div class="card"><h3>📈 Evolução acumulada</h3><div class="chart-wrap"><canvas id="chTradeBig"></canvas></div></div>
@@ -381,36 +388,6 @@ tr:last-child td{border-bottom:none}
     </section>
 
     <!-- HABILIDADES -->
-    <section class="section" id="habilidades">
-      <div class="grid g2 mb">
-        <div class="card"><h3>⏱️ Registrar prática</h3>
-          <div class="form-row fr2">
-            <div><label class="fl">Habilidade</label><select id="p_skill"></select></div>
-            <div><label class="fl">Data</label><input type="date" id="p_date"></div>
-          </div>
-          <div class="form-row fr2">
-            <div><label class="fl">Duração (min)</label><input type="number" id="p_min" placeholder="60"></div>
-            <div><label class="fl">Como foi? (1-5)</label><select id="p_rate"><option value="3">3 — ok</option><option value="1">1 — ruim</option><option value="2">2</option><option value="4">4</option><option value="5">5 — excelente</option></select></div>
-          </div>
-          <div class="form-row"><div><label class="fl">Nota</label><input id="p_note" placeholder="o que treinou?"></div></div>
-          <button class="btn" onclick="addSession()">Salvar prática</button>
-        </div>
-        <div class="card"><h3>➕ Nova habilidade</h3>
-          <div class="form-row fr2">
-            <div><label class="fl">Nome</label><input id="sk_name" placeholder="ex: Piano"></div>
-            <div><label class="fl">Nível atual (0-10)</label><input type="number" min="0" max="10" id="sk_level" placeholder="3"></div>
-          </div>
-          <div class="form-row fr2">
-            <div><label class="fl">Meta de nível (0-10)</label><input type="number" min="0" max="10" id="sk_target" placeholder="8"></div>
-            <div style="display:flex;align-items:flex-end"><button class="btn" onclick="addSkill()">Adicionar</button></div>
-          </div>
-          <div class="mini">Já vêm: Violão, Tênis, Futvôlei, Xadrez, Inglês.</div>
-        </div>
-      </div>
-      <div class="card mb"><h3>🎸 Suas habilidades</h3><div id="skillsList"></div></div>
-      <div class="card"><h3>Últimas práticas</h3><div id="sessList"></div></div>
-    </section>
-
     <!-- SAÚDE -->
     <section class="section" id="saude">
       <div class="grid g4 mb" id="healthKpis"></div>
@@ -447,27 +424,28 @@ tr:last-child td{border-bottom:none}
     <section class="section" id="livros">
       <div class="grid g3 mb" id="bookKpis"></div>
       <div class="grid g2 mb">
-        <div class="card"><h3>➕ Adicionar livro</h3>
-          <div class="form-row fr2">
+        <div class="card"><h3>➕ Adicionar leitura</h3>
+          <div class="form-row fr3">
             <div><label class="fl">Título</label><input id="b_title" placeholder="ex: Hábitos Atômicos"></div>
-            <div><label class="fl">Autor</label><input id="b_author" placeholder="opcional"></div>
+            <div><label class="fl">Tipo</label><select id="b_type"><option>Livro</option><option>Curso</option><option>Estudo</option><option>Artigo</option><option>Vídeo</option><option>Outro</option></select></div>
+            <div><label class="fl">Status</label><select id="b_status"><option>Quero ler</option><option>Lendo</option><option>Lido</option></select></div>
           </div>
           <div class="form-row fr3">
-            <div><label class="fl">Status</label><select id="b_status"><option>Quero ler</option><option>Lendo</option><option>Lido</option></select></div>
-            <div><label class="fl">Páginas (total)</label><input type="number" id="b_pages" placeholder="320"></div>
-            <div><label class="fl">Nota (0-10)</label><input type="number" min="0" max="10" id="b_rate" placeholder="só se lido"></div>
+            <div><label class="fl">Autor/Fonte</label><input id="b_author" placeholder="opcional"></div>
+            <div><label class="fl">Páginas/aulas</label><input type="number" id="b_pages" placeholder="320"></div>
+            <div><label class="fl">Nota (0-10)</label><input type="number" min="0" max="10" id="b_rate" placeholder="só se concluído"></div>
           </div>
           <button class="btn" onclick="addBook()">Adicionar</button>
         </div>
         <div class="card"><h3>🎯 Meta de leitura (ano)</h3>
           <div class="form-row fr2">
-            <div><label class="fl">Livros no ano</label><input type="number" id="goal_books" placeholder="12"></div>
+            <div><label class="fl">Leituras no ano</label><input type="number" id="goal_books" placeholder="12"></div>
             <div style="display:flex;align-items:flex-end"><button class="btn" onclick="saveGoals()">Salvar</button></div>
           </div>
           <div id="goalBooksView"></div>
         </div>
       </div>
-      <div class="card"><h3>📚 Sua estante</h3><div id="booksList"></div></div>
+      <div class="card"><h3>📚 Minhas leituras</h3><div id="booksList"></div></div>
     </section>
 
     <!-- FAMÍLIA -->
@@ -496,25 +474,50 @@ tr:last-child td{border-bottom:none}
 
     <!-- HÁBITOS -->
     <section class="section" id="habitos">
+      <div class="grid g4 mb" id="habKpis"></div>
       <div class="grid g2 mb">
-        <div class="card"><h3>✅ Hoje — <span id="habToday"></span></h3><div id="habChecklist"></div></div>
-        <div class="card"><h3>➕ Novo hábito</h3>
-          <div class="form-row"><div><label class="fl">Nome do hábito</label><input id="hb_name" placeholder="ex: Meditar 10min"></div></div>
-          <button class="btn" onclick="addHabit()">Adicionar</button>
-          <div class="mini" style="margin-top:10px">Marque o que fez a cada dia. O 🔥 conta seus dias seguidos — não quebre a sequência!</div>
+        <div class="card"><h3>⏱️ Registrar prática + hábitos de hoje</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Habilidade</label><select id="p_skill"></select></div>
+            <div><label class="fl">Data</label><input type="date" id="p_date"></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Duração (min)</label><input type="number" id="p_min" placeholder="60"></div>
+            <div><label class="fl">Como foi? (1-5)</label><select id="p_rate"><option value="3">3 — ok</option><option value="1">1 — ruim</option><option value="2">2</option><option value="4">4</option><option value="5">5 — excelente</option></select></div>
+          </div>
+          <div class="form-row"><div><label class="fl">Nota</label><input id="p_note" placeholder="o que treinou?"></div></div>
+          <button class="btn" onclick="addSession()">Salvar prática</button>
+          <div class="mini" style="margin:14px 0 6px;font-weight:600">✅ Hábitos de hoje — <span id="habToday"></span></div>
+          <div id="habChecklist"></div>
+        </div>
+        <div class="card"><h3>➕ Adicionar</h3>
+          <div class="mini" style="margin-bottom:6px;font-weight:600">Nova habilidade</div>
+          <div class="form-row fr2">
+            <div><label class="fl">Nome</label><input id="sk_name" placeholder="ex: Piano"></div>
+            <div><label class="fl">Nível atual (0-10)</label><input type="number" min="0" max="10" id="sk_level" placeholder="3"></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Meta de nível (0-10)</label><input type="number" min="0" max="10" id="sk_target" placeholder="8"></div>
+            <div style="display:flex;align-items:flex-end"><button class="btn" onclick="addSkill()">Adicionar</button></div>
+          </div>
+          <div class="mini" style="margin:14px 0 6px;font-weight:600">Novo hábito</div>
+          <div class="form-row"><div class="flex" style="gap:8px"><input id="hb_name" placeholder="ex: Meditar 10min" style="flex:1"><button class="btn" onclick="addHabit()">Adicionar</button></div></div>
         </div>
       </div>
-      <div class="card"><h3>🔥 Suas sequências</h3><div id="habStats"></div></div>
+      <div class="card mb"><h3>🎸 Suas habilidades</h3><div id="skillsList"></div></div>
+      <div class="card mb"><h3>🔥 Suas sequências (hábitos)</h3><div id="habStats"></div></div>
+      <div class="card"><h3>Últimas práticas</h3><div id="sessList"></div></div>
     </section>
 
     <!-- METAS DE VIDA -->
     <section class="section" id="vida">
       <div class="grid g2 mb">
         <div class="card"><h3>🧭 Roda da Vida (0-10)</h3>
+          <div class="form-row"><div><label class="fl">Mês da avaliação</label><input type="month" id="wheelMonth" onchange="renderVida()"></div></div>
           <div id="wheelInputs"></div>
-          <button class="btn sm" onclick="saveWheel()">Salvar avaliação</button>
+          <button class="btn sm" onclick="saveWheel()">Salvar avaliação do mês</button>
         </div>
-        <div class="card"><h3>📊 Equilíbrio atual</h3><div class="chart-wrap"><canvas id="chWheel"></canvas></div></div>
+        <div class="card"><h3>📊 Mês selecionado vs. mês anterior</h3><div class="chart-wrap"><canvas id="chWheel"></canvas></div></div>
       </div>
       <div class="grid g2">
         <div class="card"><h3>➕ Nova meta de vida</h3>
@@ -568,7 +571,7 @@ tr:last-child td{border-bottom:none}
         <div class="card"><h3>➕ Adicionar bem</h3>
           <div class="form-row fr2">
             <div><label class="fl">Nome / descrição</label><input id="bm_nome" placeholder="ex: Honda Civic 2020"></div>
-            <div><label class="fl">Tipo</label><select id="bm_tipo"><option>Carro</option><option>Imóvel</option><option>Moto</option><option>Eletrônico</option><option>Outro</option></select></div>
+            <div><label class="fl">Tipo</label><select id="bm_tipo"><option>Carro</option><option>Imóvel</option><option>Moto</option><option>Joias</option><option>Obras de arte</option><option>Antiguidades</option><option>Eletrônico</option><option>Outro</option></select></div>
           </div>
           <div class="form-row fr2">
             <div><label class="fl">Valor estimado (R$)</label><input type="number" id="bm_valor" placeholder="80000"></div>
@@ -603,7 +606,7 @@ let sb=CLOUD?supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
 let currentUser=null,cloudTimer=null,authMode='login';
 
 // ============ DADOS ============
-const KEYS=['daily','moves','accounts','loans','cards','salary','trades','skills','sessions','books','relations','habits','habitlog','lifegoals','trips','todos','bens','fixos'];
+const KEYS=['daily','moves','accounts','loans','cards','salary','trades','skills','sessions','books','relations','habits','habitlog','lifegoals','trips','todos','bens','fixos','ideias'];
 const DB={};KEYS.forEach(k=>DB[k]=load('vp_'+k));
 DB.settings=loadObj('vp_settings');
 if(!DB.skills.length){['Violão','Tênis','Futvôlei','Xadrez','Inglês','Memória','Storytelling'].forEach(n=>DB.skills.push({id:uid(),nome:n,nivel:0,meta:8}));save('vp_skills',DB.skills)}
@@ -622,7 +625,7 @@ const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"
 let charts={};
 
 // ============ NAV ============
-const titles={dashboard:'Dashboard',afazer:'A Fazer & Registro do Dia',financeiro:'Financeiro',profissional:'Profissional',habilidades:'Habilidades',saude:'Saúde',familia:'Família & Relacionamentos',habitos:'Hábitos & Sequências',livros:'Livros',vida:'Metas de Vida',viagens:'Viagens Futuras',bens:'Bens & Patrimônio'};
+const titles={dashboard:'Dashboard',afazer:'A Fazer & Registro do Dia',financeiro:'Financeiro',profissional:'Profissional',habilidades:'Habilidades',saude:'Saúde',familia:'Família & Relacionamentos',habitos:'Hábitos & Habilidades',livros:'Leitura',vida:'Metas de Vida',viagens:'Viagens Futuras',bens:'Bens & Patrimônio'};
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
   const s=b.dataset.sec;
   document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x===b));
@@ -659,7 +662,7 @@ function addCard(){const n=val('c_name');if(!n)return toast('Informe o cartão')
   DB.cards.push({id:uid(),nome:n,fatura:num('c_fatura'),parcelado:num('c_parc'),rest:parseInt(val('c_rest'))||0});
   save('vp_cards',DB.cards);clearF(['c_name','c_fatura','c_parc','c_rest']);toast('Adicionado ✓');renderAll()}
 function addTrade(){const r=val('t_res');if(r==='')return toast('Informe o resultado');
-  DB.trades.push({id:uid(),date:val('t_date')||today(),res:parseFloat(r)||0,pct:num('t_pct'),note:val('t_note')});
+  DB.trades.push({id:uid(),date:val('t_date')||today(),res:parseFloat(r)||0,pct:num('t_pct'),ativo:val('t_ativo'),note:val('t_note')});
   save('vp_trades',DB.trades);clearF(['t_res','t_pct','t_note']);toast('Salvo ✓');renderAll()}
 function addSalary(){const v=num('s_val');if(!v)return toast('Informe o valor');
   DB.salary.push({id:uid(),mes:val('s_month')||today().slice(0,7),valor:v,tipo:val('s_tipo')||'Salário',note:val('s_note')});
@@ -677,13 +680,14 @@ function addDaily(){const d=val('h_date')||today();const f={};
   if(!Object.keys(f).length)return toast('Preencha algo');
   upsertByDate(d,f);clearF(['h_water','h_sleep','h_grat','h_note']);toast('Dia salvo ✓');renderAll()}
 function addBook(){const t=val('b_title');if(!t)return toast('Informe o título');
-  DB.books.push({id:uid(),titulo:t,autor:val('b_author'),status:val('b_status'),pages:parseInt(val('b_pages'))||0,read:0,nota:num('b_rate')});
-  save('vp_books',DB.books);clearF(['b_title','b_author','b_pages','b_rate']);toast('Livro adicionado ✓');renderAll()}
+  DB.books.push({id:uid(),titulo:t,tipo:val('b_type'),autor:val('b_author'),status:val('b_status'),pages:parseInt(val('b_pages'))||0,read:0,nota:num('b_rate')});
+  save('vp_books',DB.books);clearF(['b_title','b_author','b_pages','b_rate']);toast('Leitura adicionada ✓');renderAll()}
 function saveGoals(){
   DB.settings.patrim=num('goal_patrim')||DB.settings.patrim||0;
   DB.settings.renda=num('goal_renda')||DB.settings.renda||0;
   DB.settings.books=parseInt(val('goal_books'))||DB.settings.books||0;
   save('vp_settings',DB.settings);toast('Metas salvas ✓');renderAll()}
+function addIdeia(){const t=val('ie_txt');if(!t)return toast('Escreva a ideia');DB.ideias.push({id:uid(),texto:t});save('vp_ideias',DB.ideias);clearF(['ie_txt']);toast('Ideia salva ✓');renderAll()}
 
 function del(store,id){DB[store]=DB[store].filter(x=>x.id!==id);save('vp_'+store,DB[store]);toast('Removido');renderAll()}
 function updSkill(id,v){const s=DB.skills.find(x=>x.id===id);if(s){s.nivel=Math.min(10,Number(v)||0);save('vp_skills',DB.skills);renderAll()}}
@@ -693,11 +697,12 @@ function updBookRead(id,v){const b=DB.books.find(x=>x.id===id);if(b){b.read=pars
 // ============ TOTAIS FIN ============
 function finTotals(){
   const invest=DB.accounts.reduce((a,b)=>a+b.valor,0);
+  const bens=(DB.bens||[]).reduce((a,b)=>a+b.valor,0);
   const loanSaldo=DB.loans.reduce((a,b)=>a+b.saldo,0);
   const cardTotal=DB.cards.reduce((a,b)=>a+b.fatura+b.parcelado,0);
   const divida=loanSaldo+cardTotal;
   const parcelado=DB.loans.reduce((a,b)=>a+b.parcela*b.rest,0)+DB.cards.reduce((a,b)=>a+b.parcelado,0);
-  return{invest,loanSaldo,cardTotal,divida,parcelado,patrimonio:invest-divida};
+  return{invest,bens,loanSaldo,cardTotal,divida,parcelado,patrimonio:invest+bens-divida};
 }
 function monthMoves(){const ym=today().slice(0,7);return DB.moves.filter(m=>m.date.startsWith(ym))}
 
@@ -762,7 +767,7 @@ function renderDash(){
   const wkAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
   const lastW=[...DB.daily].reverse().find(d=>d.weight);
   document.getElementById('kpis').innerHTML=
-    kpi('Patrimônio líquido',BRL(t.patrimonio),'💎',t.patrimonio>=0?'investido − dívidas':'no negativo',t.patrimonio>=0?'amount-pos':'amount-neg')+
+    kpi('Patrimônio líquido',BRL(t.patrimonio),'💎',t.patrimonio>=0?'investido + bens − dívidas':'no negativo',t.patrimonio>=0?'amount-pos':'amount-neg')+
     kpi('Total parcelado',BRL(t.parcelado),'💳','o que falta em parcelas')+
     kpi('Day Trade (mês)',BRL(monthTrade),'📈',monthTrade>=0?'lucro':'prejuízo',monthTrade>=0?'amount-pos':'amount-neg')+
     kpi('Peso atual',lastW?lastW.weight+' kg':'—','⚖️',lastW?'em '+fmtDate(lastW.date):'sem registro');
@@ -800,13 +805,17 @@ function renderFin(){
   // goals
   document.getElementById('goal_patrim').value=DB.settings.patrim||'';
   document.getElementById('goal_renda').value=DB.settings.renda||'';
-  if(DB.settings.patrim){const p=Math.min(100,Math.round(t.patrimonio/DB.settings.patrim*100))||0;
-    document.getElementById('goalPatrimView').innerHTML=`<div class="between mini mb"><span>${BRL(Math.max(0,t.patrimonio))} de ${BRL(DB.settings.patrim)}</span><b>${p}%</b></div><div class="pbar"><div style="width:${p}%"></div></div>`}
-  else document.getElementById('goalPatrimView').innerHTML='<div class="mini">Defina uma meta acima.</div>';
+  if(DB.settings.patrim){const meta=DB.settings.patrim;const atual=t.invest+t.bens;const falta=Math.max(0,meta-atual);const p=Math.min(100,Math.round(atual/meta*100))||0;
+    document.getElementById('goalPatrimView').innerHTML=`<div class="pbar mb"><div style="width:${p}%"></div></div><div class="mini">Você já tem <b class="amount-pos">${BRL(atual)}</b> (investido + bens) de uma meta de <b>${BRL(meta)}</b> — <b>${p}%</b>.</div>`+(falta>0?`<div class="mini">Faltam <b class="amount-neg">${BRL(falta)}</b> para a meta.</div>`:`<div class="mini amount-pos">🎉 Meta atingida!</div>`);}
+  else document.getElementById('goalPatrimView').innerHTML='<div class="mini">Defina a meta e clique em "Salvar metas".</div>';
+  const ymG=today().slice(0,7);
   const mInc=mm.filter(m=>m.type==='receita').reduce((a,b)=>a+b.amount,0);
-  if(DB.settings.renda){const p=Math.min(100,Math.round(mInc/DB.settings.renda*100))||0;
-    document.getElementById('goalRendaView').innerHTML=`<div class="between mini mb"><span>${BRL(mInc)} de ${BRL(DB.settings.renda)} este mês</span><b>${p}%</b></div><div class="pbar"><div style="width:${p}%"></div></div>`}
-  else document.getElementById('goalRendaView').innerHTML='<div class="mini">Defina uma meta acima.</div>';
+  const salMonth=DB.salary.filter(s=>s.mes===ymG).reduce((a,b)=>a+b.valor,0);
+  const renda=mInc+salMonth;
+  if(DB.settings.renda){const meta=DB.settings.renda;const falta=Math.max(0,meta-renda);const p=Math.min(100,Math.round(renda/meta*100))||0;
+    document.getElementById('goalRendaView').innerHTML=`<div class="pbar mb"><div style="width:${p}%"></div></div><div class="mini">Renda do mês: <b class="amount-pos">${BRL(renda)}</b> (salário ${BRL(salMonth)} + receitas ${BRL(mInc)}). Meta: <b>${BRL(meta)}</b> — <b>${p}%</b>.</div>`+(falta>0?`<div class="mini">Faltam <b class="amount-neg">${BRL(falta)}</b> este mês.</div>`:`<div class="mini amount-pos">🎉 Meta do mês atingida!</div>`);}
+  else document.getElementById('goalRendaView').innerHTML='<div class="mini">Defina a meta de renda e clique em "Salvar metas".</div>';
+  document.getElementById('ideiasList').innerHTML=(DB.ideias&&DB.ideias.length)?DB.ideias.map(i=>`<div class="item between"><span>💡 ${esc(i.texto)}</span>${acts('ideias',i.id)}</div>`).join(''):'<div class="empty">Anote ideias de renda extra aqui.</div>';
 }
 
 function renderPro(){
@@ -824,7 +833,10 @@ function renderPro(){
     kpi('Último salário',lastSal?BRL(lastSal.valor):'—','💼',lastSal?lastSal.mes:'sem registro');
   const tr=[...DB.trades].sort((a,b)=>a.date.localeCompare(b.date));
   let acc=0;const accs=tr.map(x=>{acc+=x.res;return acc});
-  lineChart('chTradeBig',tr.map(x=>fmtDate(x.date)),accs,'#6366f1');
+  (function(){const c=document.getElementById('chTradeBig');if(!c)return;destroy('chTradeBig');const o=baseOpts();o.scales.yR={position:'right',grid:{display:false},ticks:{color:tickC,font:{size:10}}};
+    charts['chTradeBig']=new Chart(c,{type:'line',data:{labels:tr.map(x=>fmtDate(x.date)),datasets:[
+      {data:accs,borderColor:'#6366f1',backgroundColor:'#6366f122',fill:true,tension:.3,pointRadius:0,borderWidth:2,yAxisID:'y'},
+      {data:accs,borderColor:'transparent',backgroundColor:'transparent',pointRadius:0,borderWidth:0,fill:false,yAxisID:'yR'}]},options:o});})();
   const mAgg={};DB.trades.forEach(t=>{const k=(t.date||'').slice(0,7);if(k)mAgg[k]=(mAgg[k]||0)+t.res});
   const mKeys=Object.keys(mAgg).sort();
   barChart('chTradeMonth',mKeys.map(k=>{const p=k.split('-');return p[1]+'/'+p[0].slice(2)}),mKeys.map(k=>Math.round(mAgg[k])),mKeys.map(k=>mAgg[k]>=0?'#22c55e':'#ef4444'));
@@ -832,17 +844,19 @@ function renderPro(){
   const yKeys=Object.keys(yAgg).sort();
   document.getElementById('tradeYear').innerHTML=yKeys.length?yKeys.map(y=>{const o=yAgg[y];return `<div class="item between"><div><b>${y}</b> <span class="mini">${o.dias} dias · ${Math.round(o.wins/o.dias*100)}% acerto</span></div><b class="${o.soma>=0?'amount-pos':'amount-neg'}">${o.soma>=0?'+':''}${BRL(o.soma)}</b></div>`}).join(''):'<div class="empty">Sem dados</div>';
   const rt=[...DB.trades].reverse();
-  document.getElementById('tradeTable').innerHTML=rt.length?`<table><thead><tr><th>Data</th><th>Resultado</th><th>%</th><th>Nota</th><th></th></tr></thead><tbody>${rt.map(e=>`<tr><td>${fmtDate(e.date)}</td><td class="${e.res>=0?'amount-pos':'amount-neg'}">${e.res>=0?'+':''}${BRL(e.res)}</td><td class="${e.pct>=0?'amount-pos':'amount-neg'}">${e.pct>=0?'+':''}${e.pct}%</td><td>${esc(e.note)||'—'}</td><td>${acts('trades',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Registre seus resultados de day trade</div>';
+  document.getElementById('tradeTable').innerHTML=rt.length?`<table><thead><tr><th>Data</th><th>Ativo</th><th>Resultado</th><th>%</th><th>Nota</th><th></th></tr></thead><tbody>${rt.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${e.ativo?'<span class="pill">'+esc(e.ativo)+'</span>':'—'}</td><td class="${e.res>=0?'amount-pos':'amount-neg'}">${e.res>=0?'+':''}${BRL(e.res)}</td><td class="${e.pct>=0?'amount-pos':'amount-neg'}">${e.pct>=0?'+':''}${e.pct}%</td><td>${esc(e.note)||'—'}</td><td>${acts('trades',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Registre seus resultados de day trade</div>';
   salaryChart();
   const rs=[...DB.salary].sort((a,b)=>b.mes.localeCompare(a.mes));
   document.getElementById('salTable').innerHTML=rs.length?`<table><thead><tr><th>Mês</th><th>Tipo</th><th>Valor</th><th>Obs</th><th></th></tr></thead><tbody>${rs.map(e=>`<tr><td>${e.mes}</td><td><span class="pill">${e.tipo||'Salário'}</span></td><td class="amount-pos">${BRL(e.valor)}</td><td>${esc(e.note)||'—'}</td><td>${acts('salary',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum salário registrado</div>';
 }
 
 function skillRow(s){
-  const pct=Math.min(100,Math.round(s.nivel/s.meta*100))||0;
+  const pct=Math.min(100,Math.round(s.nivel/(s.meta||10)*100))||0;
+  const filled=Math.round(pct/5);
   const mins=DB.sessions.filter(x=>x.skillId===s.id).reduce((a,b)=>a+b.min,0);
-  return `<div class="item"><div class="between"><div><b>${esc(s.nome)}</b> <span class="pill">nível ${s.nivel}/${s.meta}</span> <span class="pill">${(mins/60).toFixed(1)}h praticadas</span></div>${acts('skills',s.id)}</div>
-    <div class="pbar" style="margin:8px 0 6px"><div style="width:${pct}%"></div></div>
+  let bars='';for(let k=1;k<=20;k++){bars+=`<i class="${k<=filled?'on':''}" style="height:${16+k*4.2}%"></i>`}
+  return `<div class="item"><div class="between"><div><b>${esc(s.nome)}</b> <span class="pill">nível ${s.nivel}/${s.meta}</span> <span class="pill">${pct}%</span> <span class="pill">${(mins/60).toFixed(1)}h</span></div>${acts('skills',s.id)}</div>
+    <div class="lvlbars">${bars}</div>
     <div class="flex mini">Atualizar nível: <input type="number" min="0" max="10" value="${s.nivel}" style="width:70px;padding:5px 8px" onchange="updSkill('${s.id}',this.value)"></div></div>`;
 }
 function renderSkills(){
@@ -902,10 +916,10 @@ function renderBooks(){
     const tagcls=b.status==='Lido'?'in':b.status==='Lendo'?'warn':'info';
     let prog='';if(b.status==='Lendo'&&b.pages){const p=Math.min(100,Math.round(b.read/b.pages*100))||0;
       prog=`<div class="pbar" style="margin:7px 0 5px"><div style="width:${p}%"></div></div><div class="flex mini">Página: <input type="number" value="${b.read}" style="width:80px;padding:5px 8px" onchange="updBookRead('${b.id}',this.value)"> de ${b.pages} (${p}%)</div>`}
-    return `<div class="item"><div class="between"><div><b>${esc(b.titulo)}</b> ${b.autor?'<span class="mini">— '+esc(b.autor)+'</span>':''} ${b.status==='Lido'&&b.nota?'<span class="pill">nota '+b.nota+'</span>':''}</div>${acts('books',b.id)}</div>
+    return `<div class="item"><div class="between"><div>${b.tipo?'<span class="pill">'+esc(b.tipo)+'</span> ':''}<b>${esc(b.titulo)}</b> ${b.autor?'<span class="mini">— '+esc(b.autor)+'</span>':''} ${b.status==='Lido'&&b.nota?'<span class="pill">nota '+b.nota+'</span>':''}</div>${acts('books',b.id)}</div>
       <div class="flex" style="margin-top:7px"><span class="tag ${tagcls}">${b.status}</span>
       <select style="width:auto;padding:5px 8px;font-size:12px" onchange="updBookStatus('${b.id}',this.value)"><option ${b.status==='Quero ler'?'selected':''}>Quero ler</option><option ${b.status==='Lendo'?'selected':''}>Lendo</option><option ${b.status==='Lido'?'selected':''}>Lido</option></select></div>${prog}</div>`;
-  }).join(''):'<div class="empty">Adicione livros à sua estante</div>';
+  }).join(''):'<div class="empty">Adicione suas leituras (livros, cursos, estudos)</div>';
 }
 
 // ============ EDIÇÃO (genérica) ============
@@ -915,16 +929,17 @@ const SCHEMA={
   accounts:[['nome','Nome','text'],['tipo','Tipo','select',['Investimento','Conta corrente','Poupança','Reserva']],['valor','Valor (R$)','number']],
   loans:[['nome','Nome','text'],['saldo','Saldo devedor (R$)','number'],['parcela','Valor da parcela (R$)','number'],['rest','Parcelas restantes','number']],
   cards:[['nome','Cartão','text'],['fatura','Fatura atual (R$)','number'],['parcelado','Parcelado restante (R$)','number'],['rest','Parcelas restantes','number']],
-  trades:[['date','Data','date'],['res','Resultado (R$)','number'],['pct','Resultado (%)','number'],['note','Nota','text']],
+  trades:[['date','Data','date'],['res','Resultado (R$)','number'],['pct','Resultado (%)','number'],['ativo','Ativo','select',['','Índice','Dólar','Cripto','Bolsa','Forex']],['note','Nota','text']],
   salary:[['mes','Mês','month'],['valor','Valor (R$)','number'],['tipo','Tipo','select',['Salário','Bônus','Comissão','Outro']],['note','Observação','text']],
   skills:[['nome','Nome','text'],['nivel','Nível atual (0-10)','number'],['meta','Meta (0-10)','number']],
   habits:[['nome','Nome do hábito','text']],
   todos:[['titulo','Tarefa / lembrete','text'],['prazo','Fazer até','date']],
-  bens:[['nome','Nome / descrição','text'],['tipo','Tipo','select',['Carro','Imóvel','Moto','Eletrônico','Outro']],['valor','Valor estimado (R$)','number'],['note','Observação','text']],
+  bens:[['nome','Nome / descrição','text'],['tipo','Tipo','select',['Carro','Imóvel','Moto','Joias','Obras de arte','Antiguidades','Eletrônico','Outro']],['valor','Valor estimado (R$)','number'],['note','Observação','text']],
   fixos:[['nome','Nome','text'],['cat','Categoria','select',['Moradia','Contas (luz/água/gás)','Internet/Telefone','Assinaturas','Transporte','Educação','Saúde','Seguros','Outro']],['valor','Valor mensal (R$)','number']],
+  ideias:[['texto','Ideia de renda extra','text']],
   sessions:[['date','Data','date'],['skillId','Habilidade','skill'],['min','Duração (min)','number'],['rate','Nota (1-5)','number'],['note','Nota','text']],
   daily:[['date','Data','date'],['weight','Peso (kg)','number'],['fat','% Gordura','number'],['water','Água (L)','number'],['sleep','Sono (h)','number'],['diet','Seguiu dieta','select',['','sim','nao']],['workout','Treino','text'],['mood','Humor (1-5)','number'],['energy','Energia (1-5)','number'],['stress','Estresse (1-5)','number'],['grat','Gratidão','text'],['note','Diário','textarea']],
-  books:[['titulo','Título','text'],['autor','Autor','text'],['status','Status','select',['Quero ler','Lendo','Lido']],['pages','Páginas (total)','number'],['read','Página atual','number'],['nota','Nota (0-10)','number']],
+  books:[['titulo','Título','text'],['tipo','Tipo','select',['Livro','Curso','Estudo','Artigo','Vídeo','Outro']],['autor','Autor/Fonte','text'],['status','Status','select',['Quero ler','Lendo','Lido']],['pages','Páginas/aulas','number'],['read','Posição atual','number'],['nota','Nota (0-10)','number']],
   relations:[['date','Data','date'],['who','Com quem','select',['Filhos','Namorada','Família','Amigos','Outro']],['act','Atividade','text'],['rate','Nota (1-5)','number'],['note','Momento marcante','textarea']],
   lifegoals:[['titulo','Meta','text'],['area','Área','select',['Saúde','Finanças','Carreira','Relacionamentos','Aprendizado','Lazer','Pessoal']],['deadline','Prazo','date'],['prog','Progresso (%)','number'],['note','Observação','text']],
   trips:[['dest','Destino','text'],['date','Data alvo','month'],['budget','Orçamento (R$)','number'],['saved','Já guardei (R$)','number'],['status','Status','select',['Sonhando','Planejando','Reservado','Concluída']],['note','Quem vai','text'],['passagem','Passagem comprada','check'],['hospedagem','Hospedagem comprada','check'],['passeios','Passeios comprados','check']]
@@ -1052,6 +1067,11 @@ function habitStreak(hid){let s=0;const d=new Date();
 function renderHabitos(){
   document.getElementById('habToday').textContent=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
   const d=today();
+  const doneToday=DB.habits.filter(h=>isDone(h.id,d)).length;
+  const wkAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
+  const min7=DB.sessions.filter(x=>x.date>=wkAgo).reduce((a,b)=>a+(b.min||0),0);
+  const best=DB.habits.length?Math.max(0,...DB.habits.map(h=>habitStreak(h.id))):0;
+  const hk=document.getElementById('habKpis');if(hk)hk.innerHTML=kpi('Habilidades',DB.skills.length,'🎸','')+kpi('Hábitos',DB.habits.length,'✅',doneToday+' feitos hoje')+kpi('Prática (7d)',(min7/60).toFixed(1)+'h','⏱️','')+kpi('Melhor sequência',best+' dias','🔥','');
   document.getElementById('habChecklist').innerHTML=DB.habits.length?DB.habits.map(h=>{const done=isDone(h.id,d);const st=habitStreak(h.id);
     return `<div class="item between"><label class="flex" style="cursor:pointer;margin:0"><input type="checkbox" style="width:auto" ${done?'checked':''} onchange="toggleHabit('${h.id}')"> ${esc(h.nome)}</label>${st?'<span class="pill">🔥 '+st+'</span>':''}</div>`}).join(''):'<div class="empty">Crie hábitos ao lado</div>';
   const ym=today().slice(0,7);
@@ -1060,17 +1080,27 @@ function renderHabitos(){
 
 // ============ METAS DE VIDA ============
 const WHEEL=['Saúde','Finanças','Carreira','Relacionamentos','Família','Lazer','Crescimento','Espiritual'];
-function saveWheel(){DB.settings.wheel=DB.settings.wheel||{};
-  WHEEL.forEach(a=>{const el=document.getElementById('wheel_'+a);if(el&&el.value!=='')DB.settings.wheel[a]=Math.min(10,Math.max(0,parseFloat(el.value)||0))});
-  save('vp_settings',DB.settings);toast('Roda salva ✓');renderVida()}
+function prevMonthStr(m){const p=m.split('-').map(Number);const d=new Date(p[0],p[1]-1,1);d.setMonth(d.getMonth()-1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+function wheelSel(){const e=document.getElementById('wheelMonth');return e&&e.value?e.value:today().slice(0,7)}
+function radarCompare(id,labels,cur,prev,curLabel,prevLabel){destroy(id);const c=document.getElementById(id);if(!c)return;
+  const ds=[{label:curLabel,data:cur,borderColor:'#6366f1',backgroundColor:'#6366f155',pointBackgroundColor:'#818cf8',borderWidth:2}];
+  if(prev)ds.push({label:prevLabel,data:prev,borderColor:'#9aa3b8',backgroundColor:'rgba(154,163,184,.12)',pointBackgroundColor:'#9aa3b8',borderWidth:2,borderDash:[5,4]});
+  charts[id]=new Chart(c,{type:'radar',data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:tickC,font:{size:10}}}},scales:{r:{min:0,max:10,grid:{color:gridC},angleLines:{color:gridC},pointLabels:{color:tickC,font:{size:11}},ticks:{display:false}}}}})}
+function saveWheel(){const sel=wheelSel();DB.settings.wheelMonths=DB.settings.wheelMonths||{};
+  const obj={};WHEEL.forEach(a=>{const el=document.getElementById('wheel_'+a);if(el&&el.value!=='')obj[a]=Math.min(10,Math.max(0,parseFloat(el.value)||0))});
+  DB.settings.wheelMonths[sel]=obj;
+  save('vp_settings',DB.settings);toast('Roda de '+sel+' salva ✓');renderVida()}
 function addLifeGoal(){const t=val('lg_title');if(!t)return toast('Informe a meta');
   DB.lifegoals.push({id:uid(),titulo:t,area:val('lg_area'),deadline:val('lg_deadline'),prog:0,note:val('lg_note')});
   save('vp_lifegoals',DB.lifegoals);clearF(['lg_title','lg_note']);toast('Meta criada ✓');renderVida()}
 function updLifeGoal(id,v){const g=DB.lifegoals.find(x=>x.id===id);if(g){g.prog=Math.min(100,Math.max(0,parseInt(v)||0));save('vp_lifegoals',DB.lifegoals);renderVida()}}
 function renderVida(){
-  const w=DB.settings.wheel||{};
-  document.getElementById('wheelInputs').innerHTML=WHEEL.map(a=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><label class="fl" style="margin:0;flex:1">${a}</label><input id="wheel_${a}" type="number" min="0" max="10" value="${w[a]!=null?w[a]:''}" placeholder="0-10" style="width:90px"></div>`).join('');
-  radar('chWheel',WHEEL,WHEEL.map(a=>w[a]||0));
+  if(!DB.settings.wheelMonths){DB.settings.wheelMonths=DB.settings.wheel?{[today().slice(0,7)]:DB.settings.wheel}:{};save('vp_settings',DB.settings)}
+  const wm=DB.settings.wheelMonths||{};
+  const mEl=document.getElementById('wheelMonth');const sel=wheelSel();if(mEl&&!mEl.value)mEl.value=sel;
+  const cur=wm[sel]||{};const prevKey=prevMonthStr(sel);const prev=wm[prevKey];
+  document.getElementById('wheelInputs').innerHTML=WHEEL.map(a=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><label class="fl" style="margin:0;flex:1">${a}</label><input id="wheel_${a}" type="number" min="0" max="10" value="${cur[a]!=null?cur[a]:''}" placeholder="0-10" style="width:90px"></div>`).join('');
+  radarCompare('chWheel',WHEEL,WHEEL.map(a=>cur[a]||0),prev?WHEEL.map(a=>prev[a]||0):null,sel,prevKey);
   const gl=DB.lifegoals;
   document.getElementById('lifeGoalsList').innerHTML=gl.length?gl.map(g=>{const days=g.deadline?Math.ceil((new Date(g.deadline)-new Date())/864e5):null;
     return `<div class="item"><div class="between"><div><b>${esc(g.titulo)}</b> <span class="pill">${g.area}</span></div>${acts('lifegoals',g.id)}</div>
