@@ -164,6 +164,7 @@ tr:last-child td{border-bottom:none}
       <button data-sec="vida"><span class="ico">🧭</span> Metas de Vida</button>
       <button data-sec="viagens"><span class="ico">✈️</span> Viagens</button>
       <button data-sec="bens"><span class="ico">🏠</span> Bens</button>
+      <button data-sec="network"><span class="ico">🤝</span> Network</button>
       <button data-sec="assistente"><span class="ico">🤖</span> Assistente</button>
     </nav>
     <div class="side-foot">
@@ -197,6 +198,7 @@ tr:last-child td{border-bottom:none}
 
     <!-- DASHBOARD -->
     <section class="section active" id="dashboard">
+      <div class="grid g4 mb" id="lifeKpis"></div>
       <div class="grid g4 mb" id="kpis"></div>
       <div class="grid g2 mb">
         <div class="card"><h3>💵 Patrimônio: investido x dívidas</h3><div class="chart-wrap"><canvas id="chNet"></canvas></div></div>
@@ -212,12 +214,6 @@ tr:last-child td{border-bottom:none}
     <!-- A FAZER -->
     <section class="section" id="afazer">
       <div class="grid g2 mb">
-        <div class="card"><h3>➕ Novo lembrete / tarefa do ano</h3>
-          <div class="form-row"><div><label class="fl">O que precisa fazer</label><input id="td_title" placeholder="ex: Renovar CNH, fazer check-up, declarar IR..."></div></div>
-          <div class="form-row"><div><label class="fl">Fazer até (opcional)</label><input type="date" id="td_prazo"></div></div>
-          <button class="btn" onclick="addTodo()">Adicionar</button>
-          <div class="mini" style="margin-top:10px">Para lembretes e tarefas ao longo do ano (não do dia a dia). Marque o ✓ quando concluir.</div>
-        </div>
         <div class="card"><h3>📝 Registro diário</h3>
           <div class="form-row fr3">
             <div><label class="fl">Data</label><input type="date" id="h_date"></div>
@@ -232,6 +228,19 @@ tr:last-child td{border-bottom:none}
           <div class="form-row"><div><label class="fl">🙏 Gratidão (1-3 coisas do dia)</label><input id="h_grat" placeholder="ex: meus filhos, treino bom, café da manhã"></div></div>
           <div class="form-row"><div><label class="fl">📓 Algo relevante do dia (diário)</label><textarea id="h_note" placeholder="Como foi seu dia?"></textarea></div></div>
           <button class="btn" onclick="addDaily()">Salvar dia</button>
+        </div>
+        <div class="card"><h3>➕ Novo lembrete / tarefa do ano</h3>
+          <div class="form-row"><div><label class="fl">O que precisa fazer</label><input id="td_title" placeholder="ex: Renovar CNH, fazer check-up, declarar IR..."></div></div>
+          <div class="form-row"><div><label class="fl">Fazer até (opcional)</label><input type="date" id="td_prazo"></div></div>
+          <button class="btn" onclick="addTodo()">Adicionar</button>
+          <div class="mini" style="margin-top:10px">Para lembretes e tarefas ao longo do ano (não do dia a dia). Marque o ✓ quando concluir.</div>
+          <div style="border-top:1px solid var(--line);margin-top:16px;padding-top:14px">
+            <div class="between" style="margin-bottom:8px"><b style="font-size:13.5px">💡 Reflexão do Dia</b><span class="mini" id="reflCount"></span></div>
+            <div class="mini" id="reflPergunta" style="margin-bottom:8px;color:var(--pri2)"></div>
+            <textarea id="refl_resp" placeholder="Responda em 30 segundos..."></textarea>
+            <button class="btn" style="margin-top:8px" onclick="saveReflexao()">Salvar reflexão</button>
+            <div id="reflHist" style="margin-top:12px"></div>
+          </div>
         </div>
       </div>
       <div class="card"><h3>📌 Tarefas e lembretes do ano</h3><div id="todoList"></div></div>
@@ -599,6 +608,31 @@ tr:last-child td{border-bottom:none}
       </div>
       <div class="card"><h3>💬 Respostas</h3><div id="ai_out"><div class="empty">Faça uma pergunta acima. Posso somar gastos por categoria, custo fixo, renda, day trade e comparar períodos.</div></div></div>
     </section>
+
+    <!-- NETWORK -->
+    <section class="section" id="network">
+      <div class="grid g3 mb" id="netKpis"></div>
+      <div id="netAlerts" class="mb"></div>
+      <div class="grid g2 mb">
+        <div class="card"><h3>➕ Adicionar pessoa</h3>
+          <div class="form-row fr2">
+            <div><label class="fl">Nome</label><input id="nw_nome" placeholder="ex: João Silva"></div>
+            <div><label class="fl">Categoria</label><select id="nw_cat"><option>Clientes</option><option>Amigos</option><option>Família</option><option>Mentores</option><option>Parceiros</option></select></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Último contato</label><input type="date" id="nw_ultimo"></div>
+            <div><label class="fl">Próximo contato</label><input type="date" id="nw_proximo"></div>
+          </div>
+          <div class="form-row fr2">
+            <div><label class="fl">Aniversário</label><input type="date" id="nw_aniver"></div>
+            <div><label class="fl">Observações</label><input id="nw_obs" placeholder="opcional"></div>
+          </div>
+          <button class="btn" onclick="addPessoa()">Adicionar</button>
+        </div>
+        <div class="card"><h3>🎂 Aniversários próximos</h3><div id="netBdays"></div></div>
+      </div>
+      <div class="card"><h3>Minhas pessoas</h3><div id="netTable"></div></div>
+    </section>
   </main>
 </div>
 <div id="editModal" class="modal" style="display:none">
@@ -622,7 +656,7 @@ let sb=CLOUD?supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
 let currentUser=null,cloudTimer=null,authMode='login';
 
 // ============ DADOS ============
-const KEYS=['daily','moves','accounts','loans','cards','salary','trades','skills','sessions','books','relations','habits','habitlog','lifegoals','trips','todos','bens','fixos','ideias'];
+const KEYS=['daily','moves','accounts','loans','cards','salary','trades','skills','sessions','books','relations','habits','habitlog','lifegoals','trips','todos','bens','fixos','ideias','network','reflexoes'];
 const DB={};KEYS.forEach(k=>DB[k]=load('vp_'+k));
 DB.settings=loadObj('vp_settings');
 if(!DB.skills.length){['Violão','Tênis','Futvôlei','Xadrez','Inglês','Memória','Storytelling'].forEach(n=>DB.skills.push({id:uid(),nome:n,nivel:0,meta:8}));save('vp_skills',DB.skills)}
@@ -641,7 +675,7 @@ const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"
 let charts={};
 
 // ============ NAV ============
-const titles={dashboard:'Dashboard',afazer:'A Fazer & Registro do Dia',financeiro:'Financeiro',profissional:'Profissional',habilidades:'Habilidades',saude:'Saúde',familia:'Família & Relacionamentos',habitos:'Hábitos & Habilidades',livros:'Leitura',vida:'Metas de Vida',viagens:'Viagens Futuras',bens:'Bens & Patrimônio',assistente:'Assistente'};
+const titles={dashboard:'Dashboard',afazer:'A Fazer & Registro do Dia',financeiro:'Financeiro',profissional:'Profissional',habilidades:'Habilidades',saude:'Saúde',familia:'Família & Relacionamentos',habitos:'Hábitos & Habilidades',livros:'Leitura',vida:'Metas de Vida',viagens:'Viagens Futuras',bens:'Bens & Patrimônio',network:'Network',assistente:'Assistente'};
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
   const s=b.dataset.sec;
   document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x===b));
@@ -723,7 +757,31 @@ function finTotals(){
 function monthMoves(){const ym=today().slice(0,7);return DB.moves.filter(m=>m.date.startsWith(ym))}
 
 // ============ RENDER ============
-function renderAll(){renderDash();renderFin();renderPro();renderSkills();renderHealth();renderBooks();renderFamilia();renderHabitos();renderVida();renderViagens();renderTodos();renderBens();renderFixos()}
+function renderAll(){renderDash();renderFin();renderPro();renderSkills();renderHealth();renderBooks();renderFamilia();renderHabitos();renderVida();renderViagens();renderTodos();renderBens();renderFixos();renderNetwork()}
+// ============ NETWORK ============
+function addPessoa(){const n=val('nw_nome');if(!n)return toast('Informe o nome');
+  DB.network.push({id:uid(),nome:n,cat:val('nw_cat'),ultimo:val('nw_ultimo'),proximo:val('nw_proximo'),aniver:val('nw_aniver'),obs:val('nw_obs')});
+  save('vp_network',DB.network);clearF(['nw_nome','nw_ultimo','nw_proximo','nw_aniver','nw_obs']);toast('Pessoa adicionada ✓');renderNetwork()}
+function diasDesde(d){if(!d)return null;return Math.floor((new Date(today())-new Date(d))/864e5)}
+function diasAteAniver(d){if(!d)return null;const hoje=new Date(today());const a=new Date(d);let prox=new Date(hoje.getFullYear(),a.getMonth(),a.getDate());if(prox<hoje)prox=new Date(hoje.getFullYear()+1,a.getMonth(),a.getDate());return Math.round((prox-hoje)/864e5)}
+function renderNetwork(){
+  const el=document.getElementById('netKpis');if(!el)return;
+  const n=DB.network.length;
+  const semContato=DB.network.filter(p=>{const d=diasDesde(p.ultimo);return d!=null&&d>=30}).length;
+  const aReconectar=DB.network.filter(p=>p.proximo&&p.proximo<=today()).length;
+  el.innerHTML=kpi('Pessoas',n,'🤝',n+' na sua rede')+kpi('Esfriando',semContato,'🥶','30+ dias sem falar')+kpi('Reconectar',aReconectar,'⏰','próximo contato vencido');
+  // alertas
+  const alerts=DB.network.map(p=>({p,d:diasDesde(p.ultimo)})).filter(x=>x.d!=null&&x.d>=30).sort((a,b)=>b.d-a.d);
+  document.getElementById('netAlerts').innerHTML=alerts.length?alerts.map(x=>`<div class="qpreview" style="border-color:var(--warn)"><span>🔔 Você não fala com <b>${esc(x.p.nome)}</b> há <b>${x.d} dias</b>.</span><button class="btn" onclick="contatoHoje('${x.p.id}')">Falei hoje</button></div>`).join(''):'';
+  // aniversários próximos (90 dias)
+  const bd=DB.network.map(p=>({p,d:diasAteAniver(p.aniver)})).filter(x=>x.d!=null&&x.d<=90).sort((a,b)=>a.d-b.d);
+  document.getElementById('netBdays').innerHTML=bd.length?bd.map(x=>`<div class="item between"><span>🎂 ${esc(x.p.nome)}</span><span class="tag ${x.d<=7?'out':'info'}">${x.d===0?'hoje! 🎉':'em '+x.d+' dias'}</span></div>`).join(''):'<div class="empty">Cadastre aniversários para ver aqui</div>';
+  // tabela
+  const ordem={Clientes:0,Parceiros:1,Mentores:2,Amigos:3,'Família':4};
+  const ppl=[...DB.network].sort((a,b)=>(ordem[a.cat]??9)-(ordem[b.cat]??9)||(diasDesde(b.ultimo)||0)-(diasDesde(a.ultimo)||0));
+  document.getElementById('netTable').innerHTML=ppl.length?`<table><thead><tr><th>Nome</th><th>Categoria</th><th>Último contato</th><th>Próximo</th><th>Aniversário</th><th>Obs</th><th></th></tr></thead><tbody>${ppl.map(p=>{const d=diasDesde(p.ultimo);const tag=d==null?'—':(d>=30?'<span class="tag out">'+d+'d</span>':'<span class="tag in">'+d+'d</span>');return `<tr><td><b>${esc(p.nome)}</b></td><td><span class="pill">${esc(p.cat||'—')}</span></td><td>${p.ultimo?fmtDate(p.ultimo)+' '+tag:'—'}</td><td>${p.proximo?fmtDate(p.proximo):'—'}</td><td>${p.aniver?fmtDate(p.aniver):'—'}</td><td>${esc(p.obs)||'—'}</td><td>${acts('network',p.id)}</td></tr>`}).join('')}</tbody></table>`:'<div class="empty">Cadastre clientes, amigos, família, mentores e parceiros 🤝</div>';
+}
+function contatoHoje(id){const p=DB.network.find(x=>x.id===id);if(p){p.ultimo=today();save('vp_network',DB.network);toast('Contato atualizado ✓');renderNetwork()}}
 function addFixo(){const n=val('fx_nome');if(!n)return toast('Informe o nome');DB.fixos.push({id:uid(),nome:n,cat:val('fx_cat'),valor:num('fx_valor')});save('vp_fixos',DB.fixos);clearF(['fx_nome','fx_valor']);toast('Custo fixo adicionado ✓');renderAll()}
 function renderFixos(){const total=DB.fixos.reduce((a,b)=>a+b.valor,0);
   const maior=DB.fixos.length?[...DB.fixos].sort((a,b)=>b.valor-a.valor)[0]:null;
@@ -743,6 +801,25 @@ function renderTodos(){
   const open=DB.todos.filter(t=>!t.feito).sort((a,b)=>(a.prazo||'9999')>(b.prazo||'9999')?1:-1);
   const done=DB.todos.filter(t=>t.feito);
   document.getElementById('todoList').innerHTML=DB.todos.length?(open.map(row).join('')+(done.length?'<div class="mini" style="margin:12px 0 4px">✅ Concluídas</div>'+done.map(row).join(''):'')):'<div class="empty">Sem tarefas. Adicione lembretes do ano 📌</div>';
+  renderReflexao();
+}
+const REFLEXOES=['O que me deixou orgulhoso hoje?','Qual foi meu maior desperdício de tempo hoje?','Quem eu deveria agradecer hoje?','O que aprendi hoje?','Se amanhã fosse igual a hoje, eu estaria satisfeito?','O que eu poderia ter feito melhor?','Qual pequena vitória tive hoje?','O que me tirou o foco hoje?','Que decisão importante tomei hoje?','Pelo que sou grato neste momento?','O que me deu mais energia hoje?','O que estou adiando e deveria encarar?','Quem impactou meu dia de forma positiva?','Estou mais perto das minhas metas do que ontem?','O que eu faria diferente se pudesse repetir o dia?'];
+function reflexaoDoDia(){const d=new Date();const dia=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);return REFLEXOES[dia%REFLEXOES.length]}
+function renderReflexao(){
+  const perg=reflexaoDoDia();const pEl=document.getElementById('reflPergunta');if(!pEl)return;
+  pEl.textContent=perg;
+  const hoje=today();const jaHoje=DB.reflexoes.find(r=>r.date===hoje);
+  const resp=document.getElementById('refl_resp');if(resp&&jaHoje&&document.activeElement!==resp)resp.value=jaHoje.resposta;
+  document.getElementById('reflCount').textContent=DB.reflexoes.length?DB.reflexoes.length+' registradas':'';
+  const ult=[...DB.reflexoes].reverse().slice(0,3);
+  document.getElementById('reflHist').innerHTML=ult.length?ult.map(r=>`<div class="diary-item" style="margin-bottom:8px"><div class="d">${fmtDate(r.date)} · ${esc(r.pergunta)}</div>${esc(r.resposta)}</div>`).join(''):'';
+}
+function saveReflexao(){
+  const resp=document.getElementById('refl_resp').value.trim();if(!resp)return toast('Escreva sua reflexão');
+  const hoje=today();const perg=reflexaoDoDia();
+  let r=DB.reflexoes.find(x=>x.date===hoje);
+  if(r){r.resposta=resp;r.pergunta=perg}else{DB.reflexoes.push({id:uid(),date:hoje,pergunta:perg,resposta:resp})}
+  save('vp_reflexoes',DB.reflexoes);toast('Reflexão salva ✓');renderReflexao();
 }
 
 // ============ BENS ============
@@ -777,6 +854,20 @@ function gerarPDF(){
 function kpi(lbl,v,ico,sub,cls){return `<div class="stat"><div class="ico">${ico}</div><div class="lbl">${lbl}</div><div class="val ${cls||''}">${v}</div><div class="sub">${sub||''}</div></div>`}
 
 function renderDash(){
+  // ---- 4 indicadores de vida ----
+  const goalP=DB.lifegoals.find(g=>g.principal)||null;
+  const bestStreak=DB.habits.length?Math.max(0,...DB.habits.map(h=>habitStreak(h.id))):0;
+  const wm=DB.settings.wheelMonths||{};
+  const ymw=today().slice(0,7);
+  const wcur=wm[ymw]||wm[Object.keys(wm).sort().slice(-1)[0]]||null;
+  let nota='—',notaSub='preencha a Roda da Vida';
+  if(wcur){const vals=WHEEL.map(a=>wcur[a]).filter(v=>v!=null&&v!=='');if(vals.length){nota=(vals.reduce((a,b)=>a+Number(b),0)/vals.length).toFixed(1);notaSub=vals.length+' áreas avaliadas'}}
+  const nextTodo=DB.todos.filter(x=>!x.feito).sort((a,b)=>(a.prazo||'9999')>(b.prazo||'9999')?1:-1)[0];
+  document.getElementById('lifeKpis').innerHTML=
+    kpi('Meta principal do ano',goalP?(goalP.prog||0)+'%':'—','🎯',goalP?goalP.titulo:'marque uma meta na aba Metas de Vida')+
+    kpi('Sequência de hábitos',bestStreak?bestStreak+' dias':'—','🔥',bestStreak?'melhor sequência ativa':'comece um hábito hoje')+
+    kpi('Nota da vida',nota+(nota!=='—'?'/10':''),'😊',notaSub)+
+    kpi('Próxima prioridade',nextTodo?(nextTodo.prazo?fmtDate(nextTodo.prazo):'sem prazo'):'—','📅',nextTodo?nextTodo.titulo:'nada pendente 🎉');
   const t=finTotals();
   const mm=monthMoves();
   const monthTrade=DB.trades.filter(x=>x.date.startsWith(today().slice(0,7))).reduce((a,b)=>a+b.res,0);
@@ -967,7 +1058,8 @@ const SCHEMA={
   books:[['titulo','Título','text'],['tipo','Tipo','select',['Livro','Curso','Estudo','Artigo','Vídeo','Outro']],['autor','Autor/Fonte','text'],['status','Status','select',['Quero ler','Lendo','Lido']],['pages','Páginas/aulas','number'],['read','Posição atual','number'],['nota','Nota (0-10)','number']],
   relations:[['date','Data','date'],['who','Com quem','select',['Filhos','Namorada','Família','Amigos','Outro']],['act','Atividade','text'],['rate','Nota (1-5)','number'],['note','Momento marcante','textarea']],
   lifegoals:[['titulo','Meta','text'],['area','Área','select',['Saúde','Finanças','Carreira','Relacionamentos','Aprendizado','Lazer','Pessoal']],['deadline','Prazo','date'],['prog','Progresso (%)','number'],['note','Observação','text']],
-  trips:[['dest','Destino','text'],['date','Data alvo','month'],['budget','Orçamento (R$)','number'],['saved','Já guardei (R$)','number'],['status','Status','select',['Sonhando','Planejando','Reservado','Concluída']],['note','Quem vai','text'],['passagem','Passagem comprada','check'],['hospedagem','Hospedagem comprada','check'],['passeios','Passeios comprados','check']]
+  trips:[['dest','Destino','text'],['date','Data alvo','month'],['budget','Orçamento (R$)','number'],['saved','Já guardei (R$)','number'],['status','Status','select',['Sonhando','Planejando','Reservado','Concluída']],['note','Quem vai','text'],['passagem','Passagem comprada','check'],['hospedagem','Hospedagem comprada','check'],['passeios','Passeios comprados','check']],
+  network:[['nome','Nome','text'],['cat','Categoria','select',['Clientes','Amigos','Família','Mentores','Parceiros']],['ultimo','Último contato','date'],['proximo','Próximo contato','date'],['aniver','Aniversário','date'],['obs','Observações','text']]
 };
 let editStore=null,editId=null;
 function acts(store,id){return '<button class="btn editb" onclick="openEdit(\''+store+'\',\''+id+'\')">✏️ editar</button> <button class="btn danger" onclick="del(\''+store+'\',\''+id+'\')">excluir</button>'}
@@ -1120,6 +1212,7 @@ function addLifeGoal(){const t=val('lg_title');if(!t)return toast('Informe a met
   DB.lifegoals.push({id:uid(),titulo:t,area:val('lg_area'),deadline:val('lg_deadline'),prog:0,note:val('lg_note')});
   save('vp_lifegoals',DB.lifegoals);clearF(['lg_title','lg_note']);toast('Meta criada ✓');renderVida()}
 function updLifeGoal(id,v){const g=DB.lifegoals.find(x=>x.id===id);if(g){g.prog=Math.min(100,Math.max(0,parseInt(v)||0));save('vp_lifegoals',DB.lifegoals);renderVida()}}
+function setPrincipal(id){const was=DB.lifegoals.find(x=>x.id===id);const turnOn=!(was&&was.principal);DB.lifegoals.forEach(g=>g.principal=false);if(turnOn&&was)was.principal=true;save('vp_lifegoals',DB.lifegoals);toast(turnOn?'Meta principal definida ⭐':'Meta principal removida');renderVida();renderDash()}
 function renderVida(){
   if(!DB.settings.wheelMonths){DB.settings.wheelMonths=DB.settings.wheel?{[today().slice(0,7)]:DB.settings.wheel}:{};save('vp_settings',DB.settings)}
   const wm=DB.settings.wheelMonths||{};
@@ -1129,7 +1222,7 @@ function renderVida(){
   radarCompare('chWheel',WHEEL,WHEEL.map(a=>cur[a]||0),prev?WHEEL.map(a=>prev[a]||0):null,sel,prevKey);
   const gl=DB.lifegoals;
   document.getElementById('lifeGoalsList').innerHTML=gl.length?gl.map(g=>{const days=g.deadline?Math.ceil((new Date(g.deadline)-new Date())/864e5):null;
-    return `<div class="item"><div class="between"><div><b>${esc(g.titulo)}</b> <span class="pill">${g.area}</span></div>${acts('lifegoals',g.id)}</div>
+    return `<div class="item"><div class="between"><div><span onclick="setPrincipal('${g.id}')" title="Marcar como meta principal do ano" style="cursor:pointer;margin-right:4px">${g.principal?'⭐':'☆'}</span><b>${esc(g.titulo)}</b> <span class="pill">${g.area}</span></div>${acts('lifegoals',g.id)}</div>
     <div class="between mini" style="margin:7px 0"><span>${g.deadline?(days>=0?'faltam '+days+' dias':'prazo vencido')+' · '+fmtDate(g.deadline):'sem prazo'}</span><b>${g.prog||0}%</b></div>
     <div class="pbar"><div style="width:${g.prog||0}%"></div></div>
     <div class="flex mini" style="margin-top:7px">Progresso: <input type="number" min="0" max="100" value="${g.prog||0}" style="width:80px;padding:5px 8px" onchange="updLifeGoal('${g.id}',this.value)">%</div></div>`}).join(''):'<div class="empty">Defina suas grandes metas de vida 🧭</div>';
