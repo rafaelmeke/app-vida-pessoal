@@ -22,6 +22,11 @@
   --cyan:#06b6d4;--pink:#ec4899;--radius:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+*{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:var(--card2);background-clip:padding-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit}
@@ -846,7 +851,7 @@ function renderPro(){
       {data:accW,borderColor:'transparent',backgroundColor:'transparent',pointRadius:0,borderWidth:0,fill:false,yAxisID:'yR'}]},options:o});})();
   const mAgg={};DB.trades.forEach(t=>{const k=(t.date||'').slice(0,7);if(k)mAgg[k]=(mAgg[k]||0)+t.res});
   const mKeys=Object.keys(mAgg).sort();
-  barChart('chTradeMonth',mKeys.map(k=>{const p=k.split('-');return p[1]+'/'+p[0].slice(2)}),mKeys.map(k=>Math.round(mAgg[k])),mKeys.map(k=>mAgg[k]>=0?'rgba(129,140,248,.65)':'rgba(236,72,153,.55)'));
+  barChart('chTradeMonth',mKeys.map(k=>{const p=k.split('-');return p[1]+'/'+p[0].slice(2)}),mKeys.map(k=>Math.round(mAgg[k])),mKeys.map(k=>mAgg[k]>=0?'#22c55e':'#ef4444'));
   const yAgg={};DB.trades.forEach(t=>{const y=(t.date||'').slice(0,4);if(y){(yAgg[y]=yAgg[y]||{soma:0,dias:0,wins:0});yAgg[y].soma+=t.res;yAgg[y].dias++;if(t.res>0)yAgg[y].wins++}});
   const yKeys=Object.keys(yAgg).sort();
   document.getElementById('tradeYear').innerHTML=yKeys.length?yKeys.map(y=>{const o=yAgg[y];return `<div class="item between"><div><b>${y}</b> <span class="mini">${o.dias} dias · ${Math.round(o.wins/o.dias*100)}% acerto</span></div><b class="${o.soma>=0?'amount-pos':'amount-neg'}">${o.soma>=0?'+':''}${BRL(o.soma)}</b></div>`}).join(''):'<div class="empty">Sem dados</div>';
