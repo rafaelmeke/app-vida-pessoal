@@ -99,6 +99,10 @@ tr:last-child td{border-bottom:none}
   .g5,.g4,.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}
   .fr2,.fr3,.fr4{grid-template-columns:1fr}.topbar h1{font-size:20px}
   table{font-size:12.5px}td,th{padding:7px 6px}
+  /* impede que conteúdo largo (tabelas) estique a coluna e estoure a tela */
+  body,.app,.main,.section{max-width:100%;overflow-x:hidden}
+  .grid>*,.card{min-width:0}
+  .card{overflow:hidden}
   /* tabelas largas rolam dentro do card em vez de estourar a tela */
   .card>div{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
   table{white-space:nowrap}
