@@ -219,9 +219,9 @@ tr:last-child td{border-bottom:none}
             <div><label class="fl">Sono (h)</label><input type="number" step="0.5" id="h_sleep" placeholder="7.5"></div>
           </div>
           <div class="form-row fr3">
-            <div><label class="fl">Humor (1-5)</label><select id="h_mood"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-            <div><label class="fl">Energia (1-5)</label><select id="h_energy"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
-            <div><label class="fl">Estresse (1-5)</label><select id="h_stress"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div><label class="fl">Seguiu a dieta?</label><select id="h_diet"><option value="">—</option><option value="sim">Sim</option><option value="meio">Mais ou menos</option><option value="nao">Não</option></select></div>
+            <div><label class="fl">Treino</label><select id="h_workout"><option value="">—</option><option>Musculação</option><option>Futvôlei</option><option>Tênis</option><option>Corrida</option><option>Natação</option><option>Bicicleta</option><option>Outro</option></select></div>
+            <div><label class="fl">Aprendizado</label><select id="h_learn"><option value="">—</option><option>Violão</option><option>Xadrez</option><option>Inglês</option><option>Leitura</option><option>Outro</option></select></div>
           </div>
           <div class="form-row"><div><label class="fl">🙏 Gratidão (1-3 coisas do dia)</label><input id="h_grat" placeholder="ex: meus filhos, treino bom, café da manhã"></div></div>
           <div class="form-row"><div><label class="fl">📓 Algo relevante do dia (diário)</label><textarea id="h_note" placeholder="Como foi seu dia?"></textarea></div></div>
@@ -399,8 +399,8 @@ tr:last-child td{border-bottom:none}
             <div><label class="fl">% Gordura</label><input type="number" step="0.1" id="s_fat" placeholder="18.0"></div>
           </div>
           <div class="form-row fr2">
-            <div><label class="fl">Treino feito</label><select id="s_workout"><option value="">—</option><option>Musculação</option><option>Cardio</option><option>Corrida</option><option>Caminhada</option><option>Tênis</option><option>Futvôlei</option><option>Outro</option></select></div>
-            <div><label class="fl">Fez dieta hoje?</label><select id="s_diet"><option value="">—</option><option value="sim">Sim</option><option value="nao">Não</option></select></div>
+            <div><label class="fl">Tem plano de dieta para seguir?</label><select id="s_dietplan"><option value="">—</option><option value="sim">Sim</option><option value="nao">Não</option></select></div>
+            <div><label class="fl">Tem plano de treino para seguir?</label><select id="s_trainplan"><option value="">—</option><option value="sim">Sim</option><option value="nao">Não</option></select></div>
           </div>
           <button class="btn" onclick="addMedicao()">Salvar medição</button>
         </div>
@@ -409,10 +409,6 @@ tr:last-child td{border-bottom:none}
       <div class="grid g2 mb">
         <div class="card"><h3>💧 Água (litros, últimos dias)</h3><div class="chart-wrap"><canvas id="chWater"></canvas></div></div>
         <div class="card"><h3>🍽️ Aderência à dieta (mês)</h3><div class="chart-wrap"><canvas id="chDiet"></canvas></div></div>
-      </div>
-      <div class="grid g2 mb">
-        <div class="card"><h3>😊 Humor e energia (14 dias)</h3><div class="chart-wrap"><canvas id="chMood"></canvas></div></div>
-        <div class="card"><h3>😌 Estresse (14 dias)</h3><div class="chart-wrap"><canvas id="chStress"></canvas></div></div>
       </div>
       <div class="grid g2">
         <div class="card"><h3>📓 Diário</h3><div id="diaryList"></div></div>
@@ -676,9 +672,9 @@ function addSession(){const sid=val('p_skill');if(!sid)return toast('Escolha a h
 function addDaily(){const d=val('h_date')||today();const f={};
   const setN=(k,id)=>{const v=parseFloat(document.getElementById(id).value);if(!isNaN(v))f[k]=v};
   const setV=(k,id)=>{const v=document.getElementById(id).value.trim();if(v)f[k]=v};
-  setN('water','h_water');setN('sleep','h_sleep');setN('mood','h_mood');setN('energy','h_energy');setN('stress','h_stress');setV('grat','h_grat');setV('note','h_note');
+  setN('water','h_water');setN('sleep','h_sleep');setV('diet','h_diet');setV('workout','h_workout');setV('learn','h_learn');setV('grat','h_grat');setV('note','h_note');
   if(!Object.keys(f).length)return toast('Preencha algo');
-  upsertByDate(d,f);clearF(['h_water','h_sleep','h_grat','h_note']);toast('Dia salvo ✓');renderAll()}
+  upsertByDate(d,f);clearF(['h_water','h_sleep','h_diet','h_workout','h_learn','h_grat','h_note']);toast('Dia salvo ✓');renderAll()}
 function addBook(){const t=val('b_title');if(!t)return toast('Informe o título');
   DB.books.push({id:uid(),titulo:t,tipo:val('b_type'),autor:val('b_author'),status:val('b_status'),pages:parseInt(val('b_pages'))||0,read:0,nota:num('b_rate')});
   save('vp_books',DB.books);clearF(['b_title','b_author','b_pages','b_rate']);toast('Leitura adicionada ✓');renderAll()}
@@ -808,12 +804,13 @@ function renderFin(){
   if(DB.settings.patrim){const meta=DB.settings.patrim;const atual=t.invest+t.bens;const falta=Math.max(0,meta-atual);const p=Math.min(100,Math.round(atual/meta*100))||0;
     document.getElementById('goalPatrimView').innerHTML=`<div class="pbar mb"><div style="width:${p}%"></div></div><div class="mini">Você já tem <b class="amount-pos">${BRL(atual)}</b> (investido + bens) de uma meta de <b>${BRL(meta)}</b> — <b>${p}%</b>.</div>`+(falta>0?`<div class="mini">Faltam <b class="amount-neg">${BRL(falta)}</b> para a meta.</div>`:`<div class="mini amount-pos">🎉 Meta atingida!</div>`);}
   else document.getElementById('goalPatrimView').innerHTML='<div class="mini">Defina a meta e clique em "Salvar metas".</div>';
-  const ymG=today().slice(0,7);
-  const mInc=mm.filter(m=>m.type==='receita').reduce((a,b)=>a+b.amount,0);
+  const prevD=new Date();prevD.setDate(1);prevD.setMonth(prevD.getMonth()-1);const ymG=prevD.toISOString().slice(0,7);
+  const mLabel=ymG.slice(5)+'/'+ymG.slice(0,4);
+  const mInc=DB.moves.filter(m=>m.date.startsWith(ymG)&&m.type==='receita').reduce((a,b)=>a+b.amount,0);
   const salMonth=DB.salary.filter(s=>s.mes===ymG).reduce((a,b)=>a+b.valor,0);
   const renda=mInc+salMonth;
   if(DB.settings.renda){const meta=DB.settings.renda;const falta=Math.max(0,meta-renda);const p=Math.min(100,Math.round(renda/meta*100))||0;
-    document.getElementById('goalRendaView').innerHTML=`<div class="pbar mb"><div style="width:${p}%"></div></div><div class="mini">Renda do mês: <b class="amount-pos">${BRL(renda)}</b> (salário ${BRL(salMonth)} + receitas ${BRL(mInc)}). Meta: <b>${BRL(meta)}</b> — <b>${p}%</b>.</div>`+(falta>0?`<div class="mini">Faltam <b class="amount-neg">${BRL(falta)}</b> este mês.</div>`:`<div class="mini amount-pos">🎉 Meta do mês atingida!</div>`);}
+    document.getElementById('goalRendaView').innerHTML=`<div class="pbar mb"><div style="width:${p}%"></div></div><div class="mini">Renda do mês anterior (${mLabel}): <b class="amount-pos">${BRL(renda)}</b> (salário ${BRL(salMonth)} + receitas ${BRL(mInc)}). Meta: <b>${BRL(meta)}</b> — <b>${p}%</b>.</div>`+(falta>0?`<div class="mini">Faltaram <b class="amount-neg">${BRL(falta)}</b> para a meta.</div>`:`<div class="mini amount-pos">🎉 Meta do mês atingida!</div>`);}
   else document.getElementById('goalRendaView').innerHTML='<div class="mini">Defina a meta de renda e clique em "Salvar metas".</div>';
   document.getElementById('ideiasList').innerHTML=(DB.ideias&&DB.ideias.length)?DB.ideias.map(i=>`<div class="item between"><span>💡 ${esc(i.texto)}</span>${acts('ideias',i.id)}</div>`).join(''):'<div class="empty">Anote ideias de renda extra aqui.</div>';
 }
@@ -874,8 +871,9 @@ function renderHealth(){
   const lastF=[...DB.daily].reverse().find(d=>d.fat);
   const ym=today().slice(0,7);
   const md=DB.daily.filter(d=>d.date.startsWith(ym));
-  const dietYes=md.filter(d=>d.diet==='sim').length,dietNo=md.filter(d=>d.diet==='nao').length;
-  const adher=dietYes+dietNo?Math.round(dietYes/(dietYes+dietNo)*100):0;
+  const dietYes=md.filter(d=>d.diet==='sim').length,dietMid=md.filter(d=>d.diet==='meio').length,dietNo=md.filter(d=>d.diet==='nao').length;
+  const dietTot=dietYes+dietMid+dietNo;
+  const adher=dietTot?Math.round((dietYes+dietMid*0.5)/dietTot*100):0;
   const wkAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
   const wAvg=DB.daily.filter(d=>d.water&&d.date>=wkAgo);
   const avgWater=wAvg.length?(wAvg.reduce((a,b)=>a+b.water,0)/wAvg.length).toFixed(1):'—';
@@ -883,20 +881,17 @@ function renderHealth(){
     kpi('Peso atual',lastW?lastW.weight+' kg':'—','⚖️',lastW?fmtDate(lastW.date):'')+
     kpi('% Gordura',lastF?lastF.fat+'%':'—','📉',lastF?fmtDate(lastF.date):'')+
     kpi('Água média (7d)',avgWater!=='—'?avgWater+' L':'—','💧',wAvg.length+' dias')+
-    kpi('Aderência dieta (mês)',adher+'%','🍽️',dietYes+' de '+(dietYes+dietNo)+' dias');
+    kpi('Aderência dieta (mês)',adher+'%','🍽️',dietYes+' sim · '+dietMid+' +/- · '+dietNo+' não');
   const bd=DB.daily.filter(d=>d.weight||d.fat).slice(-30);
   dualChart('chBody',bd.map(d=>fmtDate(d.date)),bd.map(d=>d.weight||null),bd.map(d=>d.fat||null));
   const wd=DB.daily.filter(d=>d.water).slice(-14);
   barChart('chWater',wd.map(d=>fmtDate(d.date)),wd.map(d=>d.water),'#06b6d4');
-  donut('chDiet',['Seguiu','Não seguiu'],[dietYes,dietNo],['#22c55e','#ef4444']);
-  const moodD=DB.daily.filter(d=>d.mood||d.energy).slice(-14);
-  dualLine('chMood',moodD.map(d=>fmtDate(d.date)),moodD.map(d=>d.mood||null),'Humor','#f59e0b',moodD.map(d=>d.energy||null),'Energia','#22c55e');
-  const stressD=DB.daily.filter(d=>d.stress).slice(-14);
-  barChart('chStress',stressD.map(d=>fmtDate(d.date)),stressD.map(d=>d.stress),'#ef4444');
+  donut('chDiet',['Sim','Mais ou menos','Não'],[dietYes,dietMid,dietNo],['#22c55e','#f59e0b','#ef4444']);
   const diary=[...DB.daily].filter(d=>d.note||d.grat).reverse();
-  document.getElementById('diaryList').innerHTML=diary.length?diary.map(d=>`<div class="diary-item"><div class="d">${fmtDate(d.date)}${d.mood?' · humor '+d.mood+'/5':''}</div>${d.note?esc(d.note):''}${d.grat?'<div class="mini" style="margin-top:5px">🙏 '+esc(d.grat)+'</div>':''}</div>`).join(''):'<div class="empty">Escreva algo do seu dia 📓</div>';
+  document.getElementById('diaryList').innerHTML=diary.length?diary.map(d=>`<div class="diary-item"><div class="d">${fmtDate(d.date)}</div>${d.note?esc(d.note):''}${d.grat?'<div class="mini" style="margin-top:5px">🙏 '+esc(d.grat)+'</div>':''}</div>`).join(''):'<div class="empty">Escreva algo do seu dia 📓</div>';
+  const dietTag=v=>v==='sim'?'<span class="tag in">sim</span>':v==='meio'?'<span class="tag">+/-</span>':v==='nao'?'<span class="tag out">não</span>':'—';
   const h=[...DB.daily].reverse();
-  document.getElementById('healthTable').innerHTML=h.length?`<table><thead><tr><th>Data</th><th>Peso</th><th>%Gord</th><th>Água</th><th>Sono</th><th>Dieta</th><th>Treino</th><th></th></tr></thead><tbody>${h.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${e.weight||'—'}</td><td>${e.fat||'—'}</td><td>${e.water?e.water+'L':'—'}</td><td>${e.sleep?e.sleep+'h':'—'}</td><td>${e.diet==='sim'?'<span class="tag in">sim</span>':e.diet==='nao'?'<span class="tag out">não</span>':'—'}</td><td>${e.workout?'<span class="pill">'+e.workout+'</span>':'—'}</td><td>${acts('daily',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum registro</div>';
+  document.getElementById('healthTable').innerHTML=h.length?`<table><thead><tr><th>Data</th><th>Peso</th><th>%Gord</th><th>Água</th><th>Sono</th><th>Dieta</th><th>Treino</th><th>Aprend.</th><th></th></tr></thead><tbody>${h.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${e.weight||'—'}</td><td>${e.fat||'—'}</td><td>${e.water?e.water+'L':'—'}</td><td>${e.sleep?e.sleep+'h':'—'}</td><td>${dietTag(e.diet)}</td><td>${e.workout?'<span class="pill">'+e.workout+'</span>':'—'}</td><td>${e.learn?'<span class="pill">'+e.learn+'</span>':'—'}</td><td>${acts('daily',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum registro</div>';
 }
 
 function renderBooks(){
@@ -938,7 +933,7 @@ const SCHEMA={
   fixos:[['nome','Nome','text'],['cat','Categoria','select',['Moradia','Contas (luz/água/gás)','Internet/Telefone','Assinaturas','Transporte','Educação','Saúde','Seguros','Outro']],['valor','Valor mensal (R$)','number']],
   ideias:[['texto','Ideia de renda extra','text']],
   sessions:[['date','Data','date'],['skillId','Habilidade','skill'],['min','Duração (min)','number'],['rate','Nota (1-5)','number'],['note','Nota','text']],
-  daily:[['date','Data','date'],['weight','Peso (kg)','number'],['fat','% Gordura','number'],['water','Água (L)','number'],['sleep','Sono (h)','number'],['diet','Seguiu dieta','select',['','sim','nao']],['workout','Treino','text'],['mood','Humor (1-5)','number'],['energy','Energia (1-5)','number'],['stress','Estresse (1-5)','number'],['grat','Gratidão','text'],['note','Diário','textarea']],
+  daily:[['date','Data','date'],['weight','Peso (kg)','number'],['fat','% Gordura','number'],['water','Água (L)','number'],['sleep','Sono (h)','number'],['diet','Seguiu dieta','select',['','sim','meio','nao']],['workout','Treino','select',['','Musculação','Futvôlei','Tênis','Corrida','Natação','Bicicleta','Outro']],['learn','Aprendizado','select',['','Violão','Xadrez','Inglês','Leitura','Outro']],['dietplan','Tem plano de dieta','select',['','sim','nao']],['trainplan','Tem plano de treino','select',['','sim','nao']],['grat','Gratidão','text'],['note','Diário','textarea']],
   books:[['titulo','Título','text'],['tipo','Tipo','select',['Livro','Curso','Estudo','Artigo','Vídeo','Outro']],['autor','Autor/Fonte','text'],['status','Status','select',['Quero ler','Lendo','Lido']],['pages','Páginas/aulas','number'],['read','Posição atual','number'],['nota','Nota (0-10)','number']],
   relations:[['date','Data','date'],['who','Com quem','select',['Filhos','Namorada','Família','Amigos','Outro']],['act','Atividade','text'],['rate','Nota (1-5)','number'],['note','Momento marcante','textarea']],
   lifegoals:[['titulo','Meta','text'],['area','Área','select',['Saúde','Finanças','Carreira','Relacionamentos','Aprendizado','Lazer','Pessoal']],['deadline','Prazo','date'],['prog','Progresso (%)','number'],['note','Observação','text']],
@@ -986,10 +981,10 @@ function upsertDaily(fields){upsertByDate(today(),fields)}
 function addMedicao(){const f={};
   const w=parseFloat(document.getElementById('s_weight').value);if(!isNaN(w))f.weight=w;
   const ft=parseFloat(document.getElementById('s_fat').value);if(!isNaN(ft))f.fat=ft;
-  const wk=document.getElementById('s_workout').value;if(wk)f.workout=wk;
-  const dt=document.getElementById('s_diet').value;if(dt)f.diet=dt;
+  const dp=document.getElementById('s_dietplan').value;if(dp)f.dietplan=dp;
+  const tp=document.getElementById('s_trainplan').value;if(tp)f.trainplan=tp;
   if(!Object.keys(f).length)return toast('Preencha algo');
-  upsertDaily(f);clearF(['s_weight','s_fat']);toast('Medição salva ✓');renderAll()}
+  upsertDaily(f);clearF(['s_weight','s_fat','s_dietplan','s_trainplan']);toast('Medição salva ✓');renderAll()}
 function guessCat(t){
   if(/almo|jant|cafe|comida|mercado|lanche|restaurante|ifood|padaria|pizza/.test(t))return'Alimentação';
   if(/uber|gasolina|combust|transporte|onibus|metro|passagem|estaciona|99/.test(t))return'Transporte';
