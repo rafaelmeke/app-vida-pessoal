@@ -821,22 +821,32 @@ function renderPro(){
   const monthRes=mt.reduce((a,b)=>a+b.res,0);
   const wins=DB.trades.filter(x=>x.res>0).length,total=DB.trades.length;
   const winRate=total?Math.round(wins/total*100):0;
-  const allRes=DB.trades.reduce((a,b)=>a+b.res,0);
+  const yNow=today().slice(0,4);
+  const salYear=DB.salary.filter(s=>(s.mes||'').slice(0,4)===yNow).reduce((a,b)=>a+b.valor,0);
+  const tradeYear=DB.trades.filter(t=>(t.date||'').slice(0,4)===yNow).reduce((a,b)=>a+b.res,0);
+  const recebidoAno=salYear+tradeYear;
+  const fixoMensal=DB.fixos.reduce((a,b)=>a+b.valor,0);
+  const mesesDecorridos=new Date().getMonth()+1;
+  const custoFixoYTD=fixoMensal*mesesDecorridos;
+  const liquidoAno=recebidoAno-custoFixoYTD;
   const lastSal=[...DB.salary].sort((a,b)=>a.mes.localeCompare(b.mes)).slice(-1)[0];
   document.getElementById('proKpis').innerHTML=
     kpi('Day Trade (mês)',BRL(monthRes),'📈',mt.length+' operações',monthRes>=0?'amount-pos':'amount-neg')+
-    kpi('Acumulado total',BRL(allRes),'💹','',allRes>=0?'amount-pos':'amount-neg')+
+    kpi('Recebido − Custo fixo ('+yNow+')',BRL(liquidoAno),'💹','recebido '+BRL(recebidoAno)+' − custo '+BRL(custoFixoYTD)+' ('+mesesDecorridos+' meses)',liquidoAno>=0?'amount-pos':'amount-neg')+
     kpi('Taxa de acerto',winRate+'%','🎯',wins+'/'+total+' dias')+
     kpi('Último salário',lastSal?BRL(lastSal.valor):'—','💼',lastSal?lastSal.mes:'sem registro');
   const tr=[...DB.trades].sort((a,b)=>a.date.localeCompare(b.date));
-  let acc=0;const accs=tr.map(x=>{acc+=x.res;return acc});
+  let acc=0;const accAll=tr.map(x=>{acc+=x.res;return acc});
+  const cut=new Date();cut.setMonth(cut.getMonth()-12);const cutS=cut.toISOString().slice(0,10);
+  let start=tr.findIndex(x=>x.date>=cutS);if(start<0)start=tr.length;
+  const trW=tr.slice(start),accW=accAll.slice(start);
   (function(){const c=document.getElementById('chTradeBig');if(!c)return;destroy('chTradeBig');const o=baseOpts();o.scales.yR={position:'right',grid:{display:false},ticks:{color:tickC,font:{size:10}}};
-    charts['chTradeBig']=new Chart(c,{type:'line',data:{labels:tr.map(x=>fmtDate(x.date)),datasets:[
-      {data:accs,borderColor:'#6366f1',backgroundColor:'#6366f122',fill:true,tension:.3,pointRadius:0,borderWidth:2,yAxisID:'y'},
-      {data:accs,borderColor:'transparent',backgroundColor:'transparent',pointRadius:0,borderWidth:0,fill:false,yAxisID:'yR'}]},options:o});})();
+    charts['chTradeBig']=new Chart(c,{type:'line',data:{labels:trW.map(x=>fmtDate(x.date)),datasets:[
+      {data:accW,borderColor:'#6366f1',backgroundColor:'#6366f122',fill:true,tension:.3,pointRadius:0,borderWidth:2,yAxisID:'y'},
+      {data:accW,borderColor:'transparent',backgroundColor:'transparent',pointRadius:0,borderWidth:0,fill:false,yAxisID:'yR'}]},options:o});})();
   const mAgg={};DB.trades.forEach(t=>{const k=(t.date||'').slice(0,7);if(k)mAgg[k]=(mAgg[k]||0)+t.res});
   const mKeys=Object.keys(mAgg).sort();
-  barChart('chTradeMonth',mKeys.map(k=>{const p=k.split('-');return p[1]+'/'+p[0].slice(2)}),mKeys.map(k=>Math.round(mAgg[k])),mKeys.map(k=>mAgg[k]>=0?'#22c55e':'#ef4444'));
+  barChart('chTradeMonth',mKeys.map(k=>{const p=k.split('-');return p[1]+'/'+p[0].slice(2)}),mKeys.map(k=>Math.round(mAgg[k])),mKeys.map(k=>mAgg[k]>=0?'rgba(129,140,248,.65)':'rgba(236,72,153,.55)'));
   const yAgg={};DB.trades.forEach(t=>{const y=(t.date||'').slice(0,4);if(y){(yAgg[y]=yAgg[y]||{soma:0,dias:0,wins:0});yAgg[y].soma+=t.res;yAgg[y].dias++;if(t.res>0)yAgg[y].wins++}});
   const yKeys=Object.keys(yAgg).sort();
   document.getElementById('tradeYear').innerHTML=yKeys.length?yKeys.map(y=>{const o=yAgg[y];return `<div class="item between"><div><b>${y}</b> <span class="mini">${o.dias} dias · ${Math.round(o.wins/o.dias*100)}% acerto</span></div><b class="${o.soma>=0?'amount-pos':'amount-neg'}">${o.soma>=0?'+':''}${BRL(o.soma)}</b></div>`}).join(''):'<div class="empty">Sem dados</div>';
