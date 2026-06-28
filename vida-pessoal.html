@@ -164,6 +164,7 @@ tr:last-child td{border-bottom:none}
       <button data-sec="vida"><span class="ico">🧭</span> Metas de Vida</button>
       <button data-sec="viagens"><span class="ico">✈️</span> Viagens</button>
       <button data-sec="bens"><span class="ico">🏠</span> Bens</button>
+      <button data-sec="assistente"><span class="ico">🤖</span> Assistente</button>
     </nav>
     <div class="side-foot">
       <button onclick="exportData()">⬇️ Exportar backup</button>
@@ -255,7 +256,7 @@ tr:last-child td{border-bottom:none}
               <div><label class="fl">Tipo</label><select id="m_type"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div>
             </div>
             <div class="form-row fr2">
-              <div><label class="fl">Categoria</label><select id="m_cat"><option>Alimentação</option><option>Moradia</option><option>Transporte</option><option>Lazer</option><option>Saúde</option><option>Educação</option><option>Salário</option><option>Investimento</option><option>Outro</option></select></div>
+              <div><label class="fl">Categoria</label><select id="m_cat"><option>Alimentação</option><option>Bebidas alcoólicas</option><option>Moradia</option><option>Transporte</option><option>Lazer</option><option>Saúde</option><option>Educação</option><option>Salário</option><option>Investimento</option><option>Outro</option></select></div>
               <div><label class="fl">Valor (R$)</label><input type="number" step="0.01" id="m_amount" placeholder="120.00"></div>
             </div>
             <div class="form-row"><div><label class="fl">Descrição</label><input id="m_note" placeholder="opcional"></div></div>
@@ -584,6 +585,20 @@ tr:last-child td{border-bottom:none}
       </div>
       <div class="card"><h3>Meus bens</h3><div id="bensTable"></div></div>
     </section>
+
+    <!-- ASSISTENTE -->
+    <section class="section" id="assistente">
+      <div class="card mb">
+        <h3>🤖 Pergunte sobre suas finanças</h3>
+        <div class="mini" style="margin:-4px 0 12px">Tudo é calculado aqui no seu aparelho, em cima dos seus dados. Nada é enviado para fora.</div>
+        <div class="flex" style="gap:8px">
+          <input id="ai_q" placeholder="ex: quanto gastei de bebida em maio?" style="flex:1" onkeydown="if(event.key==='Enter')askAI()">
+          <button class="btn" onclick="askAI()">Perguntar</button>
+        </div>
+        <div id="ai_chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px"></div>
+      </div>
+      <div class="card"><h3>💬 Respostas</h3><div id="ai_out"><div class="empty">Faça uma pergunta acima. Posso somar gastos por categoria, custo fixo, renda, day trade e comparar períodos.</div></div></div>
+    </section>
   </main>
 </div>
 <div id="editModal" class="modal" style="display:none">
@@ -626,7 +641,7 @@ const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"
 let charts={};
 
 // ============ NAV ============
-const titles={dashboard:'Dashboard',afazer:'A Fazer & Registro do Dia',financeiro:'Financeiro',profissional:'Profissional',habilidades:'Habilidades',saude:'Saúde',familia:'Família & Relacionamentos',habitos:'Hábitos & Habilidades',livros:'Leitura',vida:'Metas de Vida',viagens:'Viagens Futuras',bens:'Bens & Patrimônio'};
+const titles={dashboard:'Dashboard',afazer:'A Fazer & Registro do Dia',financeiro:'Financeiro',profissional:'Profissional',habilidades:'Habilidades',saude:'Saúde',familia:'Família & Relacionamentos',habitos:'Hábitos & Habilidades',livros:'Leitura',vida:'Metas de Vida',viagens:'Viagens Futuras',bens:'Bens & Patrimônio',assistente:'Assistente'};
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
   const s=b.dataset.sec;
   document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x===b));
@@ -933,7 +948,7 @@ function renderBooks(){
 }
 
 // ============ EDIÇÃO (genérica) ============
-const _CATS=['Alimentação','Moradia','Transporte','Lazer','Saúde','Educação','Salário','Investimento','Outro'];
+const _CATS=['Alimentação','Bebidas alcoólicas','Moradia','Transporte','Lazer','Saúde','Educação','Salário','Investimento','Outro'];
 const SCHEMA={
   moves:[['date','Data','date'],['type','Tipo','select',['despesa','receita']],['cat','Categoria','select',_CATS],['amount','Valor (R$)','number'],['note','Descrição','text']],
   accounts:[['nome','Nome','text'],['tipo','Tipo','select',['Investimento','Conta corrente','Poupança','Reserva']],['valor','Valor (R$)','number']],
@@ -1001,6 +1016,7 @@ function addMedicao(){const f={};
   if(!Object.keys(f).length)return toast('Preencha algo');
   upsertDaily(f);clearF(['s_weight','s_fat','s_dietplan','s_trainplan']);toast('Medição salva ✓');renderAll()}
 function guessCat(t){
+  if(/cerveja|chopp|bebida|alcool|vinho|whisky|cachaca|caipirinha|drink/.test(t))return'Bebidas alcoólicas';
   if(/almo|jant|cafe|comida|mercado|lanche|restaurante|ifood|padaria|pizza/.test(t))return'Alimentação';
   if(/uber|gasolina|combust|transporte|onibus|metro|passagem|estaciona|99/.test(t))return'Transporte';
   if(/aluguel|luz|conta de agua|condominio|internet|moradia/.test(t))return'Moradia';
@@ -1226,7 +1242,89 @@ function resetAll(){if(confirm('Apagar TODOS os dados? Não dá pra desfazer.'))
   ['Inglês (curso)','Treino','Beber 3L de água','Praticar tênis/futvôlei','Ler 10 páginas'].forEach(n=>DB.habits.push({id:uid(),nome:n}));save('vp_habits',DB.habits);
   renderAll();toast('Tudo apagado')}}
 
+// ============ ASSISTENTE LOCAL ============
+const _norm=s=>(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const _MONTHS={janeiro:0,fevereiro:1,marco:2,abril:3,maio:4,junho:5,julho:6,agosto:7,setembro:8,outubro:9,novembro:10,dezembro:11,jan:0,fev:1,mar:2,abr:3,mai:4,jun:5,jul:6,ago:7,set:8,out:9,nov:10,dez:11};
+const _MNAMES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const _ym=(y,m)=>y+'-'+String(m+1).padStart(2,'0');
+function _period(t){
+  const now=new Date(),Y=now.getFullYear();let m;
+  if(m=t.match(/ultim[oa]s?\s+(\d+)\s+mes/)){const n=+m[1];const s=new Date(Y,now.getMonth()-(n-1),1);return{start:_ym(s.getFullYear(),s.getMonth())+'-01',end:_ym(Y,now.getMonth())+'-31',label:'nos últimos '+n+' meses',months:n}}
+  if(m=t.match(/ultim[oa]s?\s+(\d+)\s+dia/)){const n=+m[1];const s=new Date(now.getTime()-(n-1)*864e5);const fmt=d=>d.toISOString().slice(0,10);return{start:fmt(s),end:fmt(now),label:'nos últimos '+n+' dias',months:Math.max(1,Math.round(n/30))}}
+  const yMatch=t.match(/\b(20\d{2})\b/);let monKey=null;
+  for(const k in _MONTHS){if(new RegExp('\\b'+k+'\\b').test(t)){monKey=k;break}}
+  if(monKey!=null){const mi=_MONTHS[monKey];const yy=yMatch?+yMatch[1]:Y;return{start:_ym(yy,mi)+'-01',end:_ym(yy,mi)+'-31',label:'em '+_MNAMES[mi]+' de '+yy,months:1}}
+  if(/mes passado|mes anterior/.test(t)){const s=new Date(Y,now.getMonth()-1,1);return{start:_ym(s.getFullYear(),s.getMonth())+'-01',end:_ym(s.getFullYear(),s.getMonth())+'-31',label:'em '+_MNAMES[s.getMonth()],months:1}}
+  if(/este mes|esse mes|mes atual|neste mes|do mes|no mes/.test(t)){return{start:_ym(Y,now.getMonth())+'-01',end:_ym(Y,now.getMonth())+'-31',label:'este mês',months:1}}
+  if(/ano passado|ano anterior/.test(t)){return{start:(Y-1)+'-01-01',end:(Y-1)+'-12-31',label:'em '+(Y-1),months:12}}
+  if(yMatch){const yy=+yMatch[1];return{start:yy+'-01-01',end:yy+'-12-31',label:'em '+yy,months:12}}
+  if(/este ano|esse ano|ano atual|no ano|do ano/.test(t)){return{start:Y+'-01-01',end:Y+'-12-31',label:'este ano',months:now.getMonth()+1}}
+  return{start:null,end:null,label:'no total',months:null};
+}
+function _cat(t){
+  const syn=[['Bebidas alcoólicas',/bebida|alcool|alcoolic|cerveja|chopp|\bbar\b|drink|vinho|whisky|cachaca|caipirinha/],
+    ['Alimentação',/aliment|comida|mercado|restaurante|lanche|ifood|padaria/],
+    ['Transporte',/transporte|uber|gasolina|combustivel|onibus|metro|\b99\b/],
+    ['Lazer',/lazer|cinema|festa|passeio|show/],
+    ['Saúde',/saude|remedio|farmacia|medico|academia|dentista/],
+    ['Educação',/educac|curso|faculdade|escola|livro/],
+    ['Moradia',/moradia|aluguel|condominio/],
+    ['Investimento',/investiment|investi/]];
+  for(const a of syn){if(a[1].test(t))return a[0]}
+  for(const c of _CATS){if(t.includes(_norm(c)))return c}
+  return null;
+}
+const _inR=(d,s,e)=>!s||(d>=s&&d<=e);
+const _sumMov=(type,cat,p)=>DB.moves.filter(m=>m.type===type&&(!cat||m.cat===cat)&&_inR(m.date,p.start,p.end)).reduce((a,b)=>a+b.amount,0);
+function aiAnswer(raw){
+  const t=_norm(raw),p=_period(t),cat=_cat(t);
+  if(/custo fixo|custos fixos|gasto fixo|despesa fixa|conta fixa/.test(t)){
+    const mensal=DB.fixos.reduce((a,b)=>a+b.valor,0);
+    if(p.months)return BRL(mensal*p.months)+' de custo fixo '+p.label+' <span class="mini">('+BRL(mensal)+'/mês × '+p.months+' '+(p.months>1?'meses':'mês')+')</span>';
+    return 'Seu custo fixo é <b class="amount-neg">'+BRL(mensal)+'</b> por mês <span class="mini">('+BRL(mensal*12)+' no ano)</span>';
+  }
+  if(/day ?trade|\btrade\b|\btrades\b/.test(t)){
+    const arr=DB.trades.filter(x=>_inR(x.date,p.start,p.end));const res=arr.reduce((a,b)=>a+b.res,0);
+    return 'Day trade '+p.label+': <b class="'+(res>=0?'amount-pos':'amount-neg')+'">'+(res>=0?'+':'')+BRL(res)+'</b> <span class="mini">('+arr.length+' operações)</span>';
+  }
+  if(/salario|salarios/.test(t)){
+    const sal=DB.salary.filter(s=>_inR(s.mes+'-15',p.start,p.end)).reduce((a,b)=>a+b.valor,0);
+    return 'Salários/recebimentos '+p.label+': <b class="amount-pos">'+BRL(sal)+'</b>';
+  }
+  if(/saldo|sobrou|sobra|quanto sobr/.test(t)){
+    const rec=_sumMov('receita',null,p)+DB.salary.filter(s=>_inR(s.mes+'-15',p.start,p.end)).reduce((a,b)=>a+b.valor,0);
+    const des=_sumMov('despesa',null,p);const saldo=rec-des;
+    return 'Saldo '+p.label+': <b class="'+(saldo>=0?'amount-pos':'amount-neg')+'">'+BRL(saldo)+'</b> <span class="mini">(recebido '+BRL(rec)+' − gasto '+BRL(des)+')</span>';
+  }
+  if(/por categoria|no que|onde gast|distribu|categorias/.test(t)){
+    const map={};DB.moves.filter(m=>m.type==='despesa'&&_inR(m.date,p.start,p.end)).forEach(m=>map[m.cat]=(map[m.cat]||0)+m.amount);
+    const ks=Object.keys(map).sort((a,b)=>map[b]-map[a]);if(!ks.length)return 'Não encontrei gastos '+p.label+'.';
+    const tot=ks.reduce((a,k)=>a+map[k],0);
+    return 'Gastos por categoria '+p.label+' (total <b class="amount-neg">'+BRL(tot)+'</b>):'+ks.map(k=>'<div class="mini" style="margin-top:4px">• '+esc(k)+': <b>'+BRL(map[k])+'</b></div>').join('');
+  }
+  if(/receit|ganho|ganhei|recebi|entrada|\brenda\b/.test(t)&&!/gast|despes|paguei/.test(t)){
+    const rec=_sumMov('receita',cat,p)+(cat?0:DB.salary.filter(s=>_inR(s.mes+'-15',p.start,p.end)).reduce((a,b)=>a+b.valor,0));
+    return 'Recebido '+(cat?('em '+cat+' '):'')+p.label+': <b class="amount-pos">'+BRL(rec)+'</b>';
+  }
+  const des=_sumMov('despesa',cat,p);
+  if(cat)return 'Você gastou <b class="amount-neg">'+BRL(des)+'</b> em <b>'+esc(cat)+'</b> '+p.label;
+  return 'Total de gastos '+p.label+': <b class="amount-neg">'+BRL(des)+'</b>';
+}
+function askAI(){
+  const inp=document.getElementById('ai_q');const raw=(inp.value||'').trim();if(!raw)return;
+  let ans;try{ans=aiAnswer(raw)}catch(e){ans='Não consegui entender essa pergunta. Tente algo como "quanto gastei de bebida em maio".'}
+  const out=document.getElementById('ai_out');if(out.querySelector('.empty'))out.innerHTML='';
+  out.insertAdjacentHTML('afterbegin','<div class="diary-item"><div class="d">❓ '+esc(raw)+'</div>'+ans+'</div>');
+  inp.value='';
+}
+function renderAssistChips(){
+  const el=document.getElementById('ai_chips');if(!el)return;
+  const chips=['Quanto gastei de bebida este mês?','Gastos por categoria este mês','Custo fixo do ano','Quanto recebi mês passado?','Day trade este ano','Quanto sobrou este mês?'];
+  el.innerHTML=chips.map(c=>'<span class="pill" style="cursor:pointer" onclick="document.getElementById(\'ai_q\').value=this.textContent;askAI()">'+c+'</span>').join('');
+}
+
 // ============ INIT ============
+renderAssistChips();
 ['m_date','t_date','p_date','h_date','r_date'].forEach(id=>{const e=document.getElementById(id);if(e&&!e.value)e.value=today()});
 const sm=document.getElementById('s_month');if(sm&&!sm.value)sm.value=today().slice(0,7);
 document.getElementById('todayDate').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
