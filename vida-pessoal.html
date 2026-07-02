@@ -393,7 +393,7 @@ tr:last-child td{border-bottom:none}
               <div><label class="fl">Resultado (% da banca)</label><div class="flex" style="gap:6px"><input type="number" step="0.01" id="t_pct" placeholder="ex: 1.5 ou -1.2" style="flex:1"><span style="font-weight:700;color:var(--txt2)">%</span></div></div>
               <div><label class="fl">Ativo</label><select id="t_ativo"><option value="">—</option><option>Índice</option><option>Dólar</option><option>Cripto</option><option>Bolsa</option><option>Forex</option></select></div>
             </div>
-            <div class="form-row"><div><label class="fl">Nota</label><input id="t_note" placeholder="opcional"></div></div>
+            <div class="form-row"><div><label class="fl">📝 Anotações do trade</label><textarea id="t_note" placeholder="Ex: entrei no rompimento, saí no stop, mercado lateral, meu erro/acerto do dia..."></textarea></div></div>
             <button class="btn" onclick="addTrade()">Salvar</button>
           </div>
           <div class="card"><h3>📈 Evolução acumulada</h3><div class="chart-wrap"><canvas id="chTradeBig"></canvas></div></div>
@@ -761,6 +761,7 @@ function saveGoals(){
 function addIdeia(){const t=val('ie_txt');if(!t)return toast('Escreva a ideia');DB.ideias.push({id:uid(),texto:t});save('vp_ideias',DB.ideias);clearF(['ie_txt']);toast('Ideia salva ✓');renderAll()}
 
 function del(store,id){DB[store]=DB[store].filter(x=>x.id!==id);save('vp_'+store,DB[store]);toast('Removido');renderAll()}
+function delDiary(id){const e=DB.daily.find(d=>d.id===id);if(!e)return;if(!confirm('Excluir esta anotação do diário?'))return;delete e.note;delete e.grat;const keys=['weight','fat','water','sleep','diet','workout','learn','dietplan','trainplan'];const hasData=keys.some(k=>e[k]!=null&&e[k]!=='');if(!hasData)DB.daily=DB.daily.filter(d=>d.id!==id);save('vp_daily',DB.daily);toast('Anotação excluída');renderAll()}
 function updSkill(id,v){const s=DB.skills.find(x=>x.id===id);if(s){s.nivel=Math.min(10,Number(v)||0);save('vp_skills',DB.skills);renderAll()}}
 function updBookStatus(id,v){const b=DB.books.find(x=>x.id===id);if(b){b.status=v;save('vp_books',DB.books);renderAll()}}
 function updBookRead(id,v){const b=DB.books.find(x=>x.id===id);if(b){b.read=parseInt(v)||0;save('vp_books',DB.books);renderAll()}}
@@ -1061,7 +1062,7 @@ function renderHealth(){
   barChart('chWater',wd.map(d=>fmtDate(d.date)),wd.map(d=>d.water),'#06b6d4');
   donut('chDiet',['Sim','Mais ou menos','Não'],[dietYes,dietMid,dietNo],['#22c55e','#f59e0b','#ef4444']);
   const diary=[...DB.daily].filter(d=>d.note||d.grat).reverse();
-  document.getElementById('diaryList').innerHTML=diary.length?diary.map(d=>`<div class="diary-item"><div class="d">${fmtDate(d.date)}</div>${d.note?esc(d.note):''}${d.grat?'<div class="mini" style="margin-top:5px">🙏 '+esc(d.grat)+'</div>':''}</div>`).join(''):'<div class="empty">Escreva algo do seu dia 📓</div>';
+  document.getElementById('diaryList').innerHTML=diary.length?diary.map(d=>`<div class="diary-item"><div class="between"><div class="d">${fmtDate(d.date)}</div><span class="flex" style="gap:6px"><button class="btn editb" onclick="openEdit('daily','${d.id}')">✏️ editar</button><button class="btn danger" onclick="delDiary('${d.id}')">excluir</button></span></div>${d.note?esc(d.note):''}${d.grat?'<div class="mini" style="margin-top:5px">🙏 '+esc(d.grat)+'</div>':''}</div>`).join(''):'<div class="empty">Escreva algo do seu dia 📓</div>';
   const dietTag=v=>v==='sim'?'<span class="tag in">sim</span>':v==='meio'?'<span class="tag">+/-</span>':v==='nao'?'<span class="tag out">não</span>':'—';
   const h=[...DB.daily].reverse();
   document.getElementById('healthTable').innerHTML=h.length?`<table><thead><tr><th>Data</th><th>Peso</th><th>%Gord</th><th>Água</th><th>Sono</th><th>Dieta</th><th>Treino</th><th>Aprend.</th><th></th></tr></thead><tbody>${h.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${e.weight||'—'}</td><td>${e.fat||'—'}</td><td>${e.water?e.water+'L':'—'}</td><td>${e.sleep?e.sleep+'h':'—'}</td><td>${dietTag(e.diet)}</td><td>${e.workout?'<span class="pill">'+e.workout+'</span>':'—'}</td><td>${e.learn?'<span class="pill">'+e.learn+'</span>':'—'}</td><td>${acts('daily',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhum registro</div>';
@@ -1097,7 +1098,7 @@ const SCHEMA={
   accounts:[['nome','Nome','text'],['tipo','Tipo','select',['Investimento','Conta corrente','Poupança','Reserva']],['valor','Valor (R$)','number']],
   loans:[['nome','Nome','text'],['saldo','Saldo devedor (R$)','number'],['parcela','Valor da parcela (R$)','number'],['rest','Parcelas restantes','number']],
   cards:[['nome','Cartão','text'],['fatura','Fatura atual (R$)','number'],['parcelado','Parcelado restante (R$)','number'],['rest','Parcelas restantes','number']],
-  trades:[['date','Data','date'],['res','Resultado (R$)','number'],['pct','Resultado (%)','number'],['ativo','Ativo','select',['','Índice','Dólar','Cripto','Bolsa','Forex']],['note','Nota','text']],
+  trades:[['date','Data','date'],['res','Resultado (R$)','number'],['pct','Resultado (%)','number'],['ativo','Ativo','select',['','Índice','Dólar','Cripto','Bolsa','Forex']],['note','Anotações','textarea']],
   salary:[['mes','Mês','month'],['valor','Valor (R$)','number'],['tipo','Tipo','select',['Salário','Bônus','Comissão','Outro']],['note','Observação','text']],
   skills:[['nome','Nome','text'],['nivel','Nível atual (0-10)','number'],['meta','Meta (0-10)','number']],
   habits:[['nome','Nome do hábito','text']],
