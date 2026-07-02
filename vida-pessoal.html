@@ -1150,6 +1150,7 @@ function salaryChart(){
 // ============ LANÇAMENTO RÁPIDO ============
 let pendingQuick=null;
 const norm=s=>(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const yest=()=>{const d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10)};
 function upsertByDate(date,fields){let e=DB.daily.find(d=>d.date===date);if(!e){e={id:uid(),date};DB.daily.push(e)}Object.assign(e,fields);save('vp_daily',DB.daily)}
 function upsertDaily(fields){upsertByDate(today(),fields)}
 function addMedicao(){const f={};
@@ -1172,29 +1173,30 @@ function guessCat(t){
 function getNum(t){const m=t.replace(/(\d)[.,](\d{3})\b/g,'$1$2').replace(',','.').match(/-?\d+(?:\.\d+)?/);return m?parseFloat(m[0]):null}
 function parseQuick(text){
   const t=norm(text); const n=getNum(t);
-  if(/day ?trade|daytrade|operacao|trade/.test(t)&&n!=null){const r=/(perd|negativ|preju|menos|\-)/.test(t)?-Math.abs(n):Math.abs(n);
-    return{desc:`Day Trade: ${r>=0?'+':''}${BRL(r)} (hoje)`,fn:()=>{DB.trades.push({id:uid(),date:today(),res:r,pct:0,note:'rápido'});save('vp_trades',DB.trades)}}}
-  if(/(gast|paguei|comprei|despesa|gasto)/.test(t)&&n!=null){const cat=guessCat(t);
-    return{desc:`Despesa de ${BRL(n)} em ${cat}`,fn:()=>{DB.moves.push({id:uid(),date:today(),type:'despesa',cat,amount:n,note:text});save('vp_moves',DB.moves)}}}
-  if(/(recebi|ganhei|receita|salario|entrou|recebimento)/.test(t)&&n!=null){const cat=/salario/.test(t)?'Salário':'Outro';
-    return{desc:`Receita de ${BRL(n)} (${cat})`,fn:()=>{DB.moves.push({id:uid(),date:today(),type:'receita',cat,amount:n,note:text});save('vp_moves',DB.moves)}}}
+  const dia=/\bontem\b/.test(t)?yest():today();const quando=dia===today()?'hoje':'ontem';
+  if(/day ?trade|daytrade|operacao|\btrade\b|pregao/.test(t)&&n!=null){const r=/(perd|negativ|preju|menos|stop|loss|\-)/.test(t)?-Math.abs(n):Math.abs(n);
+    return{desc:`Day Trade: ${r>=0?'+':''}${BRL(r)} (${quando})`,fn:()=>{DB.trades.push({id:uid(),date:dia,res:r,pct:0,note:'rápido'});save('vp_trades',DB.trades)}}}
+  if(/(gast|paguei|comprei|compra|despesa|gasto|torrei|custou|gastar|saiu)/.test(t)&&n!=null){const cat=guessCat(t);
+    return{desc:`Despesa de ${BRL(n)} em ${cat} (${quando})`,fn:()=>{DB.moves.push({id:uid(),date:dia,type:'despesa',cat,amount:n,note:text});save('vp_moves',DB.moves)}}}
+  if(/(recebi|ganhei|receita|salario|entrou|recebimento|caiu|vendi|freela|comissao|bonus|aporte|rendiment|dividendo)/.test(t)&&n!=null){const cat=/salario/.test(t)?'Salário':(/investiment|aporte|rendiment|dividendo|acoes|cdb/.test(t)?'Investimento':'Outro');
+    return{desc:`Receita de ${BRL(n)} (${cat}, ${quando})`,fn:()=>{DB.moves.push({id:uid(),date:dia,type:'receita',cat,amount:n,note:text});save('vp_moves',DB.moves)}}}
   if(/gordura/.test(t)&&n!=null) return{desc:`% de gordura hoje: ${n}%`,fn:()=>upsertDaily({fat:n})};
-  if(/(peso|pesei|pesando|quilos|kg)/.test(t)&&n!=null) return{desc:`Peso de hoje: ${n} kg`,fn:()=>upsertDaily({weight:n})};
+  if(/(peso|pesei|pesando|quilos|\bkg\b)/.test(t)&&n!=null) return{desc:`Peso de hoje: ${n} kg`,fn:()=>upsertDaily({weight:n})};
   if(/agua/.test(t)&&n!=null) return{desc:`Água de hoje: ${n} L`,fn:()=>upsertDaily({water:n})};
   if(/(dormi|sono)/.test(t)&&n!=null) return{desc:`Sono de hoje: ${n} h`,fn:()=>upsertDaily({sleep:n})};
-  if(/humor/.test(t)&&n!=null) return{desc:`Humor de hoje: ${Math.min(5,n)}/5`,fn:()=>upsertDaily({mood:Math.min(5,n)})};
   const sk=DB.skills.find(s=>t.includes(norm(s.nome)));
-  if(sk&&/(pratiq|joguei|toquei|estud|treinei|jogo|pratica)/.test(t)){
+  if(sk&&/(pratiq|joguei|toquei|estud|treinei|jogo|pratica|estudar)/.test(t)){
     let min=60;const h=t.match(/(\d+(?:\.\d+)?)\s*h/);if(h)min=Math.round(parseFloat(h[1])*60);else if(/hora/.test(t)&&n!=null)min=Math.round(n*60);else if(/min/.test(t)&&n!=null)min=Math.round(n);else if(n!=null)min=Math.round(n);
     return{desc:`Prática de ${sk.nome}: ${min} min (hoje)`,fn:()=>{DB.sessions.push({id:uid(),skillId:sk.id,date:today(),min,rate:3,note:'rápido'});save('vp_sessions',DB.sessions)}}}
-  if(/(treinei|musculac|cardio|corri|caminh|academia)/.test(t)){let w='Outro';if(/muscula/.test(t))w='Musculação';else if(/cardio/.test(t))w='Cardio';else if(/corri/.test(t))w='Corrida';else if(/caminh/.test(t))w='Caminhada';else if(t.includes('tenis'))w='Tênis';else if(t.includes('futvolei'))w='Futvôlei';
+  if(/(treinei|musculac|malhei|corri|caminh|academia|nadei|natacao|pedalei|bicicleta|futvolei|joguei tenis)/.test(t)){let w='Outro';if(/muscula|malhei|academia/.test(t))w='Musculação';else if(/corri/.test(t))w='Corrida';else if(/nadei|natacao/.test(t))w='Natação';else if(/pedal|bicicleta/.test(t))w='Bicicleta';else if(t.includes('tenis'))w='Tênis';else if(t.includes('futvolei'))w='Futvôlei';
     return{desc:`Treino de hoje: ${w}`,fn:()=>upsertDaily({workout:w})}}
   if(/pagina/.test(t)&&n!=null){const b=DB.books.find(x=>x.status==='Lendo');if(b)return{desc:`Livro "${b.titulo}": página ${n}`,fn:()=>{b.read=n;save('vp_books',DB.books)}}}
-  return{desc:`Anotar no diário de hoje: "${text}"`,fn:()=>{const e=DB.daily.find(d=>d.date===today());const prev=e&&e.note?e.note+' | ':'';upsertDaily({note:prev+text})}};
+  return{desc:`Anotado no diário: "${text}"`,fn:()=>{const e=DB.daily.find(d=>d.date===today());const prev=e&&e.note?e.note+' | ':'';upsertDaily({note:prev+text})}};
 }
-function quickParse(){const text=document.getElementById('qq').value.trim();if(!text)return;pendingQuick=parseQuick(text);
-  const box=document.getElementById('qpreview');box.style.display='flex';
-  box.innerHTML=`<span>📥 ${pendingQuick.desc}</span><span style="white-space:nowrap"><button class="btn sm" onclick="quickConfirm()">Confirmar</button> <button class="btn sm ghost" onclick="quickCancel()">Cancelar</button></span>`}
+function quickParse(){const text=document.getElementById('qq').value.trim();if(!text)return;
+  const r=parseQuick(text);if(!r)return;
+  r.fn();document.getElementById('qq').value='';document.getElementById('qpreview').style.display='none';
+  toast('✓ '+r.desc);renderAll();}
 function quickConfirm(){if(!pendingQuick)return;pendingQuick.fn();pendingQuick=null;document.getElementById('qq').value='';document.getElementById('qpreview').style.display='none';toast('Lançado ✓');renderAll()}
 function quickCancel(){pendingQuick=null;document.getElementById('qpreview').style.display='none';document.getElementById('qq').value=''}
 function quickVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return toast('Navegador sem suporte a voz — digite');
