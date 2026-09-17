@@ -1,0 +1,50 @@
+name: keep-alive-supabase
+
+# Mantem o banco Supabase do app "Painel de Vida Pessoal" sempre ativo.
+# O plano Free do Supabase pausa o projeto apos ~7 dias sem nenhuma requisicao.
+# Este robo roda no proprio GitHub (gratis, e nao depende do seu PC estar ligado)
+# e "cutuca" o banco 2x por semana.
+#
+# Para testar na hora: Actions -> keep-alive-supabase -> Run workflow.
+
+on:
+  schedule:
+    - cron: '17 11 * * 1,4'   # segundas e quintas, 11:17 UTC (~08:17 em Brasilia)
+  workflow_dispatch:          # permite rodar manualmente pelo botao
+
+permissions:
+  contents: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cutucar o Supabase (mantem o projeto acordado)
+        run: |
+          # v31: chama a funcao public.ping() (consulta real ao banco).
+          # A chave abaixo e a publicavel (publica por natureza, a mesma do site).
+          URL="https://wlljnqlccdfrhpdvjewl.supabase.co/rest/v1/rpc/ping"
+          KEY="sb_publishable_N_xzqWc4VodffL4oEVsGzw_QeOij5Ph"
+          for i in 1 2 3; do
+            CODE=$(curl -s -o /tmp/ping.txt -w "%{http_code}" --max-time 30 -X POST \
+                   -H "apikey: $KEY" -H "Content-Type: application/json" -d '{}' "$URL" || echo 000)
+            echo "Tentativa $i: HTTP $CODE $(cat /tmp/ping.txt 2>/dev/null)"
+            [ "$CODE" = "200" ] && break
+            sleep 20
+          done
+          if [ "$CODE" != "200" ]; then
+            echo "::error::Banco nao respondeu (HTTP $CODE). Abra o painel do Supabase e verifique se o projeto esta pausado (Restore)."
+            exit 1
+          fi
+          echo "Banco do app Vida Pessoal: ativo ok"
+
+      - name: Registrar o ping (mantem o repositorio ativo)
+        run: |
+          date -u '+%Y-%m-%dT%H:%M:%SZ  ping ok' > keep-alive.txt
+          git config user.name  "keep-alive-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add keep-alive.txt
+          git commit -m "keep-alive: ping $(date -u '+%Y-%m-%d')" || echo "nada a commitar"
+          git push || echo "push falhou (nao e critico)"
