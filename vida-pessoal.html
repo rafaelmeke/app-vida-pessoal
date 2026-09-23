@@ -211,7 +211,9 @@ tr:last-child td{border-bottom:none}
 .ia-item{padding-bottom:10px;margin-bottom:10px;border-bottom:1px dashed var(--line)}.ia-item:last-of-type{border-bottom:none}
 .ia-row2{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-items:center}
 @media(max-width:900px){.ia-row2{grid-template-columns:1fr 1fr}}
-.mvx{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.mvx{display:inline-flex;flex-wrap:wrap;gap:4px;vertical-align:middle}
+.tag.ess{background:rgba(34,197,94,.15);color:#4ade80}
+.tag.sup{background:rgba(234,179,8,.15);color:#facc15}
 @media(max-width:900px){.ia-row{grid-template-columns:1fr 1fr 34px;margin-bottom:6px}.ia-row [data-f=valor],.ia-row [data-f=data]{grid-column:2/4}.ia-row [data-f=descricao]{grid-column:1/3}.ia-row .btn.danger{grid-column:3;justify-self:center}}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:150;display:flex;align-items:center;justify-content:center;padding:18px}
 .modal-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;width:100%;max-width:460px;max-height:88vh;overflow-y:auto}
@@ -991,7 +993,10 @@ function finTotals(){
   const parcelado=DB.loans.reduce((a,b)=>a+b.parcela*b.rest,0)+DB.cards.reduce((a,b)=>a+b.parcelado,0);
   return{invest,bens,loanSaldo,cardTotal,divida,parcelado,patrimonio:invest+bens-divida};
 }
-function movExtras(e){const p=[];if(e.pag)p.push(e.pag==='Crédito'&&e.cartao?'💳 '+e.cartao:e.pag);if(e.parcela)p.push(e.parcela);if(e.essencial)p.push(ESS_LBL[e.essencial]||e.essencial);if(e.pessoa&&e.pessoa!=='Eu')p.push('👤 '+e.pessoa);return p.length?`<div class="mvx">${p.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</div>`:''}
+function movExtras(e){const p=[];if(e.pag)p.push(e.pag==='Crédito'&&e.cartao?'💳 '+e.cartao:e.pag);if(e.parcela)p.push(e.parcela);if(e.pessoa&&e.pessoa!=='Eu')p.push('👤 '+e.pessoa);return p.length?`<span class="mvx">${p.map(x=>`<span class="pill">${esc(x)}</span>`).join('')}</span>`:''}
+// v33 — essencial/supérfluo ocupa a coluna antes reservada ao tipo (o tipo já se vê pela cor do valor)
+function movEss(e){if(e.type!=='despesa'||!e.essencial)return '<span class="mini">—</span>';
+  return `<span class="tag ${e.essencial==='essencial'?'ess':'sup'}" title="${e.essencial==='essencial'?'Gasto essencial':'Gasto supérfluo'}">${e.essencial==='essencial'?'✅ Essencial':'🎈 Supérfluo'}</span>`}
 function renderMovCtrl(mm){const el=document.getElementById('movCtrl');if(!el)return;
   const des=mm.filter(m=>m.type==='despesa');const totD=des.reduce((a,b)=>a+b.amount,0);
   const agg=fn=>{const o={};des.forEach(m=>{const k=fn(m);o[k]=(o[k]||0)+m.amount});return Object.entries(o).sort((a,b)=>b[1]-a[1])};
@@ -1224,7 +1229,7 @@ function renderFin(){
   // movimentações
   const mm=monthMoves();
   const f=[...DB.moves].reverse();
-  document.getElementById('movTable').innerHTML=f.length?`<table><thead><tr><th>Data</th><th>Categoria</th><th>Descrição</th><th>Tipo</th><th>Valor</th><th></th></tr></thead><tbody>${f.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${esc(e.cat)}</td><td>${esc(e.note)||'—'}${movExtras(e)}</td><td><span class="tag ${e.type==='receita'?'in':'out'}">${e.type}</span></td><td class="${e.type==='receita'?'amount-pos':'amount-neg'}">${e.type==='receita'?'+':'-'}${BRL(e.amount)}</td><td>${acts('moves',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhuma movimentação</div>';
+  document.getElementById('movTable').innerHTML=f.length?`<table><thead><tr><th>Data</th><th>Categoria</th><th>Descrição</th><th>Essencial?</th><th>Valor</th><th></th></tr></thead><tbody>${f.map(e=>`<tr><td>${fmtDate(e.date)}</td><td>${esc(e.cat)}</td><td>${esc(e.note)||'—'} ${movExtras(e)}</td><td>${movEss(e)}</td><td class="${e.type==='receita'?'amount-pos':'amount-neg'}">${e.type==='receita'?'+':'-'}${BRL(e.amount)}</td><td>${acts('moves',e.id)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">Nenhuma movimentação</div>';
   const cats={};mm.filter(m=>m.type==='despesa').forEach(m=>cats[m.cat]=(cats[m.cat]||0)+m.amount);
   donut('chCat',Object.keys(cats),Object.values(cats));
   renderMovCtrl(mm);fillSel('m_pessoa',pessoasLista(),'—');
